@@ -7,6 +7,7 @@
         "outFile": "index.js"
     },
     "files": [
+        "./src/cellMap.ts",
         "./src/program.ts"
     ]
 }
