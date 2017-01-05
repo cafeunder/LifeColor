@@ -1,9 +1,15 @@
 class Program {
 	mainCanvas: HTMLCanvasElement;
 	cellMap: CellMap;
+	alternateController: AlternateController;
+
 	constructor() {
 		this.mainCanvas = Program.createCanvas("mainCanvas", 3);
 		this.cellMap = new CellMap(10, 10);
+		this.alternateController = new AlternateController(this.cellMap);
+		setInterval(() => {
+			this.alternateController.update();
+		}, 33);
 	}
 
 	static createCanvas(id: string, zIndex: number): HTMLCanvasElement {
