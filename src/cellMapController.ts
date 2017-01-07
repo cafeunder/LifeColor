@@ -1,19 +1,22 @@
 
-class AlternateController {
+class CellMapController {
 	alternationCount: number;
 	alternationInterval: number;
 	cellMap: CellMap;
+	cellMapView: CellMapView;
 
-	constructor(cellMap: CellMap) {
+	constructor(cellMap: CellMap, cellMapView: CellMapView) {
 		this.alternationCount = 0;
 		this.alternationInterval = null;
 		this.cellMap = cellMap;
+		this.cellMapView = cellMapView;
 	}
 
 	update(): void {
 		++this.alternationCount;
 		if (this.alternationCount >= this.alternationInterval) {
 			this.cellMap.alternate();
+			this.cellMapView.draw();
 		}
 	}
 

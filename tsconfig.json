@@ -8,8 +8,9 @@
     },
     "files": [
         "./src/cellMap.ts",
+        "./src/canvasDrawer.ts",
         "./src/cellMapView.ts",
-        "./src/alternateController.ts",
+        "./src/cellMapController.ts",
         "./src/program.ts"
     ]
 }

@@ -2,20 +2,19 @@
 class Program {
 	cellMap: CellMap;
 	cellMapView: CellMapView;
-	alternateController: AlternateController;
+	cellMapController: CellMapController;
 
 	constructor() {
-		this.cellMap = new CellMap(10, 10);
-		this.alternateController = new AlternateController(this.cellMap);
-		this.alternateController.setAlternationInterval(20);
+		this.cellMap = new CellMap(100, 100);
 		this.cellMapView = new CellMapView(
 			this.cellMap,
 			Program.createCanvas("cellCanvas", 1),
 			Program.createCanvas("gridCanvas", 2)
 		);
+		this.cellMapController = new CellMapController(this.cellMap, this.cellMapView);
+		this.cellMapController.setAlternationInterval(20);
 		setInterval(() => {
-			this.alternateController.update();
-			this.cellMapView.draw();
+			this.cellMapController.update();
 		}, 33);
 	}
 

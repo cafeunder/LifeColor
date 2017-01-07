@@ -2,58 +2,92 @@
 class CellMapView {
 	cellMap: CellMap;
 	cellCanvas: HTMLCanvasElement;
-	cellContext: CanvasRenderingContext2D;
-	cellImageData: ImageData;
+	cellCanvasDrawer: CanvasDrawer;
 	gridCanvas: HTMLCanvasElement;
-	gridContext: CanvasRenderingContext2D;
+	gridCanvasDrawer: CanvasDrawer;
+
+	cellSize: number;
 
 	constructor(cellMap: CellMap, cellCanvas: HTMLCanvasElement, gridCanvas: HTMLCanvasElement) {
 		this.cellMap = cellMap;
 
 		this.cellCanvas = cellCanvas;
-		this.cellCanvas.style.width = "960px";
-		this.cellCanvas.style.height = "768px";
-		this.cellContext = this.cellCanvas.getContext("2d");
-		this.cellImageData = this.cellContext.createImageData(
-			this.cellCanvas.width,
-			this.cellCanvas.height
-		);
+		this.cellCanvas.width = 960;
+		this.cellCanvas.height = 768;
+		this.cellCanvasDrawer = new CanvasDrawer(this.cellCanvas);
 
 		this.gridCanvas = gridCanvas;
-		this.gridCanvas.style.width = "960px";
-		this.gridCanvas.style.height = "768px";
-		this.gridContext = this.gridCanvas.getContext("2d");
+		this.gridCanvas.width = 960;
+		this.gridCanvas.height = 768;
+		this.gridCanvasDrawer = new CanvasDrawer(this.gridCanvas);
+
+		this.cellSize = 16;
 	}
 
 	draw(): void {
-		for (var y = 0; y < this.cellMap.yNum; y++) {
-			for (var x = 0; x < this.cellMap.xNum; x++) {
+		for (var y = 0; y < this.cellMap.yNum; ++y) {
+			for (var x = 0; x < this.cellMap.xNum; ++x) {
 				const cell = this.cellMap.map[y][x];
-				const base = (x + y * this.cellMap.xNum) * 4;
 				switch (cell) {
 				case CellStatus.ALIVE:
-					this.cellImageData.data[base] = 255;
-					this.cellImageData.data[base + 1] = 255;
-					this.cellImageData.data[base + 2] = 255;
-					this.cellImageData.data[base + 3] = 255;
+					this.cellCanvasDrawer.drawRect(
+						x * this.cellSize,
+						y * this.cellSize,
+						this.cellSize,
+						this.cellSize,
+						{
+							r: 255,
+							g: 255,
+							b: 255,
+							a: 255
+						}
+					);
+					break;
 				case CellStatus.BIRTH:
-					this.cellImageData.data[base] = 255;
-					this.cellImageData.data[base + 1] = 255;
-					this.cellImageData.data[base + 2] = 255;
-					this.cellImageData.data[base + 3] = 255;
+					this.cellCanvasDrawer.drawRect(
+						x * this.cellSize,
+						y * this.cellSize,
+						this.cellSize,
+						this.cellSize,
+						{
+							r: 255,
+							g: 255,
+							b: 255,
+							a: 255
+						}
+					);
+					break;
 				case CellStatus.DIE:
-					this.cellImageData.data[base] = 0;
-					this.cellImageData.data[base + 1] = 0;
-					this.cellImageData.data[base + 2] = 0;
-					this.cellImageData.data[base + 3] = 0;
+					this.cellCanvasDrawer.drawRect(
+						x * this.cellSize,
+						y * this.cellSize,
+						this.cellSize,
+						this.cellSize,
+						{
+							r: 0,
+							g: 0,
+							b: 0,
+							a: 0
+						}
+					);
+					break;
 				case CellStatus.DEAD:
-					this.cellImageData.data[base] = 0;
-					this.cellImageData.data[base + 1] = 0;
-					this.cellImageData.data[base + 2] = 0;
-					this.cellImageData.data[base + 3] = 0;
+					this.cellCanvasDrawer.drawRect(
+						x * this.cellSize,
+						y * this.cellSize,
+						this.cellSize,
+						this.cellSize,
+						{
+							r: 0,
+							g: 0,
+							b: 0,
+							a: 0
+						}
+					);
+					break;
 				}
 			}
 		}
-		this.cellContext.putImageData(this.cellImageData, 0, 0);
+		this.cellCanvasDrawer.reflesh();
 	}
 }
