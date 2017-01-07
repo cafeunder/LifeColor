@@ -119,7 +119,7 @@ class CellMap {
 		for (var y = 0; y < this.yNum; ++y) {
 			this.map[y] = [];
 			for (var x = 0; x < this.xNum; ++x) {
-				var rand = Math.floor( Math.random() * 4);
+				var rand = Math.floor(Math.random() * 4);
 				if (rand == 0) {
 					this.map[y][x] = CellStatus.ALIVE;
 					this.population++;
@@ -137,13 +137,13 @@ class CellMap {
 		// TODO:
 		// 下のfor文とマージできるのでは
 		this.map = [];
-		for(var y = 0; y < this.yNum; y++){
+		for (var y = 0; y < this.yNum; y++) {
 			this.map[y] = [];
 		}
 
-		for(var y = 0; y < this.yNum; ++y){
-			for(var x = 0; x < this.xNum; ++x){
-				if((y < srcYNum && x < srcXNum) && (srcMap[y][x] == CellStatus.BIRTH || srcMap[y][x] == CellStatus.ALIVE)){
+		for (var y = 0; y < this.yNum; ++y) {
+			for (var x = 0; x < this.xNum; ++x) {
+				if ((y < srcYNum && x < srcXNum) && (srcMap[y][x] == CellStatus.BIRTH || srcMap[y][x] == CellStatus.ALIVE)) {
 					this.map[y][x] = CellStatus.ALIVE;
 				} else {
 					this.map[y][x] = CellStatus.DEAD;

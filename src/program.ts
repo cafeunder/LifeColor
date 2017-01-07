@@ -1,14 +1,21 @@
+
 class Program {
-	mainCanvas: HTMLCanvasElement;
 	cellMap: CellMap;
+	cellMapView: CellMapView;
 	alternateController: AlternateController;
 
 	constructor() {
-		this.mainCanvas = Program.createCanvas("mainCanvas", 3);
 		this.cellMap = new CellMap(10, 10);
 		this.alternateController = new AlternateController(this.cellMap);
+		this.alternateController.setAlternationInterval(20);
+		this.cellMapView = new CellMapView(
+			this.cellMap,
+			Program.createCanvas("cellCanvas", 1),
+			Program.createCanvas("gridCanvas", 2)
+		);
 		setInterval(() => {
 			this.alternateController.update();
+			this.cellMapView.draw();
 		}, 33);
 	}
 
