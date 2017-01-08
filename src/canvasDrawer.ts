@@ -20,6 +20,17 @@ class CanvasDrawer {
 		);
 	}
 
+	changeCanvas(left: number, top: number, width: number, height: number): void {
+		this.canvas.style.left = left + "px";
+		this.canvas.style.top = top + "px";
+		this.canvas.width = width;
+		this.canvas.height = height;
+		this.imageData = this.context.createImageData(
+			this.canvas.width,
+			this.canvas.height
+		);
+	}
+
 	reflesh(): void {
 		this.context.putImageData(this.imageData, 0, 0);
 	}

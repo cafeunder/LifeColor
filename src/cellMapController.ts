@@ -4,12 +4,18 @@ class CellMapController {
 	alternationInterval: number;
 	cellMap: CellMap;
 	cellMapView: CellMapView;
+	cellSize: number;
 
-	constructor(cellMap: CellMap, cellMapView: CellMapView) {
+	constructor(domController: DOMController) {
 		this.alternationCount = 0;
 		this.alternationInterval = null;
-		this.cellMap = cellMap;
-		this.cellMapView = cellMapView;
+		this.cellSize = 16;
+
+		this.cellMap = new CellMap(
+			Math.floor(domController.container.offsetWidth / this.cellSize),
+			Math.floor(domController.container.offsetHeight / this.cellSize),
+		);
+		this.cellMapView = new CellMapView(this.cellMap, this.cellSize, domController);
 	}
 
 	update(): void {

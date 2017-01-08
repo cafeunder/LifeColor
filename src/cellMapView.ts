@@ -1,5 +1,6 @@
 
 class CellMapView {
+	domController: DOMController;
 	cellMap: CellMap;
 	cellCanvas: HTMLCanvasElement;
 	cellCanvasDrawer: CanvasDrawer;
@@ -8,20 +9,22 @@ class CellMapView {
 
 	cellSize: number;
 
-	constructor(cellMap: CellMap, cellCanvas: HTMLCanvasElement, gridCanvas: HTMLCanvasElement) {
+	constructor(cellMap: CellMap, cellSize: number, domController: DOMController) {
+		this.cellSize = cellSize;
+		this.domController = domController;
 		this.cellMap = cellMap;
 
-		this.cellCanvas = cellCanvas;
-		this.cellCanvas.width = 960;
-		this.cellCanvas.height = 768;
+		this.cellCanvas = domController.createCanvas("cellCanvas", 1);
+		this.gridCanvas = domController.createCanvas("gridCanvas", 2);
 		this.cellCanvasDrawer = new CanvasDrawer(this.cellCanvas);
-
-		this.gridCanvas = gridCanvas;
-		this.gridCanvas.width = 960;
-		this.gridCanvas.height = 768;
 		this.gridCanvasDrawer = new CanvasDrawer(this.gridCanvas);
 
-		this.cellSize = 16;
+		var width = this.cellSize * Math.floor(this.domController.container.offsetWidth / this.cellSize);
+		var height = this.cellSize * Math.floor(this.domController.container.offsetHeight / this.cellSize);
+		var left = Math.floor((this.domController.container.offsetWidth - width) / 2);
+		var top = Math.floor((this.domController.container.offsetHeight - height) / 2);
+		this.cellCanvasDrawer.changeCanvas(left, top, width, height);
+		this.gridCanvasDrawer.changeCanvas(left, top, width, height);
 	}
 
 	draw(): void {
