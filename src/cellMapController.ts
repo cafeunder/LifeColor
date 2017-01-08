@@ -17,6 +17,7 @@ class CellMapController {
 		if (this.alternationCount >= this.alternationInterval) {
 			this.cellMap.alternate();
 			this.cellMapView.draw();
+			this.alternationCount = 0;
 		}
 	}
 

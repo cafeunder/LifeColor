@@ -5,7 +5,7 @@ class Program {
 	cellMapController: CellMapController;
 
 	constructor() {
-		this.cellMap = new CellMap(100, 100);
+		this.cellMap = new CellMap(60, 48);
 		this.cellMapView = new CellMapView(
 			this.cellMap,
 			Program.createCanvas("cellCanvas", 1),
