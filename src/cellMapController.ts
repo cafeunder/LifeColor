@@ -29,9 +29,6 @@ class CellMapController {
 
 	setAlternationInterval(alternationInterval): void {
 		// スピードダウンのときは，移行状態を許さない
-		if (this.alternationInterval > alternationInterval) {
-			this.cellMap.completeStatus();
-		}
 		this.alternationInterval = alternationInterval;
 	}
 }

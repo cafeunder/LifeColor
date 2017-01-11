@@ -8,6 +8,7 @@ class CellMapView {
 	gridCanvasDrawer: CanvasDrawer;
 
 	cellSize: number;
+	cellColor: Color;
 
 	constructor(cellMap: CellMap, cellSize: number, domController: DOMController) {
 		this.cellSize = cellSize;
@@ -25,6 +26,12 @@ class CellMapView {
 		var top = Math.floor((this.domController.container.offsetHeight - height) / 2);
 		this.cellCanvasDrawer.changeCanvas(left, top, width, height);
 		this.gridCanvasDrawer.changeCanvas(left, top, width, height);
+		this.cellColor = {
+			r: 10,
+			g: 250,
+			b: 66,
+			a: 255
+		};
 	}
 
 	draw(): void {
@@ -38,40 +45,7 @@ class CellMapView {
 						y * this.cellSize,
 						this.cellSize,
 						this.cellSize,
-						{
-							r: 255,
-							g: 255,
-							b: 255,
-							a: 255
-						}
-					);
-					break;
-				case CellStatus.BIRTH:
-					this.cellCanvasDrawer.drawRect(
-						x * this.cellSize,
-						y * this.cellSize,
-						this.cellSize,
-						this.cellSize,
-						{
-							r: 255,
-							g: 255,
-							b: 255,
-							a: 255
-						}
-					);
-					break;
-				case CellStatus.DIE:
-					this.cellCanvasDrawer.drawRect(
-						x * this.cellSize,
-						y * this.cellSize,
-						this.cellSize,
-						this.cellSize,
-						{
-							r: 0,
-							g: 0,
-							b: 0,
-							a: 0
-						}
+						this.cellColor
 					);
 					break;
 				case CellStatus.DEAD:

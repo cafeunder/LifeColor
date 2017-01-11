@@ -9,16 +9,6 @@ enum CellStatus {
 	 * 生状態
 	 */
 	ALIVE,
-
-	/**
-	 * 死状態に移行中
-	 */
-	DIE,
-
-	/**
-	 * 生状態に移行中
-	 */
-	BIRTH
 }
 
 class CellMap {
@@ -46,7 +36,7 @@ class CellMap {
 		for (var y = -1; y < 2; ++y) {
 			for (var x = -1; x < 2; ++x) {
 				if ((x == 0 && x == y) || x + cx < 0 || x + cx >= this.xNum || y + cy < 0 || y + cy >= this.yNum) continue;
-				if (this.map[y + cy][x + cx] == CellStatus.ALIVE || this.map[y + cy][x + cx] == CellStatus.DIE) {
+				if (this.map[y + cy][x + cx] == CellStatus.ALIVE) {
 					aliveCellCount++;
 				}
 			}
@@ -59,43 +49,25 @@ class CellMap {
 	}
 
 	alternate(): void {
-		this.completeStatus();
 		this.population = 0;
 
 		for (var y = 0; y < this.yNum; ++y) {
 			for (var x = 0; x < this.xNum; ++x) {
 				const state = this.calcCell(x, y);
 				if(state == -1){
-					if (this.map[y][x] == CellStatus.ALIVE) {
-						this.map[y][x] = CellStatus.DIE;
-					}
+					this.map[y][x] = CellStatus.DEAD;
 				}
 				if(state == 1){
-					if (this.map[y][x] == CellStatus.DEAD) {
-						this.map[y][x] = CellStatus.BIRTH;
-					}
+					this.map[y][x] = CellStatus.ALIVE;
 				}
 
-				if (this.map[y][x] == CellStatus.ALIVE || this.map[y][x] == CellStatus.BIRTH) {
+				if (this.map[y][x] == CellStatus.ALIVE) {
 					++this.population;
 				}
 			}
 		}
 
 		this.generation++;
-	}
-
-	completeStatus(): void {
-		for (var y = 0; y < this.yNum; ++y) {
-			for (var x = 0; x < this.xNum; ++x) {
-				if (this.map[y][x] == CellStatus.BIRTH) {
-					this.map[y][x] = CellStatus.ALIVE;
-				}
-				if (this.map[y][x] == CellStatus.DIE) {
-					this.map[y][x] = CellStatus.DEAD;
-				}
-			}
-		}
 	}
 
 	private _clear(): void {
@@ -143,7 +115,7 @@ class CellMap {
 
 		for (var y = 0; y < this.yNum; ++y) {
 			for (var x = 0; x < this.xNum; ++x) {
-				if ((y < srcYNum && x < srcXNum) && (srcMap[y][x] == CellStatus.BIRTH || srcMap[y][x] == CellStatus.ALIVE)) {
+				if (y < srcYNum && x < srcXNum && srcMap[y][x] == CellStatus.ALIVE) {
 					this.map[y][x] = CellStatus.ALIVE;
 				} else {
 					this.map[y][x] = CellStatus.DEAD;
