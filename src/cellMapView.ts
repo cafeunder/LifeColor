@@ -37,31 +37,33 @@ class CellMapView {
 	draw(): void {
 		for (var y = 0; y < this.cellMap.yNum; ++y) {
 			for (var x = 0; x < this.cellMap.xNum; ++x) {
-				const cell = this.cellMap.map[y][x];
-				switch (cell) {
-				case CellStatus.ALIVE:
-					this.cellCanvasDrawer.drawRect(
-						x * this.cellSize,
-						y * this.cellSize,
-						this.cellSize,
-						this.cellSize,
-						this.cellColor
-					);
-					break;
-				case CellStatus.DEAD:
-					this.cellCanvasDrawer.drawRect(
-						x * this.cellSize,
-						y * this.cellSize,
-						this.cellSize,
-						this.cellSize,
-						{
-							r: 0,
-							g: 0,
-							b: 0,
-							a: 0
-						}
-					);
-					break;
+				if (this.cellMap.map[y][x]) {
+					// 描画左上ピクセルのアルファ値がゼロ = 未描画なら描画
+					if (this.cellCanvasDrawer.getPixel(x * this.cellSize, y * this.cellSize, 3) == 0) {
+						this.cellCanvasDrawer.drawRect(
+							x * this.cellSize,
+							y * this.cellSize,
+							this.cellSize,
+							this.cellSize,
+							this.cellColor
+						);
+					}
+				} else {
+					// 描画左上ピクセルのアルファ値が非ゼロ = 描画済ならクリア
+					if (this.cellCanvasDrawer.getPixel(x * this.cellSize, y * this.cellSize, 3) != 0) {
+						this.cellCanvasDrawer.drawRect(
+							x * this.cellSize,
+							y * this.cellSize,
+							this.cellSize,
+							this.cellSize,
+							{
+								r: 0,
+								g: 0,
+								b: 0,
+								a: 0
+							}
+						);
+					}
 				}
 			}
 		}

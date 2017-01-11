@@ -53,4 +53,8 @@ class CanvasDrawer {
 			}
 		}
 	}
+
+	getPixel(x: number, y: number, offset: number): number {
+		return this.imageData.data[(x + y * this.canvas.width) * 4 + offset];
+	}
 }
