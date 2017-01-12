@@ -34,13 +34,14 @@ class CellMapController {
 			Math.floor(domController.container.offsetHeight / cellProperty.cellSize),
 		);
 		this.cellMapView = new CellMapView(this.cellMap, cellProperty, domController);
+		this.cellMapView.draw();
 	}
 
 	update(): void {
 		++this.alternationCount;
 		if (this.alternationCount >= this.alternationInterval) {
 			this.cellMap.alternate();
-			this.cellMapView.draw();
+			this.cellMapView.differenceDraw();
 			this.alternationCount = 0;
 		}
 	}

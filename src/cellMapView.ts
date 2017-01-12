@@ -40,8 +40,33 @@ class CellMapView {
 		for (var y = 0; y < this.cellMap.yNum; ++y) {
 			for (var x = 0; x < this.cellMap.xNum; ++x) {
 				if (this.cellMap.map[y][x]) {
-					// 描画左上ピクセルのアルファ値がゼロ = 未描画なら描画
-					if (this.cellCanvasDrawer.getPixel(x * cellSize, y * cellSize, 3) == 0) {
+					this.cellCanvasDrawer.drawRect(
+						x * cellSize,
+						y * cellSize,
+						cellSize,
+						cellSize,
+						this.cellColor
+					);
+				} else {
+					this.cellCanvasDrawer.drawRect(
+						x * cellSize,
+						y * cellSize,
+						cellSize,
+						cellSize,
+						{ r: 0, g: 0, b: 0, a: 0 }
+					);
+				}
+			}
+		}
+		this.cellCanvasDrawer.reflesh();
+	}
+
+	differenceDraw(): void {
+		const cellSize = this.cellProperty.cellSize;
+		for (var y = 0; y < this.cellMap.yNum; ++y) {
+			for (var x = 0; x < this.cellMap.xNum; ++x) {
+				if (this.cellMap.map[y][x]) {
+					if (!this.cellMap.alternateMap[y][x]) {
 						this.cellCanvasDrawer.drawRect(
 							x * cellSize,
 							y * cellSize,
@@ -51,19 +76,13 @@ class CellMapView {
 						);
 					}
 				} else {
-					// 描画左上ピクセルのアルファ値が非ゼロ = 描画済ならクリア
-					if (this.cellCanvasDrawer.getPixel(x * cellSize, y * cellSize, 3) != 0) {
+					if (this.cellMap.alternateMap[y][x]) {
 						this.cellCanvasDrawer.drawRect(
 							x * cellSize,
 							y * cellSize,
 							cellSize,
 							cellSize,
-							{
-								r: 0,
-								g: 0,
-								b: 0,
-								a: 0
-							}
+							{ r: 0, g: 0, b: 0, a: 0 }
 						);
 					}
 				}
