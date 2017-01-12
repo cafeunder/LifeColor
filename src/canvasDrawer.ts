@@ -6,6 +6,13 @@ interface Color {
 	a: number;
 }
 
+interface Rect {
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+}
+
 class CanvasDrawer {
 	private canvas: HTMLCanvasElement;
 	private context: CanvasRenderingContext2D;
@@ -36,16 +43,13 @@ class CanvasDrawer {
 	}
 
 	drawRect(
-		x: number,
-		y: number,
-		width: number,
-		height: number,
+		rect: Rect,
 		color: Color
 	): void {
 		const bitmap = this.imageData.data;
-		for (var dy = 0; dy < height; ++dy) {
-			for (var dx = 0; dx < width; ++dx) {
-				const base = ((x + dx) + (y + dy) * this.canvas.width) * 4;
+		for (var dy = 0; dy < rect.height; ++dy) {
+			for (var dx = 0; dx < rect.width; ++dx) {
+				const base = ((rect.x + dx) + (rect.y + dy) * this.canvas.width) * 4;
 				bitmap[base] = color.r;
 				bitmap[base + 1] = color.g;
 				bitmap[base + 2] = color.b;

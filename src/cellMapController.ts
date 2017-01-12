@@ -15,10 +15,10 @@ class CellMapController {
 	constructor(domController: DOMController) {
 		this.cellPropertyArray = [{
 			cellSize: 16,
-			gridWidth: 4
+			gridWidth: 2
 		}, {
 			cellSize: 8,
-			gridWidth: 2,
+			gridWidth: 1,
 		}, {
 			cellSize: 4,
 			gridWidth: 0
@@ -34,14 +34,15 @@ class CellMapController {
 			Math.floor(domController.container.offsetHeight / cellProperty.cellSize),
 		);
 		this.cellMapView = new CellMapView(this.cellMap, cellProperty, domController);
-		this.cellMapView.draw();
+		this.cellMapView.drawCell();
+		this.cellMapView.drawGrid();
 	}
 
 	update(): void {
 		++this.alternationCount;
 		if (this.alternationCount >= this.alternationInterval) {
 			this.cellMap.alternate();
-			this.cellMapView.differenceDraw();
+			this.cellMapView.drawDifferenceCell();
 			this.alternationCount = 0;
 		}
 	}
