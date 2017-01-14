@@ -8,7 +8,7 @@ class CellMapView {
 	gridCanvasDrawer: CanvasDrawer;
 
 	cellProperty: CellProperty;
-	cellColor: Color;
+	cellColorMap: Color[];
 
 	constructor(cellMap: CellMap, cellProperty: CellProperty, domController: DOMController) {
 		this.cellProperty = cellProperty;
@@ -27,12 +27,7 @@ class CellMapView {
 		var top = Math.floor((this.domController.container.offsetHeight - height) / 2);
 		this.cellCanvasDrawer.changeCanvas(left, top, width, height);
 		this.gridCanvasDrawer.changeCanvas(left, top, width, height);
-		this.cellColor = {
-			r: 10,
-			g: 250,
-			b: 66,
-			a: 255
-		};
+		this.cellColorMap = ColorMap.createCOCKTAIL(this.cellMap.xNum, this.cellMap.yNum);
 	}
 
 	drawCell(): void {
@@ -41,7 +36,7 @@ class CellMapView {
 				if (this.cellMap.map[y][x]) {
 					this.cellCanvasDrawer.drawRect(
 						this.getRect(x, y),
-						this.cellColor
+						this.cellColorMap[y][x]
 					);
 				} else {
 					this.cellCanvasDrawer.drawRect(
@@ -61,7 +56,7 @@ class CellMapView {
 					if (!this.cellMap.alternateMap[y][x]) {
 						this.cellCanvasDrawer.drawRect(
 							this.getRect(x, y),
-							this.cellColor
+							this.cellColorMap[y][x]
 						);
 					}
 				} else {

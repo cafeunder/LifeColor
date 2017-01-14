@@ -10,6 +10,7 @@
         "./src/DOMController.ts",
         "./src/cellMap.ts",
         "./src/canvasDrawer.ts",
+        "./src/colorMap.ts",
         "./src/cellMapView.ts",
         "./src/cellMapController.ts",
         "./src/program.ts"
