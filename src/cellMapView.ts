@@ -11,7 +11,6 @@ class CellMapView {
 	cellColorMap: Color[];
 
 	constructor(cellMap: CellMap, cellProperty: CellProperty, domController: DOMController) {
-		this.cellProperty = cellProperty;
 		this.domController = domController;
 		this.cellMap = cellMap;
 
@@ -20,14 +19,7 @@ class CellMapView {
 		this.cellCanvasDrawer = new CanvasDrawer(this.cellCanvas);
 		this.gridCanvasDrawer = new CanvasDrawer(this.gridCanvas);
 
-		const cellSize = this.cellProperty.cellSize;
-		var width = cellSize * Math.floor(this.domController.container.offsetWidth / cellSize);
-		var height = cellSize * Math.floor(this.domController.container.offsetHeight / cellSize);
-		var left = Math.floor((this.domController.container.offsetWidth - width) / 2);
-		var top = Math.floor((this.domController.container.offsetHeight - height) / 2);
-		this.cellCanvasDrawer.changeCanvas(left, top, width, height);
-		this.gridCanvasDrawer.changeCanvas(left, top, width, height);
-		this.cellColorMap = ColorMap.createCOCKTAIL(this.cellMap.xNum, this.cellMap.yNum);
+		this.setCellProperty(cellProperty, cellMap.xNum, cellMap.yNum);
 	}
 
 	drawCell(): void {
@@ -91,5 +83,17 @@ class CellMapView {
 			width: this.cellProperty.cellSize - this.cellProperty.gridWidth * 2,
 			height: this.cellProperty.cellSize - this.cellProperty.gridWidth * 2,
 		}
+	}
+
+	setCellProperty(cellProperty: CellProperty, cellXNum: number, cellYNum: number): void {
+		this.cellProperty = cellProperty;
+		const cellSize = this.cellProperty.cellSize;
+		const width = cellSize * cellXNum;
+		const height = cellSize * cellYNum;
+		const left = Math.floor((this.domController.container.offsetWidth - width) / 2);
+		const top = Math.floor((this.domController.container.offsetHeight - height) / 2);
+		this.cellCanvasDrawer.changeCanvas(left, top, width, height);
+		this.gridCanvasDrawer.changeCanvas(left, top, width, height);
+		this.cellColorMap = ColorMap.createCOCKTAIL(cellXNum, cellYNum);
 	}
 }

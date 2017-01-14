@@ -14,6 +14,8 @@ class Program {
 		setInterval(() => {
 			this.cellMapController.update();
 		}, 33);
+
+		ImageManager.load();
 	}
 }
 

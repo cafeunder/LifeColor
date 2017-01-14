@@ -7,10 +7,9 @@ class CellMap {
 	generation: number;
 	population: number;
 
-	constructor(xNum: number, yNum: number, srcCellMap?: CellMap) {
+	constructor(xNum: number, yNum: number) {
 		this.xNum = xNum;
 		this.yNum = yNum;
-
 		this.map = [];
 		this.alternateMap = [];
 		for (var y = 0; y < this.yNum; y++) {
@@ -18,11 +17,7 @@ class CellMap {
 			this.alternateMap[y] = [];
 		}
 
-		if (srcCellMap) {
-			this.copyMap(srcCellMap.map, srcCellMap.xNum, srcCellMap.yNum);
-		} else {
-			this.randomize();
-		}
+		this.randomize();
 		this.generation = 0;
 		this.population = 0;
 	}
@@ -110,5 +105,20 @@ class CellMap {
 				}
 			}
 		}
+	}
+
+	setCellNum(xNum: number, yNum: number): void {
+		this.xNum = xNum;
+		this.yNum = yNum;
+
+		const temp = this.map;
+		this.map = [];
+		this.alternateMap = [];
+		for (var y = 0; y < this.yNum; y++) {
+			this.map[y] = [];
+			this.alternateMap[y] = [];
+		}
+
+		this.copyMap(temp, xNum, yNum);
 	}
 }

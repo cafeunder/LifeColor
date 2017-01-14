@@ -8,6 +8,7 @@
     },
     "files": [
         "./src/DOMController.ts",
+        "./src/imageManager.ts",
         "./src/cellMap.ts",
         "./src/canvasDrawer.ts",
         "./src/colorMap.ts",
