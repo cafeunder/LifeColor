@@ -4,12 +4,10 @@ class DOMController {
 	private static min_screen_height = 786;
 	body: HTMLBodyElement;
 	container: HTMLElement;
-	controlCanvas: HTMLCanvasElement;
 	fullScreen: boolean;
 
 	initialize(): void {
 		this.container = document.getElementById("canvasContainer");
-		this.controlCanvas = this.createCanvas("controlCanvas", 0);
 		this.body = <HTMLBodyElement>document.getElementById('lifeBody');
 	}
 

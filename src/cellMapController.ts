@@ -47,11 +47,6 @@ class CellMapController {
 		}
 	}
 
-	setAlternationInterval(alternationInterval): void {
-		// スピードダウンのときは，移行状態を許さない
-		this.alternationInterval = alternationInterval;
-	}
-
 	setCellPropertyIndex(index: number): void {
 		if (index < 0) {
 			index = 0;

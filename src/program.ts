@@ -25,8 +25,6 @@ class Program {
 				this.cellMapController.resize();
 			}, 60 );
 		}, false );
-
-		ImageManager.load();
 	}
 }
 
