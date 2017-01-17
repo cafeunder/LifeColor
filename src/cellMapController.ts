@@ -47,6 +47,10 @@ class CellMapController {
 		}
 	}
 
+	setAlternationInterval(alternationInterval): void {
+		this.alternationInterval = alternationInterval;
+	}
+
 	setCellPropertyIndex(index: number): void {
 		if (index < 0) {
 			index = 0;
