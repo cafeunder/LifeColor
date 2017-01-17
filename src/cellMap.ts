@@ -108,17 +108,19 @@ class CellMap {
 	}
 
 	setCellNum(xNum: number, yNum: number): void {
+		const temp = this.map;
+		const tempX = this.xNum;
+		const tempY = this.yNum;
+
 		this.xNum = xNum;
 		this.yNum = yNum;
 
-		const temp = this.map;
 		this.map = [];
 		this.alternateMap = [];
 		for (var y = 0; y < this.yNum; y++) {
 			this.map[y] = [];
 			this.alternateMap[y] = [];
 		}
-
-		this.copyMap(temp, xNum, yNum);
+		this.copyMap(temp, tempX, tempY);
 	}
 }

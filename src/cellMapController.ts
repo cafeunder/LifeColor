@@ -20,6 +20,7 @@ class CellMapController {
 	alternationInterval: number;
 	cellMap: CellMap;
 	cellMapView: CellMapView;
+	cellProperty: CellProperty;
 	domController: DOMController;
 
 	constructor(domController: DOMController) {
@@ -27,12 +28,12 @@ class CellMapController {
 		this.alternationCount = 0;
 		this.alternationInterval = null;
 
-		const cellProperty = CellMapController.CELL_PROPERTY_ARRAY[0];
+		this.cellProperty = CellMapController.CELL_PROPERTY_ARRAY[0];
 		this.cellMap = new CellMap(
-			Math.floor(domController.container.offsetWidth / cellProperty.cellSize),
-			Math.floor(domController.container.offsetHeight / cellProperty.cellSize),
+			Math.floor(domController.container.offsetWidth / this.cellProperty.cellSize),
+			Math.floor(domController.container.offsetHeight / this.cellProperty.cellSize),
 		);
-		this.cellMapView = new CellMapView(this.cellMap, cellProperty, domController);
+		this.cellMapView = new CellMapView(this.cellMap, this.cellProperty, domController);
 		this.cellMapView.drawCell();
 		this.cellMapView.drawGrid();
 	}
@@ -59,12 +60,21 @@ class CellMapController {
 			index = CellMapController.CELL_PROPERTY_ARRAY.length - 1;
 		}
 
-		const cellProperty = CellMapController.CELL_PROPERTY_ARRAY[index];
-		const xNum = Math.floor(this.domController.container.offsetWidth / cellProperty.cellSize);
-		const yNum = Math.floor(this.domController.container.offsetHeight / cellProperty.cellSize);
+		this.cellProperty = CellMapController.CELL_PROPERTY_ARRAY[index];
+		const xNum = Math.floor(this.domController.container.offsetWidth / this.cellProperty.cellSize);
+		const yNum = Math.floor(this.domController.container.offsetHeight / this.cellProperty.cellSize);
 		this.cellMap.setCellNum(xNum, yNum);
-		this.cellMapView.setCellProperty(cellProperty, xNum, yNum);
+		this.cellMapView.setCellProperty(this.cellProperty, xNum, yNum);
 		this.reset();
+	}
+
+	resize(): void {
+		const xNum = Math.floor(this.domController.container.offsetWidth / this.cellProperty.cellSize);
+		const yNum = Math.floor(this.domController.container.offsetHeight / this.cellProperty.cellSize);
+		this.cellMap.setCellNum(xNum, yNum);
+		this.cellMapView.setCellProperty(this.cellProperty, xNum, yNum);
+		this.cellMapView.drawCell();
+		this.cellMapView.drawGrid();
 	}
 
 	reset(): void {
