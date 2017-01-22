@@ -14,6 +14,7 @@
         "./src/colorMap.ts",
         "./src/cellMapView.ts",
         "./src/cellMapController.ts",
+        "./src/cellSizeConfigMenu.ts",
         "./src/program.ts"
     ]
 }

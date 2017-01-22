@@ -9,7 +9,7 @@ class DOMController {
 
 	initialize(): void {
 		this.container = document.getElementById("canvasContainer");
-		this.controlCanvas = this.createCanvas("controlCanvas", 0);
+		this.controlCanvas = this.createCanvas("controlCanvas", 10);
 		this.body = <HTMLBodyElement>document.getElementById('lifeBody');
 	}
 
@@ -50,5 +50,12 @@ class DOMController {
 		canvas.style.zIndex = zIndex+"";
 		document.getElementById("canvasContainer").appendChild(canvas);
 		return canvas;
+	}
+
+	getWidth(): number {
+		return parseInt(this.container.style.width);
+	}
+	getHeight(): number {
+		return parseInt(this.container.style.height);
 	}
 }

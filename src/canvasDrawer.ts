@@ -42,6 +42,14 @@ class CanvasDrawer {
 		this.context.putImageData(this.imageData, 0, 0);
 	}
 
+	drawImage(
+		image: HTMLImageElement,
+		x: number,
+		y: number,
+	): void {
+		this.context.drawImage(image, x, y);
+	}
+
 	drawRect(
 		rect: Rect,
 		color: Color

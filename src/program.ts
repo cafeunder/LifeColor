@@ -2,6 +2,7 @@
 class Program {
 	cellMapView: CellMapView;
 	cellMapController: CellMapController;
+	cellSizeConfigMenu: CellSizeConfigMenu;
 	domController: DOMController;
 
 	constructor() {
@@ -27,6 +28,13 @@ class Program {
 		}, false );
 
 		ImageManager.load();
+		var check = setInterval(() => {
+			if (ImageManager.checkLoadCompleted()) {
+				clearInterval(check);
+				this.cellSizeConfigMenu = new CellSizeConfigMenu(this.domController);
+				this.cellSizeConfigMenu.draw();
+			}
+		}, 10);
 	}
 }
 

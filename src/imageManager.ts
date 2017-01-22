@@ -35,4 +35,12 @@ class ImageManager {
 
 		return true;
 	}
+
+	static getImageList(keyList: string[]): HTMLImageElement[] {
+		var result = [];
+		keyList.forEach((key: string) => {
+			result.push(ImageManager.imageMap[key]);
+		});
+		return result;
+	}
 }
