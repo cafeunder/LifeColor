@@ -92,15 +92,15 @@ class CellSizeConfigMenu {
 				a: 230
 			}
 		);
+		this.canvasDrawer.reflesh();
 		this.elementList.forEach((elm: MenuElement) => {
 			this.canvasDrawer.drawImage(
 				(Array.isArray(elm.img)) ? elm.img[elm.status] : elm.img,
 				elm.x,
 				elm.y
 			);
-			console.log(elm.img);
+			console.log(elm);
 		});
-		this.canvasDrawer.reflesh();
 	}
 
 	private createMenuElement(): void {
