@@ -7,10 +7,13 @@
         "outFile": "index.js"
     },
     "files": [
+        "./src/common.ts",
         "./src/DOMController.ts",
         "./src/imageManager.ts",
         "./src/cellMap.ts",
         "./src/canvasDrawer.ts",
+        "./src/canvasImageDrawer.ts",
+        "./src/canvasBitmapDrawer.ts",
         "./src/colorMap.ts",
         "./src/cellMapView.ts",
         "./src/cellMapController.ts",

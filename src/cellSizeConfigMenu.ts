@@ -57,7 +57,7 @@ class CellSizeConfigMenu {
 	];
 
 	private canvas: HTMLCanvasElement;
-	private canvasDrawer: CanvasDrawer;
+	private canvasDrawer: CanvasImageDrawer;
 	private elementList: MenuElement[];
 	private width: number;
 	private height: number;
@@ -67,7 +67,7 @@ class CellSizeConfigMenu {
 			"cellSizeConfigMenuCanvas",
 			4
 		);
-		this.canvasDrawer = new CanvasDrawer(this.canvas);
+		this.canvasDrawer = new CanvasImageDrawer(this.canvas);
 		this.createMenuElement();
 		this.canvasDrawer.changeCanvas(
 			domController.getWidth() - (this.width + CellSizeConfigMenu.outer_margin),
@@ -78,28 +78,14 @@ class CellSizeConfigMenu {
 	}
 
 	draw(): void {
-		this.canvasDrawer.drawRect(
-			{
-				x: 0,
-				y: 0,
-				width: this.width,
-				height: this.height
-			},
-			{
-				r: 10,
-				g: 10,
-				b: 10,
-				a: 230
-			}
-		);
-		this.canvasDrawer.reflesh();
+		this.canvasDrawer.drawRect(0, 0, this.width, this.height, 0, {r: 10, g: 10, b: 10, a: 230}, true);
 		this.elementList.forEach((elm: MenuElement) => {
 			this.canvasDrawer.drawImage(
 				(Array.isArray(elm.img)) ? elm.img[elm.status] : elm.img,
 				elm.x,
 				elm.y
 			);
-			console.log(elm);
+			console.log(elm.x);
 		});
 	}
 

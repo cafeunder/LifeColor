@@ -3,9 +3,9 @@ class CellMapView {
 	domController: DOMController;
 	cellMap: CellMap;
 	cellCanvas: HTMLCanvasElement;
-	cellCanvasDrawer: CanvasDrawer;
+	cellCanvasDrawer: CanvasBitmapDrawer;
 	gridCanvas: HTMLCanvasElement;
-	gridCanvasDrawer: CanvasDrawer;
+	gridCanvasDrawer: CanvasBitmapDrawer;
 
 	cellProperty: CellProperty;
 	cellColorMap: Color[];
@@ -16,8 +16,8 @@ class CellMapView {
 
 		this.cellCanvas = domController.createCanvas("cellCanvas", 2);
 		this.gridCanvas = domController.createCanvas("gridCanvas", 1);
-		this.cellCanvasDrawer = new CanvasDrawer(this.cellCanvas);
-		this.gridCanvasDrawer = new CanvasDrawer(this.gridCanvas);
+		this.cellCanvasDrawer = new CanvasBitmapDrawer(this.cellCanvas);
+		this.gridCanvasDrawer = new CanvasBitmapDrawer(this.gridCanvas);
 
 		this.setCellProperty(cellProperty, cellMap.xNum, cellMap.yNum);
 	}
