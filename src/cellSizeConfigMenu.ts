@@ -27,6 +27,11 @@ class MenuElement {
 	 */
 	status?: number;
 
+	/**
+	 * 選択されたか？
+	 */
+	selected: boolean;
+
 	constructor(
 		img: HTMLImageElement | HTMLImageElement[],
 		x: number,
@@ -41,6 +46,7 @@ class MenuElement {
 		this.width = width;
 		this.height = height;
 		this.status = status;
+		this.selected = false;
 	}
 }
 
@@ -56,18 +62,18 @@ class CellSizeConfigMenu {
 		["window_full", "window_normal"]
 	];
 
+	private cellMapController: CellMapController;
 	private canvas: HTMLCanvasElement;
 	private canvasDrawer: CanvasImageDrawer;
 	private elementList: MenuElement[];
 	private width: number;
 	private height: number;
 
-	constructor(domController: DOMController) {
-		this.canvas = domController.createCanvas(
-			"cellSizeConfigMenuCanvas",
-			4
-		);
+	constructor(cellMapController: CellMapController, domController: DOMController) {
+		this.cellMapController = cellMapController;
+		this.canvas = domController.createCanvas("cellSizeConfigMenuCanvas", 4);
 		this.canvasDrawer = new CanvasImageDrawer(this.canvas);
+
 		this.createMenuElement();
 		this.canvasDrawer.changeCanvas(
 			domController.getWidth() - (this.width + CellSizeConfigMenu.outer_margin),
@@ -75,6 +81,8 @@ class CellSizeConfigMenu {
 			this.width,
 			this.height
 		);
+
+		this.selectElement(0);
 	}
 
 	draw(): void {
@@ -85,8 +93,18 @@ class CellSizeConfigMenu {
 				elm.x,
 				elm.y
 			);
-			console.log(elm.x);
+
+			if (elm.selected) {
+				this.canvasDrawer.drawRect(elm.x-2, elm.y-2, elm.width+4, elm.height+4, 2, {r: 0, g: 250, b: 160, a: 255}, false);
+			}
 		});
+	}
+
+	selectElement(index: number): void {
+		this.elementList.forEach((element: MenuElement) => {
+			element.selected = false;
+		});
+		this.elementList[index].selected = true;
 	}
 
 	private createMenuElement(): void {
