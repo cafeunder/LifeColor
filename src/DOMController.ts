@@ -20,6 +20,8 @@ class DOMController {
 		this.container.style.position = "relative";
 		this.container.style.width = DOMController.min_screen_width + "px";
 		this.container.style.height = DOMController.min_screen_height + "px";
+		this.controlCanvas.style.width = this.container.style.width;
+		this.controlCanvas.style.height = this.container.style.height;
 		this.fullScreen = false;
 	}
 
@@ -39,6 +41,8 @@ class DOMController {
 
 		this.container.style.width = Math.max(window.innerWidth, DOMController.min_screen_width) + "px";
 		this.container.style.height = Math.max(window.innerHeight, DOMController.min_screen_height) + "px";
+		this.controlCanvas.style.width = this.container.style.width;
+		this.controlCanvas.style.height = this.container.style.height;
 		this.fullScreen = true;
 	}
 

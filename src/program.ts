@@ -14,6 +14,7 @@ class Program {
 		this.cellMapController = new CellMapController(this.domController);
 		this.cellMapController.setAlternationInterval(20);
 		setInterval(() => {
+			Mouse.update();
 			this.cellMapController.update();
 		}, 33);
 
@@ -24,6 +25,7 @@ class Program {
 			queue = setTimeout(() => {
 				this.domController.setupFullScreenMode();
 				this.cellMapController.resize();
+				this.cellSizeConfigMenu.changeCanvas();
 			}, 60 );
 		}, false );
 
@@ -35,6 +37,8 @@ class Program {
 				this.cellSizeConfigMenu.draw();
 			}
 		}, 10);
+
+		Mouse.setEventListener(this.domController);
 	}
 }
 

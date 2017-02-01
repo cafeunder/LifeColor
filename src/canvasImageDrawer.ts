@@ -30,7 +30,6 @@ class CanvasImageDrawer extends CanvasDrawer {
 		}
 
 		const rgba = "rgba("+color.r+","+color.g+","+color.b+","+(color.a/255)+")";
-		console.log(rgba);
 		if (fill) {
 			this.context.fillStyle = rgba;
 			this.context.fillRect(dx, dy, Math.floor(width), Math.floor(height));
