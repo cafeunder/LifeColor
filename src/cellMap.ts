@@ -4,8 +4,8 @@ class CellMap {
 	yNum: number;
 	map: boolean[][];
 	alternateMap: boolean[][];
-	generation: number;
-	population: number;
+	private generation: number;
+	private population: number;
 
 	constructor(xNum: number, yNum: number) {
 		this.xNum = xNum;

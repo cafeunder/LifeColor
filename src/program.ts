@@ -1,8 +1,8 @@
 
 class Program {
-	cellMapView: CellMapView;
-	cellMapController: CellMapController;
-	cellSizeConfigMenu: CellSizeConfigMenu;
+	private cellMapView: CellMapView;
+	private cellMapController: CellMapController;
+	private cellSizeConfigMenu: CellSizeConfigMenu;
 
 	constructor() {
 		global.domController = new DOMController();
@@ -16,7 +16,10 @@ class Program {
 		this.cellMapController.setAlternationInterval(20);
 		setInterval(() => {
 			global.mouse.update();
+			this.cellSizeConfigMenu.update();
 			this.cellMapController.update();
+
+			this.cellSizeConfigMenu.draw();
 		}, 33);
 
 		var queue = null;

@@ -1,6 +1,6 @@
 
 class ImageManager {
-	private imagePathArray = [
+	private static imagePathArray = [
 		"img/cellSize_big.png",
 		"img/cellSize_mid.png",
 		"img/cellSize_small.png",
@@ -19,7 +19,7 @@ class ImageManager {
 	}
 
 	load(): void {
-		this.imagePathArray.forEach((path: string) => {
+		ImageManager.imagePathArray.forEach((path: string) => {
 			const image: HTMLImageElement = <HTMLImageElement>document.createElement("img");
 			image.src = path;
 			this.imageMap[this.getBaseFileName(path)] = image;

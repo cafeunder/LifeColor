@@ -16,11 +16,11 @@ class CellMapController {
 		gridWidth: 0
 	}]
 
-	alternationCount: number;
-	alternationInterval: number;
-	cellMap: CellMap;
-	cellMapView: CellMapView;
-	cellProperty: CellProperty;
+	private alternationCount: number;
+	private alternationInterval: number;
+	private cellMap: CellMap;
+	private cellMapView: CellMapView;
+	private cellProperty: CellProperty;
 
 	constructor() {
 		this.alternationCount = 0;

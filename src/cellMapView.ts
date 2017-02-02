@@ -1,13 +1,13 @@
 
 class CellMapView {
-	cellMap: CellMap;
-	cellCanvas: HTMLCanvasElement;
-	cellCanvasDrawer: CanvasBitmapDrawer;
-	gridCanvas: HTMLCanvasElement;
-	gridCanvasDrawer: CanvasBitmapDrawer;
+	private cellMap: CellMap;
+	private cellCanvas: HTMLCanvasElement;
+	private cellCanvasDrawer: CanvasBitmapDrawer;
+	private gridCanvas: HTMLCanvasElement;
+	private gridCanvasDrawer: CanvasBitmapDrawer;
 
-	cellProperty: CellProperty;
-	cellColorMap: Color[];
+	private cellProperty: CellProperty;
+	private cellColorMap: Color[];
 
 	constructor(cellMap: CellMap, cellProperty: CellProperty) {
 		this.cellMap = cellMap;

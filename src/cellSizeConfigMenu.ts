@@ -32,6 +32,11 @@ class MenuElement {
 	 */
 	selected: boolean;
 
+	/**
+	 * ポインタが上に乗っているか？
+	 */
+	mouseover: boolean;
+
 	constructor(
 		img: HTMLImageElement | HTMLImageElement[],
 		x: number,
@@ -47,6 +52,7 @@ class MenuElement {
 		this.height = height;
 		this.status = status;
 		this.selected = false;
+		this.mouseover = false;
 	}
 }
 
@@ -85,8 +91,24 @@ class CellSizeConfigMenu {
 		this.selectElement(0);
 	}
 
+	update(): void {
+		this.elementList.forEach((elm: MenuElement) => {
+			if (global.mouse.judgeEntered({
+				x: this.canvasDrawer.x + elm.x,
+				y: this.canvasDrawer.y + elm.y,
+				width: elm.width,
+				height: elm.height
+			})) {
+				elm.mouseover = true;
+			} else {
+				elm.mouseover = false;
+			}
+		});
+	}
+
 	draw(): void {
-		this.canvasDrawer.drawRect(0, 0, this.width, this.height, 0, {r: 10, g: 10, b: 10, a: 230}, true);
+		this.canvasDrawer.clear();
+		this.canvasDrawer.drawRect(0, 0, this.width, this.height, {r: 10, g: 10, b: 10, a: 230});
 		this.elementList.forEach((elm: MenuElement) => {
 			this.canvasDrawer.drawImage(
 				(Array.isArray(elm.img)) ? elm.img[elm.status] : elm.img,
@@ -94,8 +116,11 @@ class CellSizeConfigMenu {
 				elm.y
 			);
 
+			if (elm.mouseover) {
+				this.canvasDrawer.drawRect(elm.x - 2, elm.y - 2, elm.width + 4, elm.height + 4, {r: 0, g: 255, b: 160, a: 150});
+			}
 			if (elm.selected) {
-				this.canvasDrawer.drawRect(elm.x-2, elm.y-2, elm.width+4, elm.height+4, 2, {r: 0, g: 250, b: 160, a: 255}, false);
+				this.canvasDrawer.drawRect(elm.x - 2, elm.y - 2, elm.width + 4, elm.height + 4, {r: 0, g: 250, b: 160, a: 255}, false, 2);
 			}
 		});
 	}

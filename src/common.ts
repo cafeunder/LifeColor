@@ -6,6 +6,11 @@ interface Color {
 	a: number;
 }
 
+interface Position {
+	x: number;
+	y: number;
+}
+
 interface Rect {
 	x: number;
 	y: number;

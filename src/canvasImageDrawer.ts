@@ -17,9 +17,9 @@ class CanvasImageDrawer extends CanvasDrawer {
 		y: number,
 		width: number,
 		height: number,
-		lineWidth: number,
 		color: Color,
-		fill: boolean = false
+		fill: boolean = true,
+		lineWidth: number = 2
 	): void {
 		var dx = Math.floor(x);
 		var dy = Math.floor(y);

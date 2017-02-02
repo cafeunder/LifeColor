@@ -9,10 +9,10 @@ class Mouse {
 	private tempY: number;
 
 	constructor() {
-		global.domController.controlCanvas.addEventListener('mousemove', this.mouseMove, true);
-		global.domController.controlCanvas.addEventListener('mousedown', this.mouseDown, true);
-		global.domController.controlCanvas.addEventListener('mouseup', this.mouseUp, true);
-		global.domController.controlCanvas.addEventListener('mouseout', this.mouseOut, true);
+		global.domController.controlCanvas.addEventListener('mousemove', this.mouseMove.bind(this), true);
+		global.domController.controlCanvas.addEventListener('mousedown', this.mouseDown.bind(this), true);
+		global.domController.controlCanvas.addEventListener('mouseup', this.mouseUp.bind(this), true);
+		global.domController.controlCanvas.addEventListener('mouseout', this.mouseOut.bind(this), true);
 	}
 
 	update() {
@@ -24,22 +24,29 @@ class Mouse {
 		this.stopCount++;
 	}
 
-	private mouseMove(event){
-		var rect = event.target.getBoundingClientRect();
+	judgeEntered(rect: Rect): boolean {
+		if (this.x >= rect.x && this.x < rect.x + rect.width && this.y >= rect.y && this.y < rect.y + rect.height) {
+			return true;
+		}
+		return false;
+	}
+
+	private mouseMove(event: MouseEvent){
+		var rect = (<Element>event.target).getBoundingClientRect();
 		this.tempX = event.clientX - rect.left;
 		this.tempY = event.clientY - rect.top;
 		this.stopCount = 0;
 	}
 
-	private mouseDown(event){
+	private mouseDown(event: MouseEvent){
 		this.leftPress = true;
 	}
 
-	private mouseUp(event){
+	private mouseUp(event: MouseEvent){
 		this.leftPress = false;
 	}
 
-	private mouseOut(event){
+	private mouseOut(event: MouseEvent){
 		this.leftPress = false;
 	}
 }
