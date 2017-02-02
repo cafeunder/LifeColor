@@ -21,19 +21,17 @@ class CellMapController {
 	cellMap: CellMap;
 	cellMapView: CellMapView;
 	cellProperty: CellProperty;
-	domController: DOMController;
 
-	constructor(domController: DOMController) {
-		this.domController = domController;
+	constructor() {
 		this.alternationCount = 0;
 		this.alternationInterval = null;
 
 		this.cellProperty = CellMapController.CELL_PROPERTY_ARRAY[0];
 		this.cellMap = new CellMap(
-			Math.floor(domController.container.offsetWidth / this.cellProperty.cellSize),
-			Math.floor(domController.container.offsetHeight / this.cellProperty.cellSize),
+			Math.floor(global.domController.container.offsetWidth / this.cellProperty.cellSize),
+			Math.floor(global.domController.container.offsetHeight / this.cellProperty.cellSize),
 		);
-		this.cellMapView = new CellMapView(this.cellMap, this.cellProperty, domController);
+		this.cellMapView = new CellMapView(this.cellMap, this.cellProperty);
 		this.cellMapView.drawCell();
 		this.cellMapView.drawGrid();
 	}
@@ -61,16 +59,16 @@ class CellMapController {
 		}
 
 		this.cellProperty = CellMapController.CELL_PROPERTY_ARRAY[index];
-		const xNum = Math.floor(this.domController.container.offsetWidth / this.cellProperty.cellSize);
-		const yNum = Math.floor(this.domController.container.offsetHeight / this.cellProperty.cellSize);
+		const xNum = Math.floor(global.domController.container.offsetWidth / this.cellProperty.cellSize);
+		const yNum = Math.floor(global.domController.container.offsetHeight / this.cellProperty.cellSize);
 		this.cellMap.setCellNum(xNum, yNum);
 		this.cellMapView.setCellProperty(this.cellProperty, xNum, yNum);
 		this.reset();
 	}
 
 	resize(): void {
-		const xNum = Math.floor(this.domController.container.offsetWidth / this.cellProperty.cellSize);
-		const yNum = Math.floor(this.domController.container.offsetHeight / this.cellProperty.cellSize);
+		const xNum = Math.floor(global.domController.container.offsetWidth / this.cellProperty.cellSize);
+		const yNum = Math.floor(global.domController.container.offsetHeight / this.cellProperty.cellSize);
 		this.cellMap.setCellNum(xNum, yNum);
 		this.cellMapView.setCellProperty(this.cellProperty, xNum, yNum);
 		this.cellMapView.drawCell();

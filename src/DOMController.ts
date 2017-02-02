@@ -7,7 +7,7 @@ class DOMController {
 	controlCanvas: HTMLCanvasElement;
 	fullScreen: boolean;
 
-	initialize(): void {
+	constructor() {
 		this.container = document.getElementById("canvasContainer");
 		this.controlCanvas = this.createCanvas("controlCanvas", 10);
 		this.body = <HTMLBodyElement>document.getElementById('lifeBody');

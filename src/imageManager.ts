@@ -1,15 +1,16 @@
 
 class ImageManager {
-	private static imagePathArray = [
+	private imagePathArray = [
 		"img/cellSize_big.png",
 		"img/cellSize_mid.png",
 		"img/cellSize_small.png",
 		"img/window_full.png",
 		"img/window_normal.png",
 	];
-	static imageMap: {[key: string]: HTMLImageElement} = {};
 
-	static getBaseFileName(path: string): string {
+	imageMap: {[key: string]: HTMLImageElement} = {};
+
+	getBaseFileName(path: string): string {
 		// ディレクトリ指定を除去
 		return path.slice(
 			path.lastIndexOf("/") + 1,
@@ -17,17 +18,17 @@ class ImageManager {
 		);
 	}
 
-	static load(): void {
-		ImageManager.imagePathArray.forEach((path: string) => {
+	load(): void {
+		this.imagePathArray.forEach((path: string) => {
 			const image: HTMLImageElement = <HTMLImageElement>document.createElement("img");
 			image.src = path;
-			ImageManager.imageMap[ImageManager.getBaseFileName(path)] = image;
+			this.imageMap[this.getBaseFileName(path)] = image;
 		});
 	}
 
-	static checkLoadCompleted(): boolean {
-		for (var key in ImageManager.imageMap) {
-			var image: any = ImageManager.imageMap[key];
+	checkLoadCompleted(): boolean {
+		for (var key in this.imageMap) {
+			var image: any = this.imageMap[key];
 			if (!(image.complete || image.readyState === "complete")) {
 				return false;
 			}
@@ -36,10 +37,10 @@ class ImageManager {
 		return true;
 	}
 
-	static getImageList(keyList: string[]): HTMLImageElement[] {
+	getImageList(keyList: string[]): HTMLImageElement[] {
 		var result = [];
 		keyList.forEach((key: string) => {
-			result.push(ImageManager.imageMap[key]);
+			result.push(this.imageMap[key]);
 		});
 		return result;
 	}

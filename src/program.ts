@@ -3,42 +3,41 @@ class Program {
 	cellMapView: CellMapView;
 	cellMapController: CellMapController;
 	cellSizeConfigMenu: CellSizeConfigMenu;
-	domController: DOMController;
 
 	constructor() {
-		this.domController = new DOMController();
-		this.domController.initialize();
-		// this.domController.setupNormalMode();
-		this.domController.setupFullScreenMode();
+		global.domController = new DOMController();
+		global.mouse = new Mouse();
+		global.imageManager = new ImageManager();
 
-		this.cellMapController = new CellMapController(this.domController);
+		// this.domController.setupNormalMode();
+		global.domController.setupFullScreenMode();
+
+		this.cellMapController = new CellMapController();
 		this.cellMapController.setAlternationInterval(20);
 		setInterval(() => {
-			Mouse.update();
+			global.mouse.update();
 			this.cellMapController.update();
 		}, 33);
 
 		var queue = null;
 		window.addEventListener("resize", () => {
-			if (!this.domController.fullScreen) { return; }
+			if (!global.domController.fullScreen) { return; }
 			clearTimeout(queue);
 			queue = setTimeout(() => {
-				this.domController.setupFullScreenMode();
+				global.domController.setupFullScreenMode();
 				this.cellMapController.resize();
 				this.cellSizeConfigMenu.changeCanvas();
 			}, 60 );
 		}, false );
 
-		ImageManager.load();
+		global.imageManager.load();
 		var check = setInterval(() => {
-			if (ImageManager.checkLoadCompleted()) {
+			if (global.imageManager.checkLoadCompleted()) {
 				clearInterval(check);
-				this.cellSizeConfigMenu = new CellSizeConfigMenu(this.cellMapController, this.domController);
+				this.cellSizeConfigMenu = new CellSizeConfigMenu(this.cellMapController);
 				this.cellSizeConfigMenu.draw();
 			}
 		}, 10);
-
-		Mouse.setEventListener(this.domController);
 	}
 }
 

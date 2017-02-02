@@ -9,7 +9,8 @@
     "files": [
         "./src/common.ts",
         "./src/DOMController.ts",
-        "./src/Mouse.ts",
+        "./src/mouse.ts",
+        "./src/global.ts",
         "./src/imageManager.ts",
         "./src/cellMap.ts",
         "./src/canvasDrawer.ts",

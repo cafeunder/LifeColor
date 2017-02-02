@@ -1,6 +1,5 @@
 
 class CellMapView {
-	domController: DOMController;
 	cellMap: CellMap;
 	cellCanvas: HTMLCanvasElement;
 	cellCanvasDrawer: CanvasBitmapDrawer;
@@ -10,12 +9,11 @@ class CellMapView {
 	cellProperty: CellProperty;
 	cellColorMap: Color[];
 
-	constructor(cellMap: CellMap, cellProperty: CellProperty, domController: DOMController) {
-		this.domController = domController;
+	constructor(cellMap: CellMap, cellProperty: CellProperty) {
 		this.cellMap = cellMap;
 
-		this.cellCanvas = domController.createCanvas("cellCanvas", 2);
-		this.gridCanvas = domController.createCanvas("gridCanvas", 1);
+		this.cellCanvas = global.domController.createCanvas("cellCanvas", 2);
+		this.gridCanvas = global.domController.createCanvas("gridCanvas", 1);
 		this.cellCanvasDrawer = new CanvasBitmapDrawer(this.cellCanvas);
 		this.gridCanvasDrawer = new CanvasBitmapDrawer(this.gridCanvas);
 
@@ -90,8 +88,8 @@ class CellMapView {
 		const cellSize = this.cellProperty.cellSize;
 		const width = cellSize * cellXNum;
 		const height = cellSize * cellYNum;
-		const left = Math.floor((this.domController.container.offsetWidth - width) / 2);
-		const top = Math.floor((this.domController.container.offsetHeight - height) / 2);
+		const left = Math.floor((global.domController.container.offsetWidth - width) / 2);
+		const top = Math.floor((global.domController.container.offsetHeight - height) / 2);
 		this.cellCanvasDrawer.changeCanvas(left, top, width, height);
 		this.gridCanvasDrawer.changeCanvas(left, top, width, height);
 		this.cellColorMap = ColorMap.createCOCKTAIL(cellXNum, cellYNum);
