@@ -10,6 +10,7 @@
         "./src/common.ts",
         "./src/DOMController.ts",
         "./src/mouse.ts",
+        "./src/fps.ts",
         "./src/global.ts",
         "./src/imageManager.ts",
         "./src/cellMap.ts",
