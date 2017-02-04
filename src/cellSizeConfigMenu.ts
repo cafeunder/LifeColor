@@ -108,7 +108,7 @@ class CellSizeConfigMenu {
 
 	draw(): void {
 		this.canvasDrawer.clear();
-		this.canvasDrawer.drawRect(0, 0, this.width, this.height, {r: 10, g: 10, b: 10, a: 230});
+		this.canvasDrawer.drawRect({x: 0, y: 0, width: this.width, height: this.height}, {r: 10, g: 10, b: 10, a: 230});
 		this.elementList.forEach((elm: MenuElement) => {
 			this.canvasDrawer.drawImage(
 				(Array.isArray(elm.img)) ? elm.img[elm.status] : elm.img,
@@ -117,10 +117,10 @@ class CellSizeConfigMenu {
 			);
 
 			if (elm.mouseover) {
-				this.canvasDrawer.drawRect(elm.x - 2, elm.y - 2, elm.width + 4, elm.height + 4, {r: 0, g: 255, b: 160, a: 150});
+				this.canvasDrawer.drawRect({x: elm.x - 2, y: elm.y - 2, width: elm.width + 4, height: elm.height + 4}, {r: 0, g: 255, b: 160, a: 150});
 			}
 			if (elm.selected) {
-				this.canvasDrawer.drawRect(elm.x - 2, elm.y - 2, elm.width + 4, elm.height + 4, {r: 0, g: 250, b: 160, a: 255}, false, 2);
+				this.canvasDrawer.drawRect({x: elm.x - 2, y: elm.y - 2, width: elm.width + 4, height: elm.height + 4}, {r: 0, g: 250, b: 160, a: 255}, false, 2);
 			}
 		});
 	}

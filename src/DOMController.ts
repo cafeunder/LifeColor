@@ -46,13 +46,17 @@ class DOMController {
 		this.fullScreen = true;
 	}
 
-	createCanvas(id: string, zIndex: number): HTMLCanvasElement {
+	createCanvas(id: string, zIndex: number, parent?: HTMLElement): HTMLCanvasElement {
 		const canvas = document.createElement("canvas");
 		canvas.style.position = "absolute";
 		canvas.style.display = "block";
 		canvas.id = id;
 		canvas.style.zIndex = zIndex+"";
-		document.getElementById("canvasContainer").appendChild(canvas);
+		if (parent) {
+			parent.appendChild(canvas);
+		} else {
+			document.getElementById("canvasContainer").appendChild(canvas);
+		}
 		return canvas;
 	}
 

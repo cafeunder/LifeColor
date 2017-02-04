@@ -13,16 +13,13 @@ class CanvasImageDrawer extends CanvasDrawer {
 	}
 
 	drawRect(
-		x: number,
-		y: number,
-		width: number,
-		height: number,
+		rect: Rect,
 		color: Color,
 		fill: boolean = true,
 		lineWidth: number = 2
 	): void {
-		var dx = Math.floor(x);
-		var dy = Math.floor(y);
+		var dx = Math.floor(rect.x);
+		var dy = Math.floor(rect.y);
 
 		if (lineWidth %2 != 0) {
 			dx -= 0.5;
@@ -32,11 +29,11 @@ class CanvasImageDrawer extends CanvasDrawer {
 		const rgba = "rgba("+color.r+","+color.g+","+color.b+","+(color.a/255)+")";
 		if (fill) {
 			this.context.fillStyle = rgba;
-			this.context.fillRect(dx, dy, Math.floor(width), Math.floor(height));
+			this.context.fillRect(dx, dy, Math.floor(rect.width), Math.floor(rect.height));
 		} else {
 			this.context.lineWidth = lineWidth;
 			this.context.strokeStyle = rgba;
-			this.context.strokeRect(dx, dy, Math.floor(width), Math.floor(height));
+			this.context.strokeRect(dx, dy, Math.floor(rect.width), Math.floor(rect.height));
 		}
 	}
 
@@ -44,8 +41,8 @@ class CanvasImageDrawer extends CanvasDrawer {
 		this.context.clearRect(
 			0,
 			0,
-			parseInt(this.canvas.style.width),
-			parseInt(this.canvas.style.height)
+			this.canvas.width,
+			this.canvas.height
 		);
 	}
 }
