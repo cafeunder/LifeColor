@@ -20,7 +20,9 @@
         "./src/colorMap.ts",
         "./src/cellMapView.ts",
         "./src/cellMapController.ts",
-        "./src/cellSizeConfigMenu.ts",
+        "./src/menu/menuElement.ts",
+        "./src/menu/cellSizeConfigMenu.ts",
+        "./src/menu/windowModeMenu.ts",
         "./src/program.ts"
     ]
 }
