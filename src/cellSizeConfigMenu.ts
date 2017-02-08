@@ -37,12 +37,18 @@ class MenuElement {
 	 */
 	mouseover: boolean;
 
+	/**
+	 * 押されたときの動作
+	 */
+	action: () => void;
+
 	constructor(
 		img: HTMLImageElement | HTMLImageElement[],
 		x: number,
 		y: number,
 		width: number,
 		height: number,
+		action: () => void,
 		status?: number
 	) {
 		this.img = img;
@@ -53,6 +59,7 @@ class MenuElement {
 		this.status = status;
 		this.selected = false;
 		this.mouseover = false;
+		this.action = action;
 	}
 }
 
@@ -64,14 +71,14 @@ class CellSizeConfigMenu {
 	private static element_imagename_list = [
 		"cellSize_big",
 		"cellSize_mid",
-		"cellSize_small",
-		["window_full", "window_normal"]
+		"cellSize_small"
 	];
 
 	private cellMapController: CellMapController;
 	private canvas: HTMLCanvasElement;
 	private canvasDrawer: CanvasImageDrawer;
 	private elementList: MenuElement[];
+	private selectedElement: MenuElement;
 	private width: number;
 	private height: number;
 
@@ -88,7 +95,7 @@ class CellSizeConfigMenu {
 			this.height
 		);
 
-		this.selectElement(0);
+		this.selectElement(this.elementList[0], false);
 	}
 
 	update(): void {
@@ -100,6 +107,9 @@ class CellSizeConfigMenu {
 				height: elm.height
 			})) {
 				elm.mouseover = true;
+				if (global.mouse.pointCount == 1) {
+					this.selectElement(elm);
+				}
 			} else {
 				elm.mouseover = false;
 			}
@@ -125,17 +135,22 @@ class CellSizeConfigMenu {
 		});
 	}
 
-	selectElement(index: number): void {
-		this.elementList.forEach((element: MenuElement) => {
-			element.selected = false;
-		});
-		this.elementList[index].selected = true;
+	selectElement(element: MenuElement, doAction: boolean = true): void {
+		if (element == this.selectedElement) return;
+		if (this.selectedElement) {
+			this.selectedElement.selected = false;
+		}
+
+		element.selected = true;
+		this.selectedElement = element;
+		if (doAction) element.action();
 	}
 
 	private createMenuElement(): void {
 		this.elementList = [];
 		var count: number = 0;
 		CellSizeConfigMenu.element_imagename_list.forEach((imgname: string | string[]) => {
+			var index = count;
 			this.elementList.push(
 				new MenuElement(
 					Array.isArray(imgname) ? global.imageManager.getImageList(imgname) : global.imageManager.imageMap[imgname],
@@ -143,7 +158,10 @@ class CellSizeConfigMenu {
 					CellSizeConfigMenu.inner_margin,
 					CellSizeConfigMenu.element_size,
 					CellSizeConfigMenu.element_size,
-					0
+					() => {
+						this.cellMapController.setCellPropertyIndex(index);
+						console.log(index);
+					}
 				)
 			);
 			++count;

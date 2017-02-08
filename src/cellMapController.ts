@@ -76,7 +76,9 @@ class CellMapController {
 	}
 
 	reset(): void {
+		this.alternationCount = 0;
 		this.cellMap.randomize();
 		this.cellMapView.drawCell();
+		this.cellMapView.drawGrid();
 	}
 }

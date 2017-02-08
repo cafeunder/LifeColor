@@ -1,6 +1,6 @@
 
 class FPS {
-	static sampleFract = 50;
+	static sampleFract = 10;
 	drawing = false;
 	private value = 0;
 	private start = 0;

@@ -63,6 +63,7 @@ class CellMapView {
 	}
 
 	drawGrid(): void {
+		if (this.cellProperty.gridWidth == 0) { return; }
 		for (var y = 0; y < this.cellMap.yNum; ++y) {
 			for (var x = 0; x < this.cellMap.xNum; ++x) {
 				this.gridCanvasDrawer.drawRect(
