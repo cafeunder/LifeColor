@@ -28,7 +28,14 @@ class Program {
 			queue = setTimeout(() => {
 				global.domController.setupFullScreenMode();
 				this.cellMapController.resize();
-				this.cellSizeConfigMenu.changeCanvas();
+				this.windowModeMenu.changeCanvas(
+					global.domController.getWidth() - 10,
+					10,
+				);
+				this.cellSizeConfigMenu.changeCanvas(
+					global.domController.getWidth() - this.windowModeMenu.width - 15,
+					10,
+				);
 			}, 60 );
 		}, false );
 
@@ -36,8 +43,15 @@ class Program {
 		var check = setInterval(() => {
 			if (global.imageManager.checkLoadCompleted()) {
 				clearInterval(check);
-				this.cellSizeConfigMenu = new CellSizeConfigMenu(this.cellMapController);
-				this.windowModeMenu = new WindowModeMenu();
+				this.windowModeMenu = new WindowModeMenu(
+					global.domController.getWidth() - 10,
+					10,
+				);
+				this.cellSizeConfigMenu = new CellSizeConfigMenu(
+					global.domController.getWidth() - this.windowModeMenu.width - 15,
+					10,
+					this.cellMapController
+				);
 
 				// 画像の読み込みが完了したらメインループ開始
 				setInterval(() => {
@@ -45,7 +59,9 @@ class Program {
 					global.fps.update();
 					this.cellSizeConfigMenu.update();
 					this.cellMapController.update();
+					this.windowModeMenu.update();
 
+					this.windowModeMenu.draw();
 					this.cellSizeConfigMenu.draw();
 					global.fps.draw();
 				}, 33);

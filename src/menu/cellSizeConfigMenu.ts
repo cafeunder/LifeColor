@@ -4,7 +4,6 @@ class CellSizeConfigMenu {
 	private static element_size = 28;
 	private static element_between_space = 8;
 	private static inner_margin = 8;
-	private static outer_margin = 10;
 	private static element_imagename_list = [
 		"cellSize_big",
 		"cellSize_mid",
@@ -19,15 +18,15 @@ class CellSizeConfigMenu {
 	private width: number;
 	private height: number;
 
-	constructor(cellMapController: CellMapController) {
+	constructor(rx: number, y: number, cellMapController: CellMapController) {
 		this.cellMapController = cellMapController;
 		this.canvas = global.domController.createCanvas("cellSizeConfigMenuCanvas", 4);
 		this.canvasDrawer = new CanvasImageDrawer(this.canvas);
 
 		this.createMenuElement();
 		this.canvasDrawer.changeCanvas(
-			global.domController.getWidth() - (this.width + CellSizeConfigMenu.outer_margin),
-			CellSizeConfigMenu.outer_margin,
+			rx - this.width,
+			y,
 			this.width,
 			this.height
 		);
@@ -113,10 +112,10 @@ class CellSizeConfigMenu {
 			+ CellSizeConfigMenu.element_size;
 	}
 
-	changeCanvas(): void {
+	changeCanvas(rx: number, y: number): void {
 		this.canvasDrawer.changeCanvas(
-			global.domController.getWidth() - (this.width + CellSizeConfigMenu.outer_margin),
-			CellSizeConfigMenu.outer_margin,
+			rx - this.width,
+			y,
 			this.width,
 			this.height
 		);

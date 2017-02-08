@@ -1,7 +1,7 @@
 
 class WindowModeMenu {
 	private static element_size = 28;
-	private static margin = 10;
+	private static margin = 8;
 
 	width: number;
 	height: number;
@@ -9,7 +9,7 @@ class WindowModeMenu {
 	private canvas: HTMLCanvasElement;
 	private canvasDrawer: CanvasImageDrawer;
 
-	constructor() {
+	constructor(rx: number, y: number) {
 		this.element = new MenuElement(
 			global.imageManager.getImageList(["window_full", "window_normal"]),
 			WindowModeMenu.margin,
@@ -22,12 +22,36 @@ class WindowModeMenu {
 				} else {
 					global.domController.setupNormalMode();
 				}
-			}
+			},
+			(global.domController.fullScreen) ? 1 : 0
 		);
+		this.width = WindowModeMenu.element_size + WindowModeMenu.margin * 2;
+		this.height = WindowModeMenu.element_size + WindowModeMenu.margin * 2;
 
 		this.canvas = global.domController.createCanvas("windowModeMenuCanvas", 4);
 		this.canvasDrawer = new CanvasImageDrawer(this.canvas);
-		this.canvasDrawer.changeCanvas(10, 10, WindowModeMenu.element_size + WindowModeMenu.margin * 2, WindowModeMenu.element_size + WindowModeMenu.margin * 2);
+		this.canvasDrawer.changeCanvas(
+			rx - this.width,
+			y,
+			this.width,
+			this.height
+		);
+	}
+
+	update(): void {
+		if (global.mouse.judgeEntered({
+			x: this.canvasDrawer.x + this.element.x,
+			y: this.canvasDrawer.y + this.element.y,
+			width: this.element.width,
+			height: this.element.height
+		})) {
+			this.element.mouseover = true;
+			if (global.mouse.pointCount == 1) {
+				this.element.action();
+			}
+		} else {
+			this.element.mouseover = false;
+		}
 	}
 
 	draw(): void {
@@ -51,4 +75,13 @@ class WindowModeMenu {
 		}
 	}
 
+	changeCanvas(rx: number, y: number): void {
+		this.canvasDrawer.changeCanvas(
+			rx - this.width,
+			y,
+			this.width,
+			this.height
+		);
+		this.draw();
+	}
 }
