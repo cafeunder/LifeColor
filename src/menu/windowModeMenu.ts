@@ -85,6 +85,15 @@ class WindowModeMenu {
 		this.draw();
 	}
 
+	judgeEnteredMouse(): boolean {
+		return global.mouse.judgeEntered({
+			x: this.canvasDrawer.x,
+			y: this.canvasDrawer.y,
+			width: this.width,
+			height: this.height
+		});
+	}
+
 	syncWindowMode(): void {
 		this.element.status = (global.domController.fullScreen) ? 1 : 0;
 	}

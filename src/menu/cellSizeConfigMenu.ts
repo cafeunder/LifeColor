@@ -121,4 +121,13 @@ class CellSizeConfigMenu {
 		);
 		this.draw();
 	}
+
+	judgeEnteredMouse(): boolean {
+		return global.mouse.judgeEntered({
+			x: this.canvasDrawer.x,
+			y: this.canvasDrawer.y,
+			width: this.width,
+			height: this.height
+		});
+	}
 }

@@ -2,8 +2,7 @@
 class Program {
 	private cellMapView: CellMapView;
 	private cellMapController: CellMapController;
-	private cellSizeConfigMenu: CellSizeConfigMenu;
-	private windowModeMenu: WindowModeMenu;
+	private menuManager: MenuManager;
 
 	constructor() {
 		// グローバル要素の生成と初期設定
@@ -22,15 +21,7 @@ class Program {
 
 		global.domController.resize = () => {
 			this.cellMapController.resize();
-			this.windowModeMenu.changeCanvas(
-				global.domController.getWidth() - 10,
-				10,
-			);
-			this.cellSizeConfigMenu.changeCanvas(
-				global.domController.getWidth() - this.windowModeMenu.width - 15,
-				10,
-			);
-			this.windowModeMenu.syncWindowMode();
+			this.menuManager.changeCanavs();
 		};
 
 		// リサイズ時の動作を定義
@@ -43,30 +34,20 @@ class Program {
 			}, 60 );
 		}, false );
 
-		// 画像読み込みの監視
 		var check = setInterval(() => {
+			// 画像読み込みの監視
 			if (global.imageManager.checkLoadCompleted()) {
 				clearInterval(check);
-				this.windowModeMenu = new WindowModeMenu(
-					global.domController.getWidth() - 10,
-					10,
-				);
-				this.cellSizeConfigMenu = new CellSizeConfigMenu(
-					global.domController.getWidth() - this.windowModeMenu.width - 15,
-					10,
-					this.cellMapController
-				);
+				this.menuManager = new MenuManager(this.cellMapController);
 
 				// 画像の読み込みが完了したらメインループ開始
 				setInterval(() => {
 					global.mouse.update();
 					global.fps.update();
-					this.cellSizeConfigMenu.update();
 					this.cellMapController.update();
-					this.windowModeMenu.update();
+					this.menuManager.update();
 
-					this.windowModeMenu.draw();
-					this.cellSizeConfigMenu.draw();
+					this.menuManager.draw();
 					global.fps.draw();
 				}, 33);
 			}

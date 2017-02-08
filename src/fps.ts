@@ -34,7 +34,7 @@ class FPS {
 			this.context.beginPath();
 
 			var rounded = Math.round(this.value * 100) / 100;
-			this.context.fillText(rounded + "", 10, 18);
+			this.context.fillText(rounded + "", 0, 18);
 		}
 	}
 }
