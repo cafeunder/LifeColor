@@ -11,14 +11,27 @@ class Program {
 		global.mouse = new Mouse();
 		global.imageManager = new ImageManager();
 		global.fps = new FPS();
-		// this.domController.setupNormalMode();
-		global.domController.setupFullScreenMode();
+		global.domController.setupNormalMode();
+		// global.domController.setupFullScreenMode();
 		global.fps.drawing = true;
 		global.imageManager.load();
 
 		// セルマップの生成と初期設定
 		this.cellMapController = new CellMapController();
 		this.cellMapController.setAlternationInterval(20);
+
+		global.domController.resize = () => {
+			this.cellMapController.resize();
+			this.windowModeMenu.changeCanvas(
+				global.domController.getWidth() - 10,
+				10,
+			);
+			this.cellSizeConfigMenu.changeCanvas(
+				global.domController.getWidth() - this.windowModeMenu.width - 15,
+				10,
+			);
+			this.windowModeMenu.syncWindowMode();
+		};
 
 		// リサイズ時の動作を定義
 		var queue = null;
@@ -27,15 +40,6 @@ class Program {
 			clearTimeout(queue);
 			queue = setTimeout(() => {
 				global.domController.setupFullScreenMode();
-				this.cellMapController.resize();
-				this.windowModeMenu.changeCanvas(
-					global.domController.getWidth() - 10,
-					10,
-				);
-				this.cellSizeConfigMenu.changeCanvas(
-					global.domController.getWidth() - this.windowModeMenu.width - 15,
-					10,
-				);
 			}, 60 );
 		}, false );
 

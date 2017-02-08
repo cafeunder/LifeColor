@@ -6,6 +6,7 @@ class DOMController {
 	container: HTMLElement;
 	controlCanvas: HTMLCanvasElement;
 	fullScreen: boolean;
+	resize: () => void;
 
 	constructor() {
 		this.container = document.getElementById("canvasContainer");
@@ -17,12 +18,14 @@ class DOMController {
 		document.getElementById("mainDiv").style.display = "block";
 		document.getElementById("copyright").style.display = "block";
 		this.body.style.overflow = "auto";
+		this.container.style.margin = "1em auto";
 		this.container.style.position = "relative";
 		this.container.style.width = DOMController.min_screen_width + "px";
 		this.container.style.height = DOMController.min_screen_height + "px";
 		this.controlCanvas.style.width = this.container.style.width;
 		this.controlCanvas.style.height = this.container.style.height;
 		this.fullScreen = false;
+		if (this.resize) this.resize();
 	}
 
 	setupFullScreenMode(): void {
@@ -44,6 +47,7 @@ class DOMController {
 		this.controlCanvas.style.width = this.container.style.width;
 		this.controlCanvas.style.height = this.container.style.height;
 		this.fullScreen = true;
+		if (this.resize) this.resize();
 	}
 
 	createCanvas(id: string, zIndex: number, parent?: HTMLElement): HTMLCanvasElement {

@@ -84,4 +84,8 @@ class WindowModeMenu {
 		);
 		this.draw();
 	}
+
+	syncWindowMode(): void {
+		this.element.status = (global.domController.fullScreen) ? 1 : 0;
+	}
 }
