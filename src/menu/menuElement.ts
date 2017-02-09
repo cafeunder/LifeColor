@@ -61,4 +61,8 @@ class MenuElement {
 		this.mouseover = false;
 		this.action = action;
 	}
+
+	getImage(): HTMLImageElement {
+		return (Array.isArray(this.img)) ? this.img[this.status] : this.img;
+	}
 }

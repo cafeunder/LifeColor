@@ -18,7 +18,12 @@ class ImageManager {
 		"img/menu_slow.png",
 		"img/menu_stamp.png",
 		"img/menu_stop.png",
-		"img/menu_template.png"
+		"img/menu_template.png",
+		"img/menu_back.png",
+		"img/menu_pagePrev.png",
+		"img/menu_pageNext.png",
+		"img/stamp_block.png",
+		"img/stamp_tab.png"
 	];
 
 	imageMap: {[key: string]: HTMLImageElement} = {};

@@ -1,10 +1,9 @@
 
 class MainTopMenu {
-	private static element_size = 58;
+	private static element_size = 60;
 	private static element_line_width = 2;
-	private static inner_margin = 9;
-	private static element_between_space = 2;
-	private static vertical_line_between_space = 7;
+	private static inner_margin = 8;
+	private static vertical_line_between_space = 6;
 	private static vertical_line_width = 2;
 	private static vertical_line_height = 48;
 	private static vertical_line_y = 14;
@@ -13,7 +12,7 @@ class MainTopMenu {
 	private verticalLineXList: number[];
 
 	constructor() {
-		var x: number = 0;
+		var x = 0;
 
 		this.elementList = [];
 		this.verticalLineXList = [];
@@ -30,7 +29,7 @@ class MainTopMenu {
 		this.elementList.push(
 			new MenuElement(
 				global.imageManager.getImageList(["menu_stop", "menu_play"]),
-				(x += MainTopMenu.element_size + MainTopMenu.element_between_space),
+				(x += MainTopMenu.element_size),
 				MainTopMenu.inner_margin, MainTopMenu.element_size, MainTopMenu.element_size,
 				(self: MenuElement) => {
 					if (self.status == 0) {
@@ -47,7 +46,7 @@ class MainTopMenu {
 		this.elementList.push(
 			new MenuElement(
 				global.imageManager.imageMap["menu_fast"],
-				(x += MainTopMenu.element_size + MainTopMenu.element_between_space),
+				(x += MainTopMenu.element_size),
 				MainTopMenu.inner_margin, MainTopMenu.element_size, MainTopMenu.element_size,
 				() => { console.log("fast"); }
 			)
@@ -56,7 +55,7 @@ class MainTopMenu {
 		this.elementList.push(
 			new MenuElement(
 				global.imageManager.imageMap["menu_save"],
-				(x += MainTopMenu.element_size + MainTopMenu.element_between_space),
+				(x += MainTopMenu.element_size),
 				MainTopMenu.inner_margin, MainTopMenu.element_size, MainTopMenu.element_size,
 				() => { console.log("save"); }
 			)
@@ -65,7 +64,7 @@ class MainTopMenu {
 		this.elementList.push(
 			new MenuElement(
 				global.imageManager.imageMap["menu_load"],
-				(x += MainTopMenu.element_size + MainTopMenu.element_between_space),
+				(x += MainTopMenu.element_size),
 				MainTopMenu.inner_margin, MainTopMenu.element_size, MainTopMenu.element_size,
 				() => { console.log("load"); }
 			)
@@ -87,7 +86,7 @@ class MainTopMenu {
 		this.elementList.push(
 			new MenuElement(
 				global.imageManager.imageMap["menu_eraser"],
-				(x += MainTopMenu.element_size + MainTopMenu.element_between_space),
+				(x += MainTopMenu.element_size),
 				MainTopMenu.inner_margin, MainTopMenu.element_size, MainTopMenu.element_size,
 				() => { console.log("eraser"); }
 			)
@@ -96,7 +95,7 @@ class MainTopMenu {
 		this.elementList.push(
 			new MenuElement(
 				global.imageManager.imageMap["menu_stamp"],
-				(x += MainTopMenu.element_size + MainTopMenu.element_between_space),
+				(x += MainTopMenu.element_size),
 				MainTopMenu.inner_margin, MainTopMenu.element_size, MainTopMenu.element_size,
 				() => { console.log("stamp"); }
 			)
@@ -118,7 +117,7 @@ class MainTopMenu {
 		this.elementList.push(
 			new MenuElement(
 				global.imageManager.imageMap["menu_random"],
-				(x += MainTopMenu.element_size + MainTopMenu.element_between_space),
+				(x += MainTopMenu.element_size),
 				MainTopMenu.inner_margin, MainTopMenu.element_size, MainTopMenu.element_size,
 				() => { console.log("random"); }
 			)
@@ -127,7 +126,7 @@ class MainTopMenu {
 		this.elementList.push(
 			new MenuElement(
 				global.imageManager.imageMap["menu_template"],
-				(x += MainTopMenu.element_size + MainTopMenu.element_between_space),
+				(x += MainTopMenu.element_size),
 				MainTopMenu.inner_margin, MainTopMenu.element_size, MainTopMenu.element_size,
 				() => { console.log("template"); }
 			)
@@ -149,7 +148,7 @@ class MainTopMenu {
 		this.elementList.push(
 			new MenuElement(
 				global.imageManager.imageMap["menu_grid"],
-				(x += MainTopMenu.element_size + MainTopMenu.element_between_space),
+				(x += MainTopMenu.element_size),
 				MainTopMenu.inner_margin, MainTopMenu.element_size, MainTopMenu.element_size,
 				() => { console.log("grid"); }
 			)
@@ -176,33 +175,10 @@ class MainTopMenu {
 	}
 
 	draw(canvasDrawer: CanvasImageDrawer): void {
+		// アイコンの描画
 		this.elementList.forEach((elm: MenuElement) => {
-			// マウスオーバー時の描画処理
-			if (elm.mouseover) {
-				// 背景の四角形
-				canvasDrawer.drawRect({
-					x: elm.x + 1,
-					y: elm.y + 1,
-					width: elm.width - 2,
-					height: elm.height - 2
-				}, {r: 0, g: 63, b: 63, a: 204});
-				// 枠の四角形
-				canvasDrawer.drawRect({
-					x: elm.x,
-					y: elm.y,
-					width: elm.width,
-					height: elm.height
-				}, {r: 0, g: 255, b: 160, a: 255}, false, 2);
-			}
-
-			// アイコンの描画処理
-			var image = (Array.isArray(elm.img)) ? elm.img[elm.status] : elm.img;
-			canvasDrawer.drawImage(
-				image,
-				elm.x + (MainTopMenu.element_size / 2 - image.width / 2),
-				elm.y + (MainTopMenu.element_size / 2 - image.height / 2),
-			);
-		})
+			MainTopMenu.drawElement(elm, canvasDrawer, MainTopMenu.element_line_width);
+		});
 
 		// グループを区切る棒の描画
 		this.verticalLineXList.forEach((x: number) => {
@@ -213,5 +189,34 @@ class MainTopMenu {
 				height: MainTopMenu.vertical_line_height
 			}, {r: 60, g: 60, b: 60, a: 180});
 		});
+	}
+
+	// メニューアイコンを枠付きで描画する
+	static drawElement(elm: MenuElement, canvasDrawer: CanvasImageDrawer, lineWidth: number): void {
+		// マウスオーバー時の描画処理
+		if (elm.mouseover) {
+			// 背景の四角形
+			canvasDrawer.drawRect({
+				x: elm.x + lineWidth / 2,
+				y: elm.y + lineWidth / 2,
+				width: elm.width - lineWidth,
+				height: elm.height - lineWidth
+			}, { r: 0, g: 63, b: 63, a: 204 });
+			// 枠の四角形
+			canvasDrawer.drawRect({
+				x: elm.x + lineWidth / 2,
+				y: elm.y + lineWidth / 2,
+				width: elm.width - lineWidth,
+				height: elm.height - lineWidth
+			}, { r: 0, g: 255, b: 160, a: 255 }, false, lineWidth);
+		}
+
+		// アイコンの描画処理
+		var image = elm.getImage();
+		canvasDrawer.drawImage(
+			image,
+			elm.x + (elm.width / 2 - image.width / 2),
+			elm.y + (elm.height / 2 - image.height / 2),
+		);
 	}
 }

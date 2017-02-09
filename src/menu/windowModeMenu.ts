@@ -59,7 +59,7 @@ class WindowModeMenu {
 		this.canvasDrawer.drawRect({x: 0, y: 0, width: this.width, height: this.height}, {r: 10, g: 10, b: 10, a: 230});
 		this.canvasDrawer.drawRect({x: 1, y: 1, width: this.width - 1, height: this.height - 1}, {r: 128, g: 128, b: 128, a: 255}, false, 1)
 		this.canvasDrawer.drawImage(
-			(Array.isArray(this.element.img)) ? this.element.img[this.element.status] : this.element.img,
+			this.element.getImage(),
 			this.element.x,
 			this.element.y
 		);

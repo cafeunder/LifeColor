@@ -8,6 +8,7 @@ class MainMenu {
 
 	messageBox: MessageBox;
 	mainTopMenu: MainTopMenu;
+	mainStampMenu: MainItemMenu;
 
 	constructor() {
 		this.canvas = global.domController.createCanvas("mainMenuCanvas", 4);
@@ -20,10 +21,38 @@ class MainMenu {
 		);
 		this.messageBox = new MessageBox();
 		this.mainTopMenu = new MainTopMenu();
+		this.mainStampMenu = new MainItemMenu(
+			[
+				"stamp_block",
+				"stamp_block",
+				"stamp_block",
+				"stamp_block",
+				"stamp_block",
+				"stamp_block",
+				"stamp_block",
+				"stamp_block",
+				"stamp_block",
+				"stamp_block",
+				"stamp_block",
+
+				"stamp_tab",
+				"stamp_tab",
+				"stamp_tab",
+				"stamp_tab",
+				"stamp_tab",
+				"stamp_tab",
+				"stamp_tab",
+				"stamp_tab",
+				"stamp_tab",
+				"stamp_tab",
+				"stamp_tab",
+			]
+		);
 	}
 
 	update(): void {
-		this.mainTopMenu.update(this.canvasDrawer);
+		this.mainStampMenu.update(this.canvasDrawer);
+		// this.mainTopMenu.update(this.canvasDrawer);
 	}
 
 	draw(): void {
@@ -42,7 +71,8 @@ class MainMenu {
 		}, {r: 128, g: 128, b: 128, a: 255}, false, MainMenu.line_width);
 
 		this.messageBox.draw();
-		this.mainTopMenu.draw(this.canvasDrawer);
+		// this.mainTopMenu.draw(this.canvasDrawer);
+		this.mainStampMenu.draw(this.canvasDrawer);
 	}
 
 	clearCanvas(): void {

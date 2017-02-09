@@ -58,7 +58,7 @@ class CellSizeConfigMenu {
 		this.canvasDrawer.drawRect({x: 1, y: 1, width: this.width - 1, height: this.height - 1}, {r: 128, g: 128, b: 128, a: 255}, false, 1)
 		this.elementList.forEach((elm: MenuElement) => {
 			this.canvasDrawer.drawImage(
-				(Array.isArray(elm.img)) ? elm.img[elm.status] : elm.img,
+				elm.getImage(),
 				elm.x,
 				elm.y
 			);
@@ -109,7 +109,7 @@ class CellSizeConfigMenu {
 	private createMenuElement(): void {
 		this.elementList = [];
 		var count: number = 0;
-		CellSizeConfigMenu.element_imagename_list.forEach((imgname: string | string[]) => {
+		CellSizeConfigMenu.element_imagename_list.forEach((imgname: string) => {
 			var index = count;
 			this.elementList.push(
 				new MenuElement(
