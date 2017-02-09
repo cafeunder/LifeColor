@@ -16,8 +16,8 @@ class WindowModeMenu {
 			WindowModeMenu.margin,
 			WindowModeMenu.element_size,
 			WindowModeMenu.element_size,
-			() => {
-				if (this.element.status == 0) {
+			(self: MenuElement) => {
+				if (self.status == 0) {
 					global.domController.setupFullScreenMode();
 				} else {
 					global.domController.setupNormalMode();
@@ -47,7 +47,7 @@ class WindowModeMenu {
 		})) {
 			this.element.mouseover = true;
 			if (global.mouse.pointCount == 1) {
-				this.element.action();
+				this.element.action(this.element);
 			}
 		} else {
 			this.element.mouseover = false;

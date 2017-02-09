@@ -2,6 +2,7 @@
 class MenuManager {
 	static outer_margin = 10;
 	static bitween_menu = 5;
+
 	windowModeMenu: WindowModeMenu;
 	cellSizeConfigMenu: CellSizeConfigMenu;
 	mainMenu: MainMenu;
@@ -39,6 +40,7 @@ class MenuManager {
 		if (this.visible) {
 			this.cellSizeConfigMenu.update();
 			this.windowModeMenu.update();
+			this.mainMenu.update();
 		}
 
 		if (global.keyboard.keyCountList[Keyboard.KEY_M] == 1) {

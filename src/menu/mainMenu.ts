@@ -1,6 +1,5 @@
 
 class MainMenu {
-	private static element_size = 60;
 	private static line_width = 2;
 	private canvas: HTMLCanvasElement;
 	private canvasDrawer: CanvasImageDrawer;
@@ -8,6 +7,7 @@ class MainMenu {
 	static height = 76;
 
 	messageBox: MessageBox;
+	mainTopMenu: MainTopMenu;
 
 	constructor() {
 		this.canvas = global.domController.createCanvas("mainMenuCanvas", 4);
@@ -19,6 +19,11 @@ class MainMenu {
 			MainMenu.height
 		);
 		this.messageBox = new MessageBox();
+		this.mainTopMenu = new MainTopMenu();
+	}
+
+	update(): void {
+		this.mainTopMenu.update(this.canvasDrawer);
 	}
 
 	draw(): void {
@@ -37,6 +42,7 @@ class MainMenu {
 		}, {r: 128, g: 128, b: 128, a: 255}, false, MainMenu.line_width);
 
 		this.messageBox.draw();
+		this.mainTopMenu.draw(this.canvasDrawer);
 	}
 
 	clearCanvas(): void {

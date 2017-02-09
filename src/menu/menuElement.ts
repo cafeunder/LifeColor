@@ -40,7 +40,7 @@ class MenuElement {
 	/**
 	 * 押されたときの動作
 	 */
-	action: () => void;
+	action: (self: MenuElement) => void;
 
 	constructor(
 		img: HTMLImageElement | HTMLImageElement[],
@@ -48,7 +48,7 @@ class MenuElement {
 		y: number,
 		width: number,
 		height: number,
-		action: () => void,
+		action: (self: MenuElement) => void,
 		status?: number
 	) {
 		this.img = img;

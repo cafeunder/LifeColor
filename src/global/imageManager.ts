@@ -6,6 +6,19 @@ class ImageManager {
 		"img/cellSize_small.png",
 		"img/window_full.png",
 		"img/window_normal.png",
+		"img/menu_clear.png",
+		"img/menu_fast.png",
+		"img/menu_grid.png",
+		"img/menu_load.png",
+		"img/menu_pencil.png",
+		"img/menu_eraser.png",
+		"img/menu_random.png",
+		"img/menu_play.png",
+		"img/menu_save.png",
+		"img/menu_slow.png",
+		"img/menu_stamp.png",
+		"img/menu_stop.png",
+		"img/menu_template.png"
 	];
 
 	imageMap: {[key: string]: HTMLImageElement} = {};

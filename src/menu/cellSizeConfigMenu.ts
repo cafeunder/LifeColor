@@ -84,7 +84,7 @@ class CellSizeConfigMenu {
 
 		element.selected = true;
 		this.selectedElement = element;
-		if (doAction) element.action();
+		if (doAction) element.action(element);
 	}
 
 	changeCanvas(rx: number, y: number): void {
