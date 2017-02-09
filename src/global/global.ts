@@ -4,4 +4,5 @@ namespace global {
 	export var mouse: Mouse;
 	export var imageManager: ImageManager;
 	export var fps: FPS;
+	export var keyboard: Keyboard;
 }

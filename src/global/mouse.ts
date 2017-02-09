@@ -31,22 +31,22 @@ class Mouse {
 		return false;
 	}
 
-	private mouseMove(event: MouseEvent){
+	private mouseMove(event: MouseEvent): void {
 		var rect = (<Element>event.target).getBoundingClientRect();
 		this.tempX = event.clientX - rect.left;
 		this.tempY = event.clientY - rect.top;
 		this.stopCount = 0;
 	}
 
-	private mouseDown(event: MouseEvent){
+	private mouseDown(event: MouseEvent): void {
 		this.leftPress = true;
 	}
 
-	private mouseUp(event: MouseEvent){
+	private mouseUp(event: MouseEvent): void {
 		this.leftPress = false;
 	}
 
-	private mouseOut(event: MouseEvent){
+	private mouseOut(event: MouseEvent): void {
 		this.leftPress = false;
 	}
 }

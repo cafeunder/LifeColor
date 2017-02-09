@@ -8,6 +8,7 @@ class Program {
 		// グローバル要素の生成と初期設定
 		global.domController = new DOMController();
 		global.mouse = new Mouse();
+		global.keyboard = new Keyboard();
 		global.imageManager = new ImageManager();
 		global.fps = new FPS();
 		global.domController.setupNormalMode();
@@ -42,8 +43,9 @@ class Program {
 
 				// 画像の読み込みが完了したらメインループ開始
 				setInterval(() => {
-					global.mouse.update();
 					global.fps.update();
+					global.mouse.update();
+					global.keyboard.update();
 					this.cellMapController.update();
 					this.menuManager.update();
 
