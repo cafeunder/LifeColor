@@ -4,6 +4,7 @@ class MenuManager {
 	static bitween_menu = 5;
 	windowModeMenu: WindowModeMenu;
 	cellSizeConfigMenu: CellSizeConfigMenu;
+	mainMenu: MainMenu;
 	private visible: boolean;
 
 	constructor(cellMapController: CellMapController) {
@@ -16,6 +17,7 @@ class MenuManager {
 			MenuManager.outer_margin,
 			cellMapController
 		);
+		this.mainMenu = new MainMenu();
 		this.visible = true;
 	}
 
@@ -28,6 +30,7 @@ class MenuManager {
 			global.domController.getWidth() - (this.windowModeMenu.width + MenuManager.outer_margin + MenuManager.bitween_menu),
 			MenuManager.outer_margin,
 		);
+		this.mainMenu.changeCanvas();
 
 		this.windowModeMenu.syncWindowMode();
 	}
@@ -43,6 +46,7 @@ class MenuManager {
 			if (!this.visible) {
 				this.cellSizeConfigMenu.clearCanvas();
 				this.windowModeMenu.clearCanvas();
+				this.mainMenu.clearCanvas();
 			}
 		}
 	}
@@ -51,6 +55,7 @@ class MenuManager {
 		if (!this.visible) return;
 		this.cellSizeConfigMenu.draw();
 		this.windowModeMenu.draw();
+		this.mainMenu.draw();
 	}
 
 	judgeMouseOnMenu(): boolean {
