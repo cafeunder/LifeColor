@@ -4,6 +4,7 @@ class MenuManager {
 	static bitween_menu = 5;
 	windowModeMenu: WindowModeMenu;
 	cellSizeConfigMenu: CellSizeConfigMenu;
+	private visible: boolean;
 
 	constructor(cellMapController: CellMapController) {
 		this.windowModeMenu = new WindowModeMenu(
@@ -15,6 +16,7 @@ class MenuManager {
 			MenuManager.outer_margin,
 			cellMapController
 		);
+		this.visible = true;
 	}
 
 	changeCanavs(): void {
@@ -31,17 +33,28 @@ class MenuManager {
 	}
 
 	update(): void {
-		this.cellSizeConfigMenu.update();
-		this.windowModeMenu.update();
+		if (this.visible) {
+			this.cellSizeConfigMenu.update();
+			this.windowModeMenu.update();
+		}
+
+		if (global.keyboard.keyCountList[Keyboard.KEY_M] == 1) {
+			this.visible = !this.visible;
+			if (!this.visible) {
+				this.cellSizeConfigMenu.clearCanvas();
+				this.windowModeMenu.clearCanvas();
+			}
+		}
 	}
 
 	draw(): void {
+		if (!this.visible) return;
 		this.cellSizeConfigMenu.draw();
 		this.windowModeMenu.draw();
 	}
 
 	judgeMouseOnMenu(): boolean {
-		return (
+		return this.visible && (
 			this.cellSizeConfigMenu.judgeEnteredMouse()
 			|| this.windowModeMenu.judgeEnteredMouse()
 		);

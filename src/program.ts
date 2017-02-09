@@ -11,9 +11,8 @@ class Program {
 		global.keyboard = new Keyboard();
 		global.imageManager = new ImageManager();
 		global.fps = new FPS();
-		global.domController.setupNormalMode();
-		// global.domController.setupFullScreenMode();
 		global.fps.drawing = true;
+		global.domController.setupNormalMode();
 		global.imageManager.load();
 
 		// セルマップの生成と初期設定

@@ -72,6 +72,10 @@ class CellSizeConfigMenu {
 		});
 	}
 
+	clearCanvas(): void {
+		this.canvasDrawer.clear();
+	}
+
 	selectElement(element: MenuElement, doAction: boolean = true): void {
 		if (element == this.selectedElement) return;
 		if (this.selectedElement) {
@@ -81,6 +85,25 @@ class CellSizeConfigMenu {
 		element.selected = true;
 		this.selectedElement = element;
 		if (doAction) element.action();
+	}
+
+	changeCanvas(rx: number, y: number): void {
+		this.canvasDrawer.changeCanvas(
+			rx - this.width,
+			y,
+			this.width,
+			this.height
+		);
+		this.draw();
+	}
+
+	judgeEnteredMouse(): boolean {
+		return global.mouse.judgeEntered({
+			x: this.canvasDrawer.x,
+			y: this.canvasDrawer.y,
+			width: this.width,
+			height: this.height
+		});
 	}
 
 	private createMenuElement(): void {
@@ -110,24 +133,5 @@ class CellSizeConfigMenu {
 		this.height =
 			CellSizeConfigMenu.inner_margin * 2
 			+ CellSizeConfigMenu.element_size;
-	}
-
-	changeCanvas(rx: number, y: number): void {
-		this.canvasDrawer.changeCanvas(
-			rx - this.width,
-			y,
-			this.width,
-			this.height
-		);
-		this.draw();
-	}
-
-	judgeEnteredMouse(): boolean {
-		return global.mouse.judgeEntered({
-			x: this.canvasDrawer.x,
-			y: this.canvasDrawer.y,
-			width: this.width,
-			height: this.height
-		});
 	}
 }

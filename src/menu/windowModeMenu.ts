@@ -75,6 +75,10 @@ class WindowModeMenu {
 		}
 	}
 
+	clearCanvas(): void {
+		this.canvasDrawer.clear();
+	}
+
 	changeCanvas(rx: number, y: number): void {
 		this.canvasDrawer.changeCanvas(
 			rx - this.width,
