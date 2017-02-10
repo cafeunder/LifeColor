@@ -26,10 +26,12 @@ class CanvasImageDrawer extends CanvasDrawer {
 			dy -= 0.5;
 		}
 
-		dx += Math.ceil(lineWidth / 2);
-		dy += Math.ceil(lineWidth / 2);
-		rect.width -= lineWidth;
-		rect.height -= lineWidth;
+		if (!fill) {
+			dx += Math.ceil(lineWidth / 2);
+			dy += Math.ceil(lineWidth / 2);
+			rect.width -= lineWidth;
+			rect.height -= lineWidth;
+		}
 
 		const rgba = "rgba("+color.r+","+color.g+","+color.b+","+(color.a/255)+")";
 		if (fill) {

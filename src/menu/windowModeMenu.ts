@@ -58,11 +58,6 @@ class WindowModeMenu {
 		this.canvasDrawer.clear();
 		this.canvasDrawer.drawRect({x: 0, y: 0, width: this.width, height: this.height}, {r: 10, g: 10, b: 10, a: 230});
 		this.canvasDrawer.drawRect({x: 0, y: 0, width: this.width, height: this.height}, {r: 128, g: 128, b: 128, a: 255}, false, 1)
-		this.canvasDrawer.drawImage(
-			this.element.getImage(),
-			this.element.x + Math.floor(this.element.width / 2 - this.element.getImage().width / 2),
-			this.element.y + Math.floor(this.element.height / 2 - this.element.getImage().height / 2)
-		);
 
 		if (this.element.mouseover) {
 			this.canvasDrawer.drawRect({
@@ -73,6 +68,12 @@ class WindowModeMenu {
 				{r: 0, g: 255, b: 160, a: 150}
 			);
 		}
+
+		this.canvasDrawer.drawImage(
+			this.element.getImage(),
+			this.element.x + Math.floor(this.element.width / 2 - this.element.getImage().width / 2),
+			this.element.y + Math.floor(this.element.height / 2 - this.element.getImage().height / 2)
+		);
 	}
 
 	clearCanvas(): void {
