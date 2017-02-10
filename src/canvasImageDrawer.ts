@@ -21,10 +21,15 @@ class CanvasImageDrawer extends CanvasDrawer {
 		var dx = Math.floor(rect.x);
 		var dy = Math.floor(rect.y);
 
-		if (lineWidth %2 != 0) {
+		if (lineWidth % 2 != 0) {
 			dx -= 0.5;
 			dy -= 0.5;
 		}
+
+		dx += Math.ceil(lineWidth / 2);
+		dy += Math.ceil(lineWidth / 2);
+		rect.width -= lineWidth;
+		rect.height -= lineWidth;
 
 		const rgba = "rgba("+color.r+","+color.g+","+color.b+","+(color.a/255)+")";
 		if (fill) {

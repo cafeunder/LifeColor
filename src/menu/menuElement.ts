@@ -33,6 +33,11 @@ class MenuElement {
 	selected: boolean;
 
 	/**
+	 * 有効か？
+	 */
+	enable: boolean;
+
+	/**
 	 * ポインタが上に乗っているか？
 	 */
 	mouseover: boolean;
@@ -57,6 +62,7 @@ class MenuElement {
 		this.width = width;
 		this.height = height;
 		this.status = status;
+		this.enable = true;
 		this.selected = false;
 		this.mouseover = false;
 		this.action = action;

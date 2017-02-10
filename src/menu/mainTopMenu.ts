@@ -197,17 +197,17 @@ class MainTopMenu {
 		if (elm.mouseover) {
 			// 背景の四角形
 			canvasDrawer.drawRect({
-				x: elm.x + lineWidth / 2,
-				y: elm.y + lineWidth / 2,
-				width: elm.width - lineWidth,
-				height: elm.height - lineWidth
+				x: elm.x,
+				y: elm.y,
+				width: elm.width,
+				height: elm.height
 			}, { r: 0, g: 63, b: 63, a: 204 });
 			// 枠の四角形
 			canvasDrawer.drawRect({
-				x: elm.x + lineWidth / 2,
-				y: elm.y + lineWidth / 2,
-				width: elm.width - lineWidth,
-				height: elm.height - lineWidth
+				x: elm.x,
+				y: elm.y,
+				width: elm.width,
+				height: elm.height
 			}, { r: 0, g: 255, b: 160, a: 255 }, false, lineWidth);
 		}
 
@@ -215,8 +215,8 @@ class MainTopMenu {
 		var image = elm.getImage();
 		canvasDrawer.drawImage(
 			image,
-			elm.x + (elm.width / 2 - image.width / 2),
-			elm.y + (elm.height / 2 - image.height / 2),
+			elm.x + Math.floor(elm.width / 2 - image.width / 2),
+			elm.y + Math.floor(elm.height / 2 - image.height / 2),
 		);
 	}
 }

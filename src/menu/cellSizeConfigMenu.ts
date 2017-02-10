@@ -1,9 +1,9 @@
 
 
 class CellSizeConfigMenu {
-	private static element_size = 28;
-	private static element_between_space = 8;
-	private static inner_margin = 8;
+	private static element_size = 34;
+	private static element_between_space = 5;
+	private static inner_margin = 5;
 	private static element_imagename_list = [
 		"cellSize_big",
 		"cellSize_mid",
@@ -55,19 +55,19 @@ class CellSizeConfigMenu {
 	draw(): void {
 		this.canvasDrawer.clear();
 		this.canvasDrawer.drawRect({x: 0, y: 0, width: this.width, height: this.height}, {r: 10, g: 10, b: 10, a: 230});
-		this.canvasDrawer.drawRect({x: 1, y: 1, width: this.width - 1, height: this.height - 1}, {r: 128, g: 128, b: 128, a: 255}, false, 1)
+		this.canvasDrawer.drawRect({x: 0, y: 0, width: this.width, height: this.height}, {r: 128, g: 128, b: 128, a: 255}, false, 1)
 		this.elementList.forEach((elm: MenuElement) => {
 			this.canvasDrawer.drawImage(
 				elm.getImage(),
-				elm.x,
-				elm.y
+				elm.x + Math.floor(elm.width / 2 - elm.getImage().width / 2),
+				elm.y + Math.floor(elm.height / 2 - elm.getImage().height / 2)
 			);
 
 			if (elm.mouseover) {
-				this.canvasDrawer.drawRect({x: elm.x - 2, y: elm.y - 2, width: elm.width + 4, height: elm.height + 4}, {r: 0, g: 255, b: 160, a: 150});
+				this.canvasDrawer.drawRect({x: elm.x, y: elm.y, width: elm.width, height: elm.height}, {r: 0, g: 255, b: 160, a: 150});
 			}
 			if (elm.selected) {
-				this.canvasDrawer.drawRect({x: elm.x - 2, y: elm.y - 2, width: elm.width + 4, height: elm.height + 4}, {r: 0, g: 250, b: 160, a: 255}, false, 2);
+				this.canvasDrawer.drawRect({x: elm.x, y: elm.y, width: elm.width, height: elm.height}, {r: 0, g: 250, b: 160, a: 255}, false, 2);
 			}
 		});
 	}

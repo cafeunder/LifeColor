@@ -57,22 +57,20 @@ class MainMenu {
 
 	draw(): void {
 		this.canvasDrawer.clear();
-		this.canvasDrawer.drawRect({
-			x: 0,
-			y: 0,
-			width: MainMenu.width,
-			height: MainMenu.height
-		}, {r: 10, g: 10, b: 10, a: 230});
-		this.canvasDrawer.drawRect({
-			x: Math.floor(MainMenu.line_width / 2),
-			y: Math.floor(MainMenu.line_width / 2),
-			width: MainMenu.width - MainMenu.line_width,
-			height: MainMenu.height - MainMenu.line_width
-		}, {r: 128, g: 128, b: 128, a: 255}, false, MainMenu.line_width);
+		this.canvasDrawer.drawRect(
+			{x: 0, y: 0, width: MainMenu.width, height: MainMenu.height},
+			{r: 10, g: 10, b: 10, a: 230}
+		);
+		this.canvasDrawer.drawRect(
+			{x: 0, y: 0, width: MainMenu.width, height: MainMenu.height},
+			{r: 128, g: 128, b: 128, a: 255},
+			false,
+			MainMenu.line_width
+		);
 
 		this.messageBox.draw();
-		// this.mainTopMenu.draw(this.canvasDrawer);
 		this.mainStampMenu.draw(this.canvasDrawer);
+		// this.mainTopMenu.draw(this.canvasDrawer);
 	}
 
 	clearCanvas(): void {

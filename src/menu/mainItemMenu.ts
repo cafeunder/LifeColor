@@ -1,6 +1,7 @@
 
 class MainItemMenu {
 	private static element_size = 60;
+	private static element_padding = 3;
 	private static page_button_size = 27;
 	private static between_element_space = 3;
 	private static between_page_button_space = 6;
@@ -29,13 +30,19 @@ class MainItemMenu {
 			MainItemMenu.inner_margin, MainItemMenu.element_size, MainItemMenu.element_size,
 			() => { console.log("back"); }
 		);
+		// 最初はページ0なので戻るボタンを無効にしておく
+		this.backButton.enable = false;
 
 		// 前のページボタン
 		this.pagePrevButton = new MenuElement(
 			global.imageManager.imageMap["menu_pagePrev"],
 			(x += MainItemMenu.element_size + MainItemMenu.between_back_button_space),
 			MainItemMenu.inner_margin, MainItemMenu.page_button_size, MainItemMenu.element_size,
-			() => { --this.page; }
+			() => {
+				if (this.page > 0) {
+					--this.page;
+				}
+			}
 		);
 
 		// ページ内要素の先頭のx座標を記憶しておく
@@ -74,8 +81,16 @@ class MainItemMenu {
 			global.imageManager.imageMap["menu_pageNext"],
 			head_x + (MainItemMenu.element_size + MainItemMenu.between_element_space) * MainItemMenu.page_element_max - MainItemMenu.between_element_space + MainItemMenu.between_page_button_space,
 			MainItemMenu.inner_margin, MainItemMenu.page_button_size, MainItemMenu.element_size,
-			() => { ++this.page; }
+			() => {
+				if (this.page < this.elementList.length - 1) {
+					++this.page;
+				}
+			}
 		);
+		// ページが1ページしかないなら次へボタンを無効にしておく
+		if (this.elementList.length == 1) {
+			this.pageNextButton.enable = false;
+		}
 	}
 
 	update(canvasDrawer: CanvasImageDrawer): void {
@@ -118,36 +133,36 @@ class MainItemMenu {
 	// ページボタンを枠付きで描画する
 	private static drawPageButton(elm: MenuElement, canvasDrawer: CanvasImageDrawer): void {
 		// 背景の四角形
-		if (elm.mouseover) {
+		if (elm.mouseover && elm.enable) {
 			canvasDrawer.drawRect({
-				x: elm.x + MainItemMenu.element_line_width / 2,
-				y: elm.y + MainItemMenu.element_line_width / 2,
-				width: elm.width - MainItemMenu.element_line_width,
-				height: elm.height - MainItemMenu.element_line_width
+				x: elm.x,
+				y: elm.y,
+				width: elm.width,
+				height: elm.height
 			}, {r: 64, g: 32, b: 0, a: 204});
 		} else {
 			canvasDrawer.drawRect({
-				x: elm.x + MainItemMenu.element_line_width / 2,
-				y: elm.y + MainItemMenu.element_line_width / 2,
-				width: elm.width - MainItemMenu.element_line_width,
-				height: elm.height - MainItemMenu.element_line_width
+				x: elm.x,
+				y: elm.y,
+				width: elm.width,
+				height: elm.height
 			}, {r: 5, g: 5, b: 5, a: 178});
 		}
 
 		// 枠の四角形
-		if (elm.mouseover) {
+		if (elm.mouseover && elm.enable) {
 			canvasDrawer.drawRect({
-				x: elm.x + MainItemMenu.element_line_width / 2,
-				y: elm.y + MainItemMenu.element_line_width / 2,
-				width: elm.width - MainItemMenu.element_line_width,
-				height: elm.height - MainItemMenu.element_line_width
+				x: elm.x,
+				y: elm.y,
+				width: elm.width,
+				height: elm.height
 			}, {r: 255, g: 128, b: 0, a: 255}, false, MainItemMenu.element_line_width);
 		} else {
 			canvasDrawer.drawRect({
-				x: elm.x + MainItemMenu.element_line_width / 2,
-				y: elm.y + MainItemMenu.element_line_width / 2,
-				width: elm.width - MainItemMenu.element_line_width,
-				height: elm.height - MainItemMenu.element_line_width
+				x: elm.x,
+				y: elm.y,
+				width: elm.width,
+				height: elm.height
 			}, {r: 128, g: 128, b: 128, a: 255}, false, MainItemMenu.element_line_width);
 		}
 
@@ -155,8 +170,8 @@ class MainItemMenu {
 		var image = (Array.isArray(elm.img)) ? elm.img[elm.status] : elm.img;
 		canvasDrawer.drawImage(
 			elm.getImage(),
-			elm.x + (elm.width / 2 - image.width / 2),
-			elm.y + (elm.height / 2 - image.height / 2),
+			elm.x + Math.floor(elm.width / 2 - image.width / 2),
+			elm.y + Math.floor(elm.height / 2 - image.height / 2),
 		);
 	}
 
@@ -165,17 +180,17 @@ class MainItemMenu {
 		// 背景の四角形
 		if (elm.mouseover) {
 			canvasDrawer.drawRect({
-				x: elm.x + 1,
-				y: elm.y + 1,
-				width: elm.width - 2,
-				height: elm.height - 2
+				x: elm.x,
+				y: elm.y,
+				width: elm.width,
+				height: elm.height
 			}, {r: 0, g: 16, b: 16, a: 255});
 		} else {
 			canvasDrawer.drawRect({
-				x: elm.x + MainItemMenu.element_line_width,
-				y: elm.y + MainItemMenu.element_line_width,
-				width: elm.width - MainItemMenu.element_line_width * 2,
-				height: elm.height - MainItemMenu.element_line_width * 2
+				x: elm.x + MainItemMenu.element_padding,
+				y: elm.y + MainItemMenu.element_padding,
+				width: elm.width - MainItemMenu.element_padding * 2,
+				height: elm.height - MainItemMenu.element_padding * 2
 			}, {r: 5, g: 5, b: 5, a: 255});
 		}
 	
@@ -189,10 +204,10 @@ class MainItemMenu {
 			}, {r: 0, g: 255, b: 160, a: 255}, false, 2);
 		} else {
 			canvasDrawer.drawRect({
-				x: elm.x + MainItemMenu.element_line_width,
-				y: elm.y + MainItemMenu.element_line_width,
-				width: elm.width - MainItemMenu.element_line_width * 2,
-				height: elm.height - MainItemMenu.element_line_width * 2
+				x: elm.x + MainItemMenu.element_padding,
+				y: elm.y + MainItemMenu.element_padding,
+				width: elm.width - MainItemMenu.element_padding * 2,
+				height: elm.height - MainItemMenu.element_padding * 2
 			}, {r: 64, g: 64, b: 64, a: 255}, false, MainItemMenu.element_line_width);
 		}
 
@@ -200,8 +215,8 @@ class MainItemMenu {
 		var image = (Array.isArray(elm.img)) ? elm.img[elm.status] : elm.img;
 		canvasDrawer.drawImage(
 			elm.getImage(),
-			elm.x + (elm.width / 2 - image.width / 2),
-			elm.y + (elm.height / 2 - image.height / 2),
+			elm.x + Math.floor(elm.width / 2 - image.width / 2),
+			elm.y + Math.floor(elm.height / 2 - image.height / 2),
 		);
 	}
 }

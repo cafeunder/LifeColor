@@ -21,18 +21,16 @@ class MessageBox {
 
 	draw(): void {
 		this.canvasDrawer.clear();
-		this.canvasDrawer.drawRect({
-			x: 0,
-			y: 0,
-			width: MessageBox.width,
-			height: MessageBox.height
-		}, {r: 10, g: 10, b: 10, a: 230});
-		this.canvasDrawer.drawRect({
-			x: Math.floor(MessageBox.line_width / 2),
-			y: Math.floor(MessageBox.line_width / 2),
-			width: MessageBox.width - MessageBox.line_width,
-			height: MessageBox.height - MessageBox.line_width
-		}, {r: 128, g: 128, b: 128, a: 255}, false, MessageBox.line_width);
+		this.canvasDrawer.drawRect(
+			{x: 0, y: 0, width: MessageBox.width, height: MessageBox.height},
+			{r: 10, g: 10, b: 10, a: 230}
+		);
+		this.canvasDrawer.drawRect(
+			{x: 0, y: 0, width: MessageBox.width, height: MessageBox.height},
+			{r: 128, g: 128, b: 128, a: 255},
+			false,
+			MessageBox.line_width
+		);
 	}
 
 	clearCanvas(): void {
