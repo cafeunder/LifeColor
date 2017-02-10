@@ -1,4 +1,10 @@
 
+const enum MainMenuChangeStatus {
+	HOLD_PANEL,
+	GO_TOP_PANEL,
+	GO_STAMP_PANEL
+}
+
 class MainMenu {
 	private static line_width = 2;
 	private canvas: HTMLCanvasElement;
@@ -7,8 +13,9 @@ class MainMenu {
 	static height = 76;
 
 	messageBox: MessageBox;
-	mainTopMenu: MainTopMenu;
-	mainStampMenu: MainItemMenu;
+	topPagePanel: TopPagePanel;
+	stampPanel: ItemPanel;
+	visiblePanel: MainMenuPanel;
 
 	constructor() {
 		this.canvas = global.domController.createCanvas("mainMenuCanvas", 4);
@@ -20,8 +27,8 @@ class MainMenu {
 			MainMenu.height
 		);
 		this.messageBox = new MessageBox();
-		this.mainTopMenu = new MainTopMenu();
-		this.mainStampMenu = new MainItemMenu(
+		this.topPagePanel = new TopPagePanel();
+		this.stampPanel = new ItemPanel(
 			[
 				"stamp_block",
 				"stamp_block",
@@ -48,11 +55,21 @@ class MainMenu {
 				"stamp_tab",
 			]
 		);
+
+		this.visiblePanel = this.stampPanel;
 	}
 
 	update(): void {
-		this.mainStampMenu.update(this.canvasDrawer);
-		// this.mainTopMenu.update(this.canvasDrawer);
+		switch(this.visiblePanel.update(this.canvasDrawer)) {
+		case MainMenuChangeStatus.HOLD_PANEL:
+			break;
+		case MainMenuChangeStatus.GO_TOP_PANEL:
+			this.visiblePanel = this.topPagePanel;
+			break;
+		case MainMenuChangeStatus.GO_STAMP_PANEL:
+			this.visiblePanel = this.visiblePanel;
+			break;
+		}
 	}
 
 	draw(): void {
@@ -69,8 +86,7 @@ class MainMenu {
 		);
 
 		this.messageBox.draw();
-		this.mainStampMenu.draw(this.canvasDrawer);
-		// this.mainTopMenu.draw(this.canvasDrawer);
+		this.visiblePanel.draw(this.canvasDrawer);
 	}
 
 	clearCanvas(): void {

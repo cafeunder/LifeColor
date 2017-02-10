@@ -27,8 +27,9 @@
         "./src/menu/mainMenu.ts",
         "./src/menu/messageBox.ts",
         "./src/menu/menuManager.ts",
-        "./src/menu/mainTopMenu.ts",
-        "./src/menu/mainItemMenu.ts",
+        "./src/menu/mainMenuPanel.ts",
+        "./src/menu/topPagePanel.ts",
+        "./src/menu/itemPanel.ts",
         "./src/program.ts"
     ]
 }
