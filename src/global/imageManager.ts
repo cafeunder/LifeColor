@@ -23,7 +23,9 @@ class ImageManager {
 		"img/menu_pagePrev.png",
 		"img/menu_pageNext.png",
 		"img/stamp_block.png",
-		"img/stamp_tab.png"
+		"img/stamp_tab.png",
+		"img/template_bakery.png",
+		"img/template_lake.png"
 	];
 
 	imageMap: {[key: string]: HTMLImageElement} = {};

@@ -2,7 +2,8 @@
 const enum MainMenuChangeStatus {
 	HOLD_PANEL,
 	GO_TOP_PANEL,
-	GO_STAMP_PANEL
+	GO_STAMP_PANEL,
+	GO_TEMPLATE_PANEL
 }
 
 class MainMenu {
@@ -15,6 +16,7 @@ class MainMenu {
 	messageBox: MessageBox;
 	topPagePanel: TopPagePanel;
 	stampPanel: ItemPanel;
+	templatePanel: ItemPanel;
 	visiblePanel: MainMenuPanel;
 
 	constructor() {
@@ -55,8 +57,35 @@ class MainMenu {
 				"stamp_tab",
 			]
 		);
+		this.templatePanel = new ItemPanel(
+			[
+				"template_lake",
+				"template_lake",
+				"template_lake",
+				"template_lake",
+				"template_lake",
+				"template_lake",
+				"template_lake",
+				"template_lake",
+				"template_lake",
+				"template_lake",
+				"template_lake",
 
-		this.visiblePanel = this.stampPanel;
+				"template_bakery",
+				"template_bakery",
+				"template_bakery",
+				"template_bakery",
+				"template_bakery",
+				"template_bakery",
+				"template_bakery",
+				"template_bakery",
+				"template_bakery",
+				"template_bakery",
+				"template_bakery",
+			]
+		);
+
+		this.visiblePanel = this.topPagePanel;
 	}
 
 	update(): void {
@@ -67,8 +96,10 @@ class MainMenu {
 			this.visiblePanel = this.topPagePanel;
 			break;
 		case MainMenuChangeStatus.GO_STAMP_PANEL:
-			this.visiblePanel = this.visiblePanel;
+			this.visiblePanel = this.stampPanel;
 			break;
+		case MainMenuChangeStatus.GO_TEMPLATE_PANEL:
+			this.visiblePanel = this.templatePanel;
 		}
 	}
 

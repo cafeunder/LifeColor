@@ -10,6 +10,7 @@ class TopPagePanel extends MainMenuPanel {
 
 	private elementList: MenuElement[];
 	private verticalLineXList: number[];
+	private changeStatus: MainMenuChangeStatus;
 
 	constructor() {
 		super();
@@ -98,7 +99,9 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_stamp"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => { console.log("stamp"); }
+				() => {
+					this.changeStatus = MainMenuChangeStatus.GO_STAMP_PANEL;
+				}
 			)
 		);
 
@@ -129,7 +132,9 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_template"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => { console.log("template"); }
+				() => {
+					this.changeStatus = MainMenuChangeStatus.GO_TEMPLATE_PANEL;
+				}
 			)
 		);
 
@@ -157,6 +162,7 @@ class TopPagePanel extends MainMenuPanel {
 	}
 
 	update(canvasDrawer: CanvasImageDrawer): number {
+		this.changeStatus = MainMenuChangeStatus.HOLD_PANEL;
 		this.elementList.forEach((elm: MenuElement) => {
 			if (global.mouse.judgeEntered({
 				x: canvasDrawer.x + elm.x,
@@ -173,7 +179,7 @@ class TopPagePanel extends MainMenuPanel {
 			}
 		});
 
-		return 0;
+		return this.changeStatus;
 	}
 
 	draw(canvasDrawer: CanvasImageDrawer): void {

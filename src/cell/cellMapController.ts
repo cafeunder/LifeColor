@@ -14,7 +14,7 @@ class CellMapController {
 	}, {
 		cellSize: 4,
 		gridWidth: 0
-	}]
+	}];
 
 	private alternationCount: number;
 	private alternationInterval: number;
@@ -81,4 +81,6 @@ class CellMapController {
 		this.cellMapView.drawCell();
 		this.cellMapView.drawGrid();
 	}
+
+	
 }
