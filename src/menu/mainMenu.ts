@@ -19,7 +19,7 @@ class MainMenu {
 	templatePanel: ItemPanel;
 	visiblePanel: MainMenuPanel;
 
-	constructor() {
+	constructor(cellMapInterface: CellMapInterface) {
 		this.canvas = global.domController.createCanvas("mainMenuCanvas", 4);
 		this.canvasDrawer = new CanvasImageDrawer(this.canvas);
 		this.canvasDrawer.changeCanvas(

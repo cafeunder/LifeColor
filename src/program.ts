@@ -38,7 +38,7 @@ class Program {
 			// 画像読み込みの監視
 			if (global.imageManager.checkLoadCompleted()) {
 				clearInterval(check);
-				this.menuManager = new MenuManager(this.cellMapController);
+				this.menuManager = new MenuManager(this.cellMapController.getInterface());
 
 				// 画像の読み込みが完了したらメインループ開始
 				setInterval(() => {

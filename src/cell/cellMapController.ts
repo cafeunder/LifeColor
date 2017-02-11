@@ -82,5 +82,7 @@ class CellMapController {
 		this.cellMapView.drawGrid();
 	}
 
-	
+	getInterface(): CellMapInterface {
+		return new CellMapInterface(this, this.cellMap);
+	}
 }

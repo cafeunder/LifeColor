@@ -8,7 +8,7 @@ class MenuManager {
 	mainMenu: MainMenu;
 	private visible: boolean;
 
-	constructor(cellMapController: CellMapController) {
+	constructor(cellMapInterface: CellMapInterface) {
 		this.windowModeMenu = new WindowModeMenu(
 			global.domController.getWidth() - MenuManager.outer_margin,
 			MenuManager.outer_margin,
@@ -16,9 +16,9 @@ class MenuManager {
 		this.cellSizeConfigMenu = new CellSizeConfigMenu(
 			global.domController.getWidth() - (this.windowModeMenu.width + MenuManager.outer_margin + MenuManager.bitween_menu),
 			MenuManager.outer_margin,
-			cellMapController
+			cellMapInterface
 		);
-		this.mainMenu = new MainMenu();
+		this.mainMenu = new MainMenu(cellMapInterface);
 		this.visible = true;
 	}
 
