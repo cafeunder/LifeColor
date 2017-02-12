@@ -4,6 +4,7 @@ class CellMap {
 	yNum: number;
 	map: boolean[][];
 	alternateMap: boolean[][];
+	savedMap: boolean[][];
 	private generation: number;
 	private population: number;
 
@@ -12,6 +13,7 @@ class CellMap {
 		this.yNum = yNum;
 		this.map = [];
 		this.alternateMap = [];
+		this.savedMap = null;
 		for (var y = 0; y < this.yNum; y++) {
 			this.map[y] = [];
 			this.alternateMap[y] = [];
@@ -91,7 +93,9 @@ class CellMap {
 		}
 	}
 
-	copyMap(srcMap: boolean[][], srcXNum: number, srcYNum: number): void {
+	copy(srcMap: boolean[][], srcXNum?: number, srcYNum?: number): void {
+		if (!srcXNum) srcXNum = srcMap[0].length;
+		if (!srcYNum) srcYNum = srcMap.length;
 		const dstXNum = this.xNum;
 		const dstYNum = this.yNum;
 
@@ -106,6 +110,29 @@ class CellMap {
 		}
 	}
 
+	save(): void {
+		this.alternateMap = [];
+		for (var y = 0; y < this.yNum; ++y) {
+			this.alternateMap[y] = [];
+		}
+
+		this.savedMap = [];
+		for (var y = 0; y < this.yNum; ++y) {
+			this.savedMap[y] = [];
+			for (var x = 0; x < this.xNum; ++x) {
+				this.savedMap[y][x] = this.map[y][x];
+			}
+		}
+	}
+
+	load(): void {
+		this.copy(this.savedMap);
+	}
+
+	canLoad(): boolean {
+		return this.savedMap != null;
+	}
+
 	setCellNum(xNum: number, yNum: number): void {
 		const temp = this.map;
 		const tempX = this.xNum;
@@ -116,10 +143,10 @@ class CellMap {
 
 		this.map = [];
 		this.alternateMap = [];
-		for (var y = 0; y < this.yNum; y++) {
+		for (var y = 0; y < this.yNum; ++y) {
 			this.map[y] = [];
 			this.alternateMap[y] = [];
 		}
-		this.copyMap(temp, tempX, tempY);
+		this.copy(temp, tempX, tempY);
 	}
 }

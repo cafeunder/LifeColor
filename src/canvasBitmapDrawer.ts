@@ -18,6 +18,10 @@ class CanvasBitmapDrawer extends CanvasDrawer {
 		);
 	}
 
+	clear(): void {
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	}
+
 	reflesh(): void {
 		this.context.putImageData(this.imageData, 0, 0);
 	}

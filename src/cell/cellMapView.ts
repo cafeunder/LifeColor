@@ -6,6 +6,7 @@ class CellMapView {
 	private gridCanvas: HTMLCanvasElement;
 	private gridCanvasDrawer: CanvasBitmapDrawer;
 
+	private visibleGrid: boolean;
 	private cellProperty: CellProperty;
 	private cellColorMap: Color[];
 
@@ -94,5 +95,18 @@ class CellMapView {
 		this.cellCanvasDrawer.changeCanvas(left, top, width, height);
 		this.gridCanvasDrawer.changeCanvas(left, top, width, height);
 		this.cellColorMap = ColorMap.createCOCKTAIL(cellXNum, cellYNum);
+	}
+
+	getVisibleGrid(): boolean {
+		return this.visibleGrid;
+	}
+
+	setVisibleGrid(visible: boolean): void {
+		this.visibleGrid = visible;
+		if (this.visibleGrid) {
+			this.drawGrid();
+		} else {
+			this.gridCanvasDrawer.clear();
+		}
 	}
 }

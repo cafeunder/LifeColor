@@ -79,3 +79,25 @@ class MenuElement {
 		return (Array.isArray(this.img)) ? this.img[this.status] : this.img;
 	}
 }
+
+class MenuElementWithExplain extends MenuElement {
+	explain: string | string[]
+	constructor(
+		img: HTMLImageElement | HTMLImageElement[],
+		x: number,
+		y: number,
+		width: number,
+		height: number,
+		update: (self: MenuElement) => void,
+		action: (self: MenuElement) => void,
+		explain: string | string[],
+		status?: number
+	) {
+		super(img, x, y, width, height, update, action, status);
+		this.explain = explain;
+	}
+
+	getExplain(): string {
+		return (Array.isArray(this.explain)) ? this.explain[this.status] : this.explain;
+	}
+}

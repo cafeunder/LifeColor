@@ -31,6 +31,8 @@
         "./src/menu/mainMenuPanel.ts",
         "./src/menu/topPagePanel.ts",
         "./src/menu/itemPanel.ts",
+        "./src/pattern/templatePattern.ts",
+        "./src/pattern/stampPattern.ts",
         "./src/program.ts"
     ]
 }

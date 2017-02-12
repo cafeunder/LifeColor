@@ -1,7 +1,7 @@
 @font-face {
-  font-family: "Noto Sans Japanese";
-   src: url("../font/NotoSansCJKjp-Regular.eot?") format('eot'),
-   url("../font/NotoSansCJKjp-Regular.woff") format('woff');
+  font-family: "myFont";
+  src: url("../font/NotoSansCJKjp-DemiLight.eot?") format('eot'),
+       url("../font/NotoSansCJKjp-DemiLight.woff") format('woff');
 }
 
 html, body {
@@ -16,7 +16,7 @@ body {
 }
 
 #mainDiv {
-  background-color: #000;
+  background-color: #080808;
   font-family: "ヒラギノ角ゴ Pro W3",メイリオ,Osaka,Arial,Verdana,"ＭＳ Ｐゴシック",sans-serif;
   width:880px;
   margin: 0 auto;
@@ -30,7 +30,7 @@ body {
 
 #canvasContainer {
   background-color: #000;
-  font-family: 'Noto Sans Japanese', sans-serif;
+  font-family: "myFont";
   width:960px;
   height:768px;
 }

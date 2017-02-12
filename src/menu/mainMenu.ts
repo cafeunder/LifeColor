@@ -18,6 +18,7 @@ class MainMenu {
 	stampPanel: ItemPanel;
 	templatePanel: ItemPanel;
 	visiblePanel: MainMenuPanel;
+	changedPanel: boolean;
 
 	constructor(cellMapController: CellMapController) {
 		this.canvas = global.domController.createCanvas("mainMenuCanvas", 4);
@@ -29,68 +30,32 @@ class MainMenu {
 			MainMenu.height
 		);
 		this.messageBox = new MessageBox();
-		this.topPagePanel = new TopPagePanel(cellMapController);
-		this.stampPanel = new ItemPanel(
-			[
-				"stamp_block",
-				"stamp_block",
-				"stamp_block",
-				"stamp_block",
-				"stamp_block",
-				"stamp_block",
-				"stamp_block",
-				"stamp_block",
-				"stamp_block",
-				"stamp_block",
-				"stamp_block",
+		this.topPagePanel = new TopPagePanel(cellMapController, this.messageBox);
 
-				"stamp_tab",
-				"stamp_tab",
-				"stamp_tab",
-				"stamp_tab",
-				"stamp_tab",
-				"stamp_tab",
-				"stamp_tab",
-				"stamp_tab",
-				"stamp_tab",
-				"stamp_tab",
-				"stamp_tab",
-			]
+		var setStamp = (name: string) => { console.log(name); }
+		var setTemplate = (name: string) => { console.log(name); }
+		this.stampPanel = new ItemPanel(
+			StampPattern.makeItemPanelElementData(),
+			setStamp,
+			this.messageBox
 		);
 		this.templatePanel = new ItemPanel(
-			[
-				"template_lake",
-				"template_lake",
-				"template_lake",
-				"template_lake",
-				"template_lake",
-				"template_lake",
-				"template_lake",
-				"template_lake",
-				"template_lake",
-				"template_lake",
-				"template_lake",
-
-				"template_bakery",
-				"template_bakery",
-				"template_bakery",
-				"template_bakery",
-				"template_bakery",
-				"template_bakery",
-				"template_bakery",
-				"template_bakery",
-				"template_bakery",
-				"template_bakery",
-				"template_bakery",
-			]
+			TemplatePattern.makeItemPanelElementData(),
+			setTemplate,
+			this.messageBox
 		);
 
 		this.visiblePanel = this.topPagePanel;
+		this.changedPanel = false;
 	}
 
 	update(): void {
+		this.messageBox.setMessage("キーボードのMキーでメニューの表示/非表示を切り替えることができます。");
+
+		this.changedPanel = true;
 		switch(this.visiblePanel.update(this.canvasDrawer)) {
 		case MainMenuChangeStatus.HOLD_PANEL:
+			this.changedPanel = false;
 			break;
 		case MainMenuChangeStatus.GO_TOP_PANEL:
 			this.visiblePanel = this.topPagePanel;
@@ -100,10 +65,12 @@ class MainMenu {
 			break;
 		case MainMenuChangeStatus.GO_TEMPLATE_PANEL:
 			this.visiblePanel = this.templatePanel;
+			break;
 		}
 	}
 
 	draw(): void {
+		if (this.changedPanel) return;
 		this.canvasDrawer.clear();
 		this.canvasDrawer.drawRect(
 			{x: 0, y: 0, width: MainMenu.width, height: MainMenu.height},

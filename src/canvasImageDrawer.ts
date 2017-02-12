@@ -47,6 +47,19 @@ class CanvasImageDrawer extends CanvasDrawer {
 		}
 	}
 
+	drawText(
+		text: string,
+		x: number,
+		y: number,
+		color: Color,
+	): void {
+		this.context.textAlign = "left";
+		this.context.textBaseline = "top";
+		this.context.fillStyle = "rgba("+color.r+","+color.g+","+color.b+","+(color.a/255)+")";
+		this.context.beginPath();
+		this.context.fillText(text, x, y);
+	}
+
 	clear(): void {
 		this.context.clearRect(
 			0,
@@ -54,5 +67,13 @@ class CanvasImageDrawer extends CanvasDrawer {
 			this.canvas.width,
 			this.canvas.height
 		);
+	}
+
+	getStringTextWidth(text: string): number {
+		return this.context.measureText(text).width;
+	}
+
+	setFont(font: string): void {
+		this.context.font = font;
 	}
 }

@@ -1,4 +1,9 @@
 
+class ItemPanelElementData {
+	name: string;
+	explain: string;
+}
+
 class ItemPanel extends MainMenuPanel {
 	private static element_size = 60;
 	private static element_padding = 3;
@@ -10,34 +15,34 @@ class ItemPanel extends MainMenuPanel {
 	private static inner_margin = 8;
 	private static page_element_max = 11;
 
-	private itemNameList: string[];
-	private elementList: MenuElement[][];
+	private elementList: MenuElementWithExplain[][];
 	private page: number;
-	private backButton: MenuElement;
-	private pagePrevButton: MenuElement;
-	private pageNextButton: MenuElement;
+	private backButton: MenuElementWithExplain;
+	private pagePrevButton: MenuElementWithExplain;
+	private pageNextButton: MenuElementWithExplain;
 	private changeStatus: MainMenuChangeStatus;
+	private messageBox: MessageBox;
 
-	constructor(itemNameList: string[]) {
+	constructor(itemList: ItemPanelElementData[], itemAction: (name: string) => void, messageBox: MessageBox) {
 		super();
 		this.elementList = [];
-		this.itemNameList = itemNameList;
 		this.changeStatus = 0;
+		this.messageBox = messageBox;
 
 		var x = 0;
 		// 戻るボタン
-		this.backButton = new MenuElement(
+		this.backButton = new MenuElementWithExplain(
 			global.imageManager.imageMap["menu_back"],
 			(x += ItemPanel.inner_margin),
 			ItemPanel.inner_margin, ItemPanel.element_size, ItemPanel.element_size,
 			() => {},
 			() => {
 				this.changeStatus = MainMenuChangeStatus.GO_TOP_PANEL;
-			}
+			}, "メインメニューに戻ります。"
 		);
 
 		// 前のページボタン
-		this.pagePrevButton = new MenuElement(
+		this.pagePrevButton = new MenuElementWithExplain(
 			global.imageManager.imageMap["menu_pagePrev"],
 			(x += ItemPanel.element_size + ItemPanel.between_back_button_space),
 			ItemPanel.inner_margin, ItemPanel.page_button_size, ItemPanel.element_size,
@@ -48,7 +53,7 @@ class ItemPanel extends MainMenuPanel {
 				if (this.page > 0) {
 					--this.page;
 				}
-			}
+			}, null
 		);
 
 		// ページ内要素の先頭のx座標を記憶しておく
@@ -57,7 +62,7 @@ class ItemPanel extends MainMenuPanel {
 		var page_index = 0;
 
 		// 各ページ配列を生成する
-		this.itemNameList.forEach((itemName: string) => {
+		itemList.forEach((item: ItemPanelElementData) => {
 			// ページの開始なら新しくページを作る
 			if (page_index == 0) {
 				this.elementList[page] = [];
@@ -65,13 +70,16 @@ class ItemPanel extends MainMenuPanel {
 			}
 
 			// 要素の生成
-			var name = itemName;
-			this.elementList[page][page_index] = new MenuElement(
-				global.imageManager.imageMap[itemName],
+			var name = item;
+			this.elementList[page][page_index] = new MenuElementWithExplain(
+				global.imageManager.imageMap[item.name],
 				x,
 				ItemPanel.inner_margin, ItemPanel.element_size, ItemPanel.element_size,
 				() => {},
-				() => {}
+				() => {
+					itemAction(item.name);
+				},
+				item.explain
 			);
 			x += ItemPanel.element_size + ItemPanel.between_element_space;
 
@@ -84,7 +92,7 @@ class ItemPanel extends MainMenuPanel {
 		});
 
 		// 次のページボタン
-		this.pageNextButton = new MenuElement(
+		this.pageNextButton = new MenuElementWithExplain(
 			global.imageManager.imageMap["menu_pageNext"],
 			head_x + (ItemPanel.element_size + ItemPanel.between_element_space) * ItemPanel.page_element_max - ItemPanel.between_element_space + ItemPanel.between_page_button_space,
 			ItemPanel.inner_margin, ItemPanel.page_button_size, ItemPanel.element_size,
@@ -95,7 +103,7 @@ class ItemPanel extends MainMenuPanel {
 				if (this.page < this.elementList.length - 1) {
 					++this.page;
 				}
-			}
+			}, null
 		);
 
 		this.page = 0;
@@ -109,7 +117,7 @@ class ItemPanel extends MainMenuPanel {
 			this.pageNextButton,
 			this.pagePrevButton,
 			this.backButton
-		]).forEach((elm: MenuElement) => {
+		]).forEach((elm: MenuElementWithExplain) => {
 			elm.update(elm);
 			if (global.mouse.judgeEntered({
 				x: canvasDrawer.x + elm.x,
@@ -118,6 +126,7 @@ class ItemPanel extends MainMenuPanel {
 				height: elm.height
 			})) {
 				elm.mouseover = true;
+				this.messageBox.setMessage(elm.getExplain());
 				if (global.mouse.pointCount == 1) {
 					elm.action(elm);
 				}

@@ -7,6 +7,7 @@ class MessageBox {
 
 	private canvas: HTMLCanvasElement;
 	private canvasDrawer: CanvasImageDrawer;
+	private message: string;
 
 	constructor() {
 		this.canvas = global.domController.createCanvas("messageBoxCanvas", 4);
@@ -17,9 +18,11 @@ class MessageBox {
 			MessageBox.width,
 			MessageBox.height
 		);
+		this.message = "";
 	}
 
 	draw(): void {
+		this.canvasDrawer.setFont("18px MyFont");
 		this.canvasDrawer.clear();
 		this.canvasDrawer.drawRect(
 			{x: 0, y: 0, width: MessageBox.width, height: MessageBox.height},
@@ -31,6 +34,28 @@ class MessageBox {
 			false,
 			MessageBox.line_width
 		);
+
+		var color = {r: 255, g: 255, b: 255, a: 255};
+		var dx = 6;
+		for(var i = 0; i < this.message.length; ++i){
+			var c = this.message.charAt(i);
+
+			if(c == "#"){
+				++i;
+				switch(this.message.charAt(i)){
+				case "c":
+					color = {r: 0, g: 255, b: 160, a: 255};
+					break;
+				case "w":
+					color = {r: 255, g: 255, b: 255, a: 255};
+					break;
+				}
+				continue;
+			}
+
+			this.canvasDrawer.drawText(c, dx, 7, color);
+			dx += this.canvasDrawer.getStringTextWidth(c);
+		}
 	}
 
 	clearCanvas(): void {
@@ -45,5 +70,10 @@ class MessageBox {
 			MessageBox.height
 		);
 		this.draw();
+	}
+
+	setMessage(message: string): void {
+		if (!message) { return; }
+		this.message = message;
 	}
 }

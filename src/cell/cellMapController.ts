@@ -35,7 +35,7 @@ class CellMapController {
 		);
 		this.cellMapView = new CellMapView(this.cellMap, this.cellProperty);
 		this.cellMapView.drawCell();
-		this.cellMapView.drawGrid();
+		this.cellMapView.setVisibleGrid(true);
 		this.pause = false;
 		this.alternationSetter = new CellMapAlternationSetter(this);
 		this.alternationSetter.setIndex(3);
@@ -78,6 +78,19 @@ class CellMapController {
 		this.cellMapView.drawCell();
 	}
 
+	saveMap(): void {
+		this.cellMap.save();
+	}
+
+	loadMap(): void {
+		this.cellMap.load();
+		this.cellMapView.drawCell();
+	}
+
+	canLoadMap(): boolean {
+		return this.cellMap.canLoad();
+	}
+
 	setPause(pause: boolean): void {
 		this.pause = pause;
 		if (this.pause) {
@@ -107,5 +120,13 @@ class CellMapController {
 		this.cellMap.setCellNum(xNum, yNum);
 		this.cellMapView.setCellProperty(this.cellProperty, xNum, yNum);
 		this.reset();
+	}
+
+	getVisibleGrid(): boolean {
+		return this.cellMapView.getVisibleGrid();
+	}
+
+	setVisibleGrid(visible: boolean): void {
+		this.cellMapView.setVisibleGrid(visible);
 	}
 }

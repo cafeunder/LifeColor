@@ -8,36 +8,39 @@ class TopPagePanel extends MainMenuPanel {
 	private static vertical_line_height = 48;
 	private static vertical_line_y = 14;
 
-	private elementList: MenuElement[];
+	private messageBox: MessageBox;
+	private elementList: MenuElementWithExplain[];
 	private verticalLineXList: number[];
 	private changeStatus: MainMenuChangeStatus;
 
-	constructor(cellMapController: CellMapController) {
+	constructor(cellMapController: CellMapController, messageBox: MessageBox) {
 		super();
 		var x = 0;
 
+		this.messageBox = messageBox;
 		this.elementList = [];
 		this.verticalLineXList = [];
 		// スピードダウン
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_slow"],
 				(x += TopPagePanel.inner_margin),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				(elm: MenuElement) => {
-					elm.enable = cellMapController.getAlternationSetter().canUp();
+				(self: MenuElement) => {
+					self.enable = cellMapController.getAlternationSetter().canUp();
 				},
-				(elm: MenuElement) => {
+				(self: MenuElement) => {
 					var setter = cellMapController.getAlternationSetter();
 					if (setter.canUp()) {
 						setter.setIndex(setter.getIndex() + 1);
 					}
-				}
+				},
+				"世代交代のスピードを遅くします。"
 			)
 		);
 		// ストップ・スタート切り替え
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.getImageList(["menu_stop", "menu_play"]),
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
@@ -50,44 +53,51 @@ class TopPagePanel extends MainMenuPanel {
 						cellMapController.setPause(false);
 						self.status = 0;
 					}
-				}, 0
+				}, 
+				["世代交代を停止します。", "世代交代を再開します。"], 0,
 			)
 		);
 		// スピードアップ
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_fast"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				(elm: MenuElement) => {
-					elm.enable = cellMapController.getAlternationSetter().canDown();
+				(self: MenuElement) => {
+					self.enable = cellMapController.getAlternationSetter().canDown();
 				},
-				(elm: MenuElement) => {
+				(self: MenuElement) => {
 					var setter = cellMapController.getAlternationSetter();
 					if (setter.canDown()) {
 						setter.setIndex(setter.getIndex() - 1);
 					}
-				}
+				}, "世代交代のスピードを早くします。"
 			)
 		);
 		// 盤面のセーブ
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_save"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
 				() => {},
-				() => { console.log("save"); }
+				() => {
+					cellMapController.saveMap();
+				}, "現在のマップを保存します。"
 			)
 		);
 		// 盤面のロード
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_load"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => {},
-				() => { console.log("load"); }
+				(self: MenuElement) => {
+					self.enable = cellMapController.canLoadMap();
+				},
+				() => {
+					cellMapController.loadMap();
+				}, "保存したマップを復元します。"
 			)
 		);
 
@@ -96,34 +106,37 @@ class TopPagePanel extends MainMenuPanel {
 
 		// ペンモード
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_pencil"],
 				(x += TopPagePanel.vertical_line_width + TopPagePanel.vertical_line_between_space),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
 				() => {},
-				() => { console.log("pencil"); }
+				() => { console.log("pencil"); },
+				"#cペン#w：クリックした位置にセルを追加します。"
 			)
 		);
 		// 消しゴムモード
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_eraser"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
 				() => {},
-				() => { console.log("eraser"); }
+				() => { console.log("eraser"); },
+				"#c消しゴム#w：クリックした位置のセルを削除します。"
 			)
 		);
 		// スタンプモード
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_stamp"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
 				() => {},
 				() => {
 					this.changeStatus = MainMenuChangeStatus.GO_STAMP_PANEL;
-				}
+				},
+				"#cスタンプ#w：一覧からパターンを選択し、クリックで配置します。"
 			)
 		);
 
@@ -132,38 +145,38 @@ class TopPagePanel extends MainMenuPanel {
 
 		// 盤面のクリア
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_clear"],
 				(x += TopPagePanel.vertical_line_width + TopPagePanel.vertical_line_between_space),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
 				() => {},
 				() => {
 					cellMapController.clear();
-				}
+				}, "すべてのセルを削除します。"
 			)
 		);
 		// 盤面のランダマイズ
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_random"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
 				() => {},
 				() => {
 					cellMapController.randomize();
-				}
+				}, "すべてのセルを削除し、セルをランダムに配置します。"
 			)
 		);
 		// テンプレート一覧へ
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_template"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
 				() => {},
 				() => {
 					this.changeStatus = MainMenuChangeStatus.GO_TEMPLATE_PANEL;
-				}
+				}, "一覧から選んだパターンを配置します。"
 			)
 		);
 
@@ -172,29 +185,35 @@ class TopPagePanel extends MainMenuPanel {
 
 		// グリッド表示・非表示切り替え
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_grid"],
 				(x += TopPagePanel.vertical_line_width + TopPagePanel.vertical_line_between_space),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => {},
-				() => { console.log("grid"); }
+				(self: MenuElement) => {
+					self.status = (cellMapController.getVisibleGrid()) ? 0 : 1;
+				},
+				(self: MenuElement) => {
+					cellMapController.setVisibleGrid(self.status != 0);
+				},
+				["グリッドを非表示にします。", "グリッドを表示します。"], 0
 			)
 		);
 		// ダミー
 		this.elementList.push(
-			new MenuElement(
+			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_grid"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
 				() => {},
-				() => { console.log("grid"); }
+				() => { console.log("grid"); },
+				"ダミー"
 			)
 		);
 	}
 
 	update(canvasDrawer: CanvasImageDrawer): number {
 		this.changeStatus = MainMenuChangeStatus.HOLD_PANEL;
-		this.elementList.forEach((elm: MenuElement) => {
+		this.elementList.forEach((elm: MenuElementWithExplain) => {
 			elm.update(elm);
 			if (global.mouse.judgeEntered({
 				x: canvasDrawer.x + elm.x,
@@ -203,6 +222,7 @@ class TopPagePanel extends MainMenuPanel {
 				height: elm.height
 			})) {
 				elm.mouseover = true;
+				this.messageBox.setMessage(elm.getExplain());
 				if (global.mouse.pointCount == 1) {
 					elm.action(elm);
 				}
