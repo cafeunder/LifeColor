@@ -6,6 +6,8 @@ const enum DrawingTool {
 }
 
 class CellPlanter {
+	private static guide_fadeout_count = 15;
+
 	private cellMapController: CellMapController;
 	private menuOnMouse: () => boolean;
 
@@ -42,6 +44,7 @@ class CellPlanter {
 		this.guideCanvasDrawer.clear();
 
 		if (this.menuOnMouse()) return;
+		if (global.mouse.stopCount > CellPlanter.guide_fadeout_count) return;
 		const cellProperty = this.cellMapController.getCellProperty();
 		const cellSize = cellProperty.cellSize;
 		const gridWidth = cellProperty.gridWidth;

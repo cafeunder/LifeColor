@@ -19,9 +19,14 @@ class Mouse {
 		if (this.leftPress) ++this.pointCount;
 		else this.pointCount = 0;
 
+		// このフレーム中には動かなかった
+		if (this.x == this.tempX && this.y == this.tempY) {
+			this.stopCount++;
+		} else {
+			this.stopCount = 0;
+		}
 		this.x = this.tempX;
 		this.y = this.tempY;
-		this.stopCount++;
 	}
 
 	judgeEntered(rect: Rect): boolean {
@@ -35,7 +40,6 @@ class Mouse {
 		var rect = (<Element>event.target).getBoundingClientRect();
 		this.tempX = event.clientX - rect.left;
 		this.tempY = event.clientY - rect.top;
-		this.stopCount = 0;
 	}
 
 	private mouseDown(event: MouseEvent): void {
