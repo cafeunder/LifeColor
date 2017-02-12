@@ -22,7 +22,7 @@ class MessageBox {
 	}
 
 	draw(): void {
-		this.canvasDrawer.setFont("18px MyFont");
+		this.canvasDrawer.setFont("17px MyFont");
 		this.canvasDrawer.clear();
 		this.canvasDrawer.drawRect(
 			{x: 0, y: 0, width: MessageBox.width, height: MessageBox.height},
@@ -53,7 +53,7 @@ class MessageBox {
 				continue;
 			}
 
-			this.canvasDrawer.drawText(c, dx, 7, color);
+			this.canvasDrawer.drawText(c, dx, 8, color);
 			dx += this.canvasDrawer.getStringTextWidth(c);
 		}
 	}
