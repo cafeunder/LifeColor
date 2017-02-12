@@ -149,4 +149,18 @@ class CellMap {
 		}
 		this.copy(temp, tempX, tempY);
 	}
+
+	setTemplate(template: number[][], leftAlignment: boolean = false): void {
+		this.clear();
+		var setX = (leftAlignment) ? 0 : Math.floor(this.xNum / 2 - template[0].length / 2);
+		var setY = Math.floor(this.yNum / 2 - template.length / 2);
+
+		for(var y = 0; y < template.length && y < this.map.length; ++y){
+			for(var x = 0; x < template[y].length && x < this.map[y].length; ++x){
+				if(template[y][x] == 1) {
+					this.map[setY + y][setX + x] = true;
+				}
+			}
+		}
+	}
 }

@@ -33,7 +33,13 @@ class MainMenu {
 		this.topPagePanel = new TopPagePanel(cellMapController, this.messageBox);
 
 		var setStamp = (name: string) => { console.log(name); }
-		var setTemplate = (name: string) => { console.log(name); }
+		var setTemplate = (name: string) => {
+			cellMapController.setTemplate(
+				TemplatePattern.list[name].map,
+				TemplatePattern.list[name].leftAlignment
+			);
+		}
+
 		this.stampPanel = new ItemPanel(
 			StampPattern.makeItemPanelElementData(),
 			setStamp,

@@ -110,6 +110,7 @@ class ItemPanel extends MainMenuPanel {
 	}
 
 	update(canvasDrawer: CanvasImageDrawer): MainMenuChangeStatus {
+		this.messageBox.setMessage(" ");
 		this.changeStatus = MainMenuChangeStatus.HOLD_PANEL;
 
 		// ほとんど同じ処理なので同じ配列で処理する

@@ -25,7 +25,38 @@ class ImageManager {
 		"img/stamp_block.png",
 		"img/stamp_tab.png",
 		"img/template_bakery.png",
-		"img/template_lake.png"
+		"img/template_lake.png",
+		"img/template_phoenix1.png",
+		"img/template_galaxy.png",
+		"img/template_eight.png",
+		"img/template_pentadecathlon.png",
+		"img/template_pulsar.png",
+		"img/template_clock2.png",
+		"img/template_hertz.png",
+		"img/template_glasses.png",
+		"img/template_1234.png",
+		"img/template_cauldron.png",
+		"img/template_harbor.png",
+		"img/template_barberpole.png",
+		"img/template_carnival_shuttle.png",
+		"img/template_toadflipper.png",
+		"img/template_tumbler.png",
+		"img/template_fly.png",
+		"img/template_brain.png",
+		"img/template_hammerhead.png",
+		"img/template_thunderbird.png",
+		"img/template_rpento.png",
+		"img/template_switchengine.png",
+		"img/template_acorn.png",
+		"img/template_5x5.png",
+		"img/template_glidergun.png",
+		"img/template_max.png",
+		"img/template_wickstretcher1.png",
+		"img/template_ttetromino.png",
+		"img/template_apiary.png",
+		"img/template_eatloaf.png",
+		"img/template_eatglider.png",
+		"img/template_flowerofeden.png"
 	];
 
 	imageMap: {[key: string]: HTMLImageElement} = {};
@@ -53,7 +84,6 @@ class ImageManager {
 				return false;
 			}
 		}
-
 		return true;
 	}
 
