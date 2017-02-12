@@ -13,7 +13,7 @@ class TopPagePanel extends MainMenuPanel {
 	private verticalLineXList: number[];
 	private changeStatus: MainMenuChangeStatus;
 
-	constructor(cellMapController: CellMapController, messageBox: MessageBox) {
+	constructor(cellMapController: CellMapController, cellPlanter: CellPlanter, messageBox: MessageBox) {
 		super();
 		var x = 0;
 
@@ -113,7 +113,9 @@ class TopPagePanel extends MainMenuPanel {
 				(x += TopPagePanel.vertical_line_width + TopPagePanel.vertical_line_between_space),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
 				() => {},
-				() => { console.log("pencil"); },
+				() => {
+					cellPlanter.setDrawingTool(DrawingTool.PEN);
+				},
 				"#cペン#w：クリックした位置にセルを追加します。"
 			)
 		);
@@ -124,7 +126,9 @@ class TopPagePanel extends MainMenuPanel {
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
 				() => {},
-				() => { console.log("eraser"); },
+				() => {
+					cellPlanter.setDrawingTool(DrawingTool.ERASER);
+				},
 				"#c消しゴム#w：クリックした位置のセルを削除します。"
 			)
 		);

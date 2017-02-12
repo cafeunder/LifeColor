@@ -21,7 +21,6 @@ class CellMapController {
 	private cellMap: CellMap;
 	private cellMapView: CellMapView;
 	private cellProperty: CellProperty;
-	private cellPlanter: CellPlanter;
 	private pause: boolean;
 	private alternationSetter: CellMapAlternationSetter;
 
@@ -37,14 +36,12 @@ class CellMapController {
 		this.cellMapView = new CellMapView(this.cellMap, this.cellProperty);
 		this.cellMapView.drawCell();
 		this.cellMapView.setVisibleGrid(true);
-		this.cellPlanter = new CellPlanter(this, this.cellMapView);
 		this.pause = false;
 		this.alternationSetter = new CellMapAlternationSetter(this);
 		this.alternationSetter.setIndex(2);
 	}
 
 	update(): void {
-		this.cellPlanter.update();
 		if (!this.pause) {
 			++this.alternationCount;
 		}
@@ -97,7 +94,7 @@ class CellMapController {
 		return this.cellMap.canLoad();
 	}
 
-	plant(x: number, y: number, cell: boolean): void {
+	setCell(x: number, y: number, cell: boolean): void {
 		this.cellMap.setCell(x, y, cell);
 		this.cellMapView.drawCell();
 	}
@@ -121,6 +118,10 @@ class CellMapController {
 		this.alternationInterval = alternationInterval;
 	}
 
+	getCellProperty(): CellProperty {
+		return this.cellProperty;
+	}
+
 	setCellPropertyIndex(index: number): void {
 		if (index < 0) {
 			index = 0;
@@ -130,10 +131,7 @@ class CellMapController {
 		}
 
 		this.cellProperty = CellMapController.cell_property_array[index];
-		const xNum = Math.floor(global.domController.container.offsetWidth / this.cellProperty.cellSize);
-		const yNum = Math.floor(global.domController.container.offsetHeight / this.cellProperty.cellSize);
-		this.cellMap.setCellNum(xNum, yNum);
-		this.cellMapView.setCellProperty(this.cellProperty, xNum, yNum);
+		global.domController.resize();
 		this.reset();
 	}
 
@@ -145,13 +143,13 @@ class CellMapController {
 		this.cellMapView.setVisibleGrid(visible);
 	}
 
+	getCanvasRect(): Rect {
+		return this.cellMapView.getCanvasRect();
+	}
+
 	setTemplate(template: number[][], leftAlignment: boolean = false): void {
 		this.alternationCount = 0;
 		this.cellMap.setTemplate(template, leftAlignment);
 		this.cellMapView.drawCell();
-	}
-
-	setMenuOnMouse(menuOnMouse: () => boolean): void {
-		this.cellPlanter.setMenuOnMouse(menuOnMouse);
 	}
 }

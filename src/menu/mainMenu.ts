@@ -20,7 +20,7 @@ class MainMenu {
 	visiblePanel: MainMenuPanel;
 	changedPanel: boolean;
 
-	constructor(cellMapController: CellMapController) {
+	constructor(cellMapController: CellMapController, cellPlanter: CellPlanter) {
 		this.canvas = global.domController.createCanvas("mainMenuCanvas", 4);
 		this.canvasDrawer = new CanvasImageDrawer(this.canvas);
 		this.canvasDrawer.changeCanvas(
@@ -30,7 +30,7 @@ class MainMenu {
 			MainMenu.height
 		);
 		this.messageBox = new MessageBox();
-		this.topPagePanel = new TopPagePanel(cellMapController, this.messageBox);
+		this.topPagePanel = new TopPagePanel(cellMapController, cellPlanter, this.messageBox);
 
 		var setStamp = (name: string) => { console.log(name); }
 		var setTemplate = (name: string) => {

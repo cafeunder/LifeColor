@@ -1,6 +1,6 @@
 
 class Program {
-	private cellMapView: CellMapView;
+	private cellPlanter: CellPlanter;
 	private cellMapController: CellMapController;
 	private menuManager: MenuManager;
 
@@ -17,9 +17,11 @@ class Program {
 
 		// セルマップの生成と初期設定
 		this.cellMapController = new CellMapController();
+		this.cellPlanter = new CellPlanter(this.cellMapController);
 
 		global.domController.resize = () => {
 			this.cellMapController.resize();
+			this.cellPlanter.changeCanvas();
 			this.menuManager.changeCanavs();
 		};
 
@@ -37,17 +39,19 @@ class Program {
 			// 画像読み込みの監視
 			if (global.imageManager.checkLoadCompleted()) {
 				clearInterval(check);
-				this.menuManager = new MenuManager(this.cellMapController);
-				this.cellMapController.setMenuOnMouse(this.menuManager.judgeMouseOnMenu.bind(this.menuManager));
+				this.menuManager = new MenuManager(this.cellMapController, this.cellPlanter);
+				this.cellPlanter.setMenuOnMouse(this.menuManager.judgeMouseOnMenu.bind(this.menuManager));
 
 				// 画像の読み込みが完了したらメインループ開始
 				setInterval(() => {
 					global.fps.update();
 					global.mouse.update();
 					global.keyboard.update();
+					this.cellPlanter.update();
 					this.cellMapController.update();
 					this.menuManager.update();
 
+					this.cellPlanter.draw();
 					this.menuManager.draw();
 					global.fps.draw();
 				}, 33);
