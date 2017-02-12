@@ -12,7 +12,7 @@ class TopPagePanel extends MainMenuPanel {
 	private verticalLineXList: number[];
 	private changeStatus: MainMenuChangeStatus;
 
-	constructor() {
+	constructor(cellMapController: CellMapController) {
 		super();
 		var x = 0;
 
@@ -24,7 +24,15 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_slow"],
 				(x += TopPagePanel.inner_margin),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => { console.log("slow"); }
+				(elm: MenuElement) => {
+					elm.enable = cellMapController.getAlternationSetter().canUp();
+				},
+				(elm: MenuElement) => {
+					var setter = cellMapController.getAlternationSetter();
+					if (setter.canUp()) {
+						setter.setIndex(setter.getIndex() + 1);
+					}
+				}
 			)
 		);
 		// ストップ・スタート切り替え
@@ -33,12 +41,13 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.getImageList(["menu_stop", "menu_play"]),
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
+				() => {},
 				(self: MenuElement) => {
 					if (self.status == 0) {
-						console.log("stop");
+						cellMapController.setPause(true);
 						self.status = 1;
 					} else {
-						console.log("play");
+						cellMapController.setPause(false);
 						self.status = 0;
 					}
 				}, 0
@@ -50,7 +59,15 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_fast"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => { console.log("fast"); }
+				(elm: MenuElement) => {
+					elm.enable = cellMapController.getAlternationSetter().canDown();
+				},
+				(elm: MenuElement) => {
+					var setter = cellMapController.getAlternationSetter();
+					if (setter.canDown()) {
+						setter.setIndex(setter.getIndex() - 1);
+					}
+				}
 			)
 		);
 		// 盤面のセーブ
@@ -59,6 +76,7 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_save"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
+				() => {},
 				() => { console.log("save"); }
 			)
 		);
@@ -68,6 +86,7 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_load"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
+				() => {},
 				() => { console.log("load"); }
 			)
 		);
@@ -81,6 +100,7 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_pencil"],
 				(x += TopPagePanel.vertical_line_width + TopPagePanel.vertical_line_between_space),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
+				() => {},
 				() => { console.log("pencil"); }
 			)
 		);
@@ -90,6 +110,7 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_eraser"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
+				() => {},
 				() => { console.log("eraser"); }
 			)
 		);
@@ -99,6 +120,7 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_stamp"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
+				() => {},
 				() => {
 					this.changeStatus = MainMenuChangeStatus.GO_STAMP_PANEL;
 				}
@@ -114,7 +136,10 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_clear"],
 				(x += TopPagePanel.vertical_line_width + TopPagePanel.vertical_line_between_space),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => { console.log("clear"); }
+				() => {},
+				() => {
+					cellMapController.clear();
+				}
 			)
 		);
 		// 盤面のランダマイズ
@@ -123,7 +148,10 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_random"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => { console.log("random"); }
+				() => {},
+				() => {
+					cellMapController.randomize();
+				}
 			)
 		);
 		// テンプレート一覧へ
@@ -132,6 +160,7 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_template"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
+				() => {},
 				() => {
 					this.changeStatus = MainMenuChangeStatus.GO_TEMPLATE_PANEL;
 				}
@@ -147,6 +176,7 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_grid"],
 				(x += TopPagePanel.vertical_line_width + TopPagePanel.vertical_line_between_space),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
+				() => {},
 				() => { console.log("grid"); }
 			)
 		);
@@ -156,6 +186,7 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_grid"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
+				() => {},
 				() => { console.log("grid"); }
 			)
 		);
@@ -164,6 +195,7 @@ class TopPagePanel extends MainMenuPanel {
 	update(canvasDrawer: CanvasImageDrawer): number {
 		this.changeStatus = MainMenuChangeStatus.HOLD_PANEL;
 		this.elementList.forEach((elm: MenuElement) => {
+			elm.update(elm);
 			if (global.mouse.judgeEntered({
 				x: canvasDrawer.x + elm.x,
 				y: canvasDrawer.y + elm.y,
@@ -202,7 +234,7 @@ class TopPagePanel extends MainMenuPanel {
 	// メニューアイコンを枠付きで描画する
 	static drawElement(elm: MenuElement, canvasDrawer: CanvasImageDrawer, lineWidth: number): void {
 		// マウスオーバー時の描画処理
-		if (elm.mouseover) {
+		if (elm.enable && elm.mouseover) {
 			// 背景の四角形
 			canvasDrawer.drawRect(
 				{x: elm.x, y: elm.y, width: elm.width, height: elm.height},
@@ -223,6 +255,7 @@ class TopPagePanel extends MainMenuPanel {
 			image,
 			elm.x + Math.floor(elm.width / 2 - image.width / 2),
 			elm.y + Math.floor(elm.height / 2 - image.height / 2),
+			(elm.enable) ? null : 0.5
 		);
 	}
 }

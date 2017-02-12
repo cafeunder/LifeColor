@@ -30,6 +30,7 @@ class ItemPanel extends MainMenuPanel {
 			global.imageManager.imageMap["menu_back"],
 			(x += ItemPanel.inner_margin),
 			ItemPanel.inner_margin, ItemPanel.element_size, ItemPanel.element_size,
+			() => {},
 			() => {
 				this.changeStatus = MainMenuChangeStatus.GO_TOP_PANEL;
 			}
@@ -40,9 +41,12 @@ class ItemPanel extends MainMenuPanel {
 			global.imageManager.imageMap["menu_pagePrev"],
 			(x += ItemPanel.element_size + ItemPanel.between_back_button_space),
 			ItemPanel.inner_margin, ItemPanel.page_button_size, ItemPanel.element_size,
+			(elm: MenuElement) => {
+				elm.enable = (this.page != 0);
+			},
 			() => {
 				if (this.page > 0) {
-					this.setPage(this.page - 1);
+					--this.page;
 				}
 			}
 		);
@@ -66,7 +70,8 @@ class ItemPanel extends MainMenuPanel {
 				global.imageManager.imageMap[itemName],
 				x,
 				ItemPanel.inner_margin, ItemPanel.element_size, ItemPanel.element_size,
-				() => { }
+				() => {},
+				() => {}
 			);
 			x += ItemPanel.element_size + ItemPanel.between_element_space;
 
@@ -83,14 +88,17 @@ class ItemPanel extends MainMenuPanel {
 			global.imageManager.imageMap["menu_pageNext"],
 			head_x + (ItemPanel.element_size + ItemPanel.between_element_space) * ItemPanel.page_element_max - ItemPanel.between_element_space + ItemPanel.between_page_button_space,
 			ItemPanel.inner_margin, ItemPanel.page_button_size, ItemPanel.element_size,
+			(elm: MenuElement) => {
+				elm.enable = (this.page < (this.elementList.length - 1));
+			},
 			() => {
 				if (this.page < this.elementList.length - 1) {
-					this.setPage(this.page + 1);
+					++this.page;
 				}
 			}
 		);
 
-		this.setPage(0);
+		this.page = 0;
 	}
 
 	update(canvasDrawer: CanvasImageDrawer): MainMenuChangeStatus {
@@ -102,6 +110,7 @@ class ItemPanel extends MainMenuPanel {
 			this.pagePrevButton,
 			this.backButton
 		]).forEach((elm: MenuElement) => {
+			elm.update(elm);
 			if (global.mouse.judgeEntered({
 				x: canvasDrawer.x + elm.x,
 				y: canvasDrawer.y + elm.y,
@@ -222,12 +231,5 @@ class ItemPanel extends MainMenuPanel {
 			elm.x + Math.floor(elm.width / 2 - image.width / 2),
 			elm.y + Math.floor(elm.height / 2 - image.height / 2),
 		);
-	}
-
-	setPage(page: number): void {
-		this.page = page;
-
-		this.pagePrevButton.enable = (this.page != 0);
-		this.pageNextButton.enable = (this.page < (this.elementList.length - 1));
 	}
 }

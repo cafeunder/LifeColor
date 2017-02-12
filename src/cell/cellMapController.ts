@@ -5,7 +5,7 @@ interface CellProperty {
 }
 
 class CellMapController {
-	static CELL_PROPERTY_ARRAY = [{
+	private static cell_property_array = [{
 		cellSize: 16,
 		gridWidth: 2
 	}, {
@@ -21,12 +21,14 @@ class CellMapController {
 	private cellMap: CellMap;
 	private cellMapView: CellMapView;
 	private cellProperty: CellProperty;
+	private pause: boolean;
+	private alternationSetter: CellMapAlternationSetter;
 
 	constructor() {
 		this.alternationCount = 0;
 		this.alternationInterval = null;
 
-		this.cellProperty = CellMapController.CELL_PROPERTY_ARRAY[0];
+		this.cellProperty = CellMapController.cell_property_array[0];
 		this.cellMap = new CellMap(
 			Math.floor(global.domController.container.offsetWidth / this.cellProperty.cellSize),
 			Math.floor(global.domController.container.offsetHeight / this.cellProperty.cellSize),
@@ -34,36 +36,20 @@ class CellMapController {
 		this.cellMapView = new CellMapView(this.cellMap, this.cellProperty);
 		this.cellMapView.drawCell();
 		this.cellMapView.drawGrid();
+		this.pause = false;
+		this.alternationSetter = new CellMapAlternationSetter(this);
+		this.alternationSetter.setIndex(3);
 	}
 
 	update(): void {
-		++this.alternationCount;
+		if (!this.pause) {
+			++this.alternationCount;
+		}
 		if (this.alternationCount >= this.alternationInterval) {
 			this.cellMap.alternate();
 			this.cellMapView.drawDifferenceCell();
 			this.alternationCount = 0;
 		}
-	}
-
-	setAlternationInterval(alternationInterval): void {
-		// スピードダウンのときは，移行状態を許さない
-		this.alternationInterval = alternationInterval;
-	}
-
-	setCellPropertyIndex(index: number): void {
-		if (index < 0) {
-			index = 0;
-		}
-		if (index >= CellMapController.CELL_PROPERTY_ARRAY.length) {
-			index = CellMapController.CELL_PROPERTY_ARRAY.length - 1;
-		}
-
-		this.cellProperty = CellMapController.CELL_PROPERTY_ARRAY[index];
-		const xNum = Math.floor(global.domController.container.offsetWidth / this.cellProperty.cellSize);
-		const yNum = Math.floor(global.domController.container.offsetHeight / this.cellProperty.cellSize);
-		this.cellMap.setCellNum(xNum, yNum);
-		this.cellMapView.setCellProperty(this.cellProperty, xNum, yNum);
-		this.reset();
 	}
 
 	resize(): void {
@@ -82,7 +68,44 @@ class CellMapController {
 		this.cellMapView.drawGrid();
 	}
 
-	getInterface(): CellMapInterface {
-		return new CellMapInterface(this, this.cellMap);
+	clear(): void {
+		this.cellMap.clear();
+		this.cellMapView.drawCell();
+	}
+
+	randomize(): void {
+		this.cellMap.randomize();
+		this.cellMapView.drawCell();
+	}
+
+	setPause(pause: boolean): void {
+		this.pause = pause;
+		if (this.pause) {
+			this.alternationCount = 0;
+		}
+	}
+
+	getAlternationSetter(): CellMapAlternationSetter {
+		return this.alternationSetter;
+	}
+
+	setAlternationInterval(alternationInterval): void {
+		this.alternationInterval = alternationInterval;
+	}
+
+	setCellPropertyIndex(index: number): void {
+		if (index < 0) {
+			index = 0;
+		}
+		if (index >= CellMapController.cell_property_array.length) {
+			index = CellMapController.cell_property_array.length - 1;
+		}
+
+		this.cellProperty = CellMapController.cell_property_array[index];
+		const xNum = Math.floor(global.domController.container.offsetWidth / this.cellProperty.cellSize);
+		const yNum = Math.floor(global.domController.container.offsetHeight / this.cellProperty.cellSize);
+		this.cellMap.setCellNum(xNum, yNum);
+		this.cellMapView.setCellProperty(this.cellProperty, xNum, yNum);
+		this.reset();
 	}
 }

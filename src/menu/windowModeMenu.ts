@@ -17,6 +17,9 @@ class WindowModeMenu {
 			WindowModeMenu.element_size,
 			WindowModeMenu.element_size,
 			(self: MenuElement) => {
+				this.element.status = (global.domController.fullScreen) ? 1 : 0;
+			},
+			(self: MenuElement) => {
 				if (self.status == 0) {
 					global.domController.setupFullScreenMode();
 				} else {
@@ -39,6 +42,7 @@ class WindowModeMenu {
 	}
 
 	update(): void {
+		this.element.update(this.element);
 		if (global.mouse.judgeEntered({
 			x: this.canvasDrawer.x + this.element.x,
 			y: this.canvasDrawer.y + this.element.y,
@@ -97,9 +101,5 @@ class WindowModeMenu {
 			width: this.width,
 			height: this.height
 		});
-	}
-
-	syncWindowMode(): void {
-		this.element.status = (global.domController.fullScreen) ? 1 : 0;
 	}
 }

@@ -19,7 +19,7 @@ class MainMenu {
 	templatePanel: ItemPanel;
 	visiblePanel: MainMenuPanel;
 
-	constructor(cellMapInterface: CellMapInterface) {
+	constructor(cellMapController: CellMapController) {
 		this.canvas = global.domController.createCanvas("mainMenuCanvas", 4);
 		this.canvasDrawer = new CanvasImageDrawer(this.canvas);
 		this.canvasDrawer.changeCanvas(
@@ -29,7 +29,7 @@ class MainMenu {
 			MainMenu.height
 		);
 		this.messageBox = new MessageBox();
-		this.topPagePanel = new TopPagePanel();
+		this.topPagePanel = new TopPagePanel(cellMapController);
 		this.stampPanel = new ItemPanel(
 			[
 				"stamp_block",

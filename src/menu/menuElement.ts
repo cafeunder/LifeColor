@@ -43,6 +43,11 @@ class MenuElement {
 	mouseover: boolean;
 
 	/**
+	 * 毎フレーム呼び出されるべき状態更新メソッド
+	 */
+	update: (self: MenuElement) => void;
+
+	/**
 	 * 押されたときの動作
 	 */
 	action: (self: MenuElement) => void;
@@ -53,6 +58,7 @@ class MenuElement {
 		y: number,
 		width: number,
 		height: number,
+		update: (self: MenuElement) => void,
 		action: (self: MenuElement) => void,
 		status?: number
 	) {
@@ -65,6 +71,7 @@ class MenuElement {
 		this.enable = true;
 		this.selected = false;
 		this.mouseover = false;
+		this.update = update;
 		this.action = action;
 	}
 

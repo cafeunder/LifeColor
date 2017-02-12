@@ -8,8 +8,11 @@ class CanvasImageDrawer extends CanvasDrawer {
 		image: HTMLImageElement,
 		x: number,
 		y: number,
+		alpha?: number
 	): void {
+		if (alpha) this.context.globalAlpha = alpha;
 		this.context.drawImage(image, x, y);
+		if (alpha) this.context.globalAlpha = 1.0;
 	}
 
 	drawRect(

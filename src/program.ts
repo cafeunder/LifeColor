@@ -17,7 +17,6 @@ class Program {
 
 		// セルマップの生成と初期設定
 		this.cellMapController = new CellMapController();
-		this.cellMapController.setAlternationInterval(20);
 
 		global.domController.resize = () => {
 			this.cellMapController.resize();
@@ -38,7 +37,7 @@ class Program {
 			// 画像読み込みの監視
 			if (global.imageManager.checkLoadCompleted()) {
 				clearInterval(check);
-				this.menuManager = new MenuManager(this.cellMapController.getInterface());
+				this.menuManager = new MenuManager(this.cellMapController);
 
 				// 画像の読み込みが完了したらメインループ開始
 				setInterval(() => {

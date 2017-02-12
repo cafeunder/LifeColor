@@ -58,7 +58,6 @@ class CellMap {
 				}
 			}
 		}
-
 		this.generation++;
 
 		// 世代交代用マップと現在のマップを入れ替え

@@ -10,7 +10,7 @@ class CellSizeConfigMenu {
 		"cellSize_small"
 	];
 
-	private cellMapInterface: CellMapInterface;
+	private cellMapController: CellMapController;
 	private canvas: HTMLCanvasElement;
 	private canvasDrawer: CanvasImageDrawer;
 	private elementList: MenuElement[];
@@ -18,8 +18,8 @@ class CellSizeConfigMenu {
 	private width: number;
 	private height: number;
 
-	constructor(rx: number, y: number, cellMapInterface: CellMapInterface) {
-		this.cellMapInterface = cellMapInterface;
+	constructor(rx: number, y: number, cellMapController: CellMapController) {
+		this.cellMapController = cellMapController;
 		this.canvas = global.domController.createCanvas("cellSizeConfigMenuCanvas", 4);
 		this.canvasDrawer = new CanvasImageDrawer(this.canvas);
 
@@ -36,6 +36,7 @@ class CellSizeConfigMenu {
 
 	update(): void {
 		this.elementList.forEach((elm: MenuElement) => {
+			elm.update(elm);
 			if (global.mouse.judgeEntered({
 				x: this.canvasDrawer.x + elm.x,
 				y: this.canvasDrawer.y + elm.y,
@@ -118,8 +119,9 @@ class CellSizeConfigMenu {
 					CellSizeConfigMenu.inner_margin,
 					CellSizeConfigMenu.element_size,
 					CellSizeConfigMenu.element_size,
+					() => {},
 					() => {
-						this.cellMapInterface.setCellPropertyIndex(index);
+						this.cellMapController.setCellPropertyIndex(index);
 					}
 				)
 			);
