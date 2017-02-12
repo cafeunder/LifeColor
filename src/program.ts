@@ -38,6 +38,7 @@ class Program {
 			if (global.imageManager.checkLoadCompleted()) {
 				clearInterval(check);
 				this.menuManager = new MenuManager(this.cellMapController);
+				this.cellMapController.setMenuOnMouse(this.menuManager.judgeMouseOnMenu.bind(this.menuManager));
 
 				// 画像の読み込みが完了したらメインループ開始
 				setInterval(() => {

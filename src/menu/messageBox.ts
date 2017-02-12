@@ -76,4 +76,13 @@ class MessageBox {
 		if (!message) { return; }
 		this.message = message;
 	}
+
+	judgeEnteredMouse(): boolean {
+		return global.mouse.judgeEntered({
+			x: this.canvasDrawer.x,
+			y: this.canvasDrawer.y,
+			width: MessageBox.width,
+			height: MessageBox.height
+		});
+	}
 }

@@ -62,6 +62,7 @@ class MenuManager {
 		return this.visible && (
 			this.cellSizeConfigMenu.judgeEnteredMouse()
 			|| this.windowModeMenu.judgeEnteredMouse()
+			|| this.mainMenu.judgeEnteredMouse()
 		);
 	}
 }

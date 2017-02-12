@@ -76,6 +76,10 @@ class CellMapView {
 		this.gridCanvasDrawer.reflesh();
 	}
 
+	getCellSize(): number {
+		return this.cellProperty.cellSize;
+	}
+
 	getRect(cx: number, cy: number): Rect {
 		return {
 			x: cx * this.cellProperty.cellSize + this.cellProperty.gridWidth,
@@ -108,5 +112,14 @@ class CellMapView {
 		} else {
 			this.gridCanvasDrawer.clear();
 		}
+	}
+
+	getCanvasRect(): Rect {
+		return {
+			x: this.cellCanvasDrawer.x,
+			y: this.cellCanvasDrawer.y,
+			width: this.cellCanvas.width,
+			height: this.cellCanvas.height
+		};
 	}
 }

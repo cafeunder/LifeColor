@@ -108,4 +108,13 @@ class MainMenu {
 		this.messageBox.changeCanvas();
 		this.draw();
 	}
+
+	judgeEnteredMouse(): boolean {
+		return this.messageBox.judgeEnteredMouse() || global.mouse.judgeEntered({
+			x: this.canvasDrawer.x,
+			y: this.canvasDrawer.y,
+			width: MainMenu.width,
+			height: MainMenu.height
+		});
+	}
 }

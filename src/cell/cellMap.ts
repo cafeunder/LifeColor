@@ -133,6 +133,10 @@ class CellMap {
 		return this.savedMap != null;
 	}
 
+	setCell(x: number, y: number, cell: boolean): void {
+		this.map[y][x] = cell;
+	}
+
 	setCellNum(xNum: number, yNum: number): void {
 		const temp = this.map;
 		const tempX = this.xNum;

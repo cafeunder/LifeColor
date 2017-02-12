@@ -21,6 +21,7 @@ class CellMapController {
 	private cellMap: CellMap;
 	private cellMapView: CellMapView;
 	private cellProperty: CellProperty;
+	private cellPlanter: CellPlanter;
 	private pause: boolean;
 	private alternationSetter: CellMapAlternationSetter;
 
@@ -36,12 +37,14 @@ class CellMapController {
 		this.cellMapView = new CellMapView(this.cellMap, this.cellProperty);
 		this.cellMapView.drawCell();
 		this.cellMapView.setVisibleGrid(true);
+		this.cellPlanter = new CellPlanter(this, this.cellMapView);
 		this.pause = false;
 		this.alternationSetter = new CellMapAlternationSetter(this);
 		this.alternationSetter.setIndex(2);
 	}
 
 	update(): void {
+		this.cellPlanter.update();
 		if (!this.pause) {
 			++this.alternationCount;
 		}
@@ -94,6 +97,15 @@ class CellMapController {
 		return this.cellMap.canLoad();
 	}
 
+	plant(x: number, y: number, cell: boolean): void {
+		this.cellMap.setCell(x, y, cell);
+		this.cellMapView.drawCell();
+	}
+
+	getPause(): boolean {
+		return this.pause;
+	}
+
 	setPause(pause: boolean): void {
 		this.pause = pause;
 		if (this.pause) {
@@ -137,5 +149,9 @@ class CellMapController {
 		this.alternationCount = 0;
 		this.cellMap.setTemplate(template, leftAlignment);
 		this.cellMapView.drawCell();
+	}
+
+	setMenuOnMouse(menuOnMouse: () => boolean): void {
+		this.cellPlanter.setMenuOnMouse(menuOnMouse);
 	}
 }

@@ -10,7 +10,7 @@ class DOMController {
 
 	constructor() {
 		this.container = document.getElementById("canvasContainer");
-		this.controlCanvas = this.createCanvas("controlCanvas", 10);
+		this.controlCanvas = this.createCanvas("controlCanvas", 200);
 		this.body = <HTMLBodyElement>document.getElementById('lifeBody');
 	}
 

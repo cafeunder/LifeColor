@@ -22,6 +22,7 @@
         "./src/cell/cellMapView.ts",
         "./src/cell/cellMapController.ts",
         "./src/cell/cellMapAlternationSetter.ts",
+        "./src/cell/cellPlanter.ts",
         "./src/menu/menuElement.ts",
         "./src/menu/cellSizeConfigMenu.ts",
         "./src/menu/windowModeMenu.ts",

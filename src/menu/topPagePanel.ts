@@ -44,7 +44,9 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.getImageList(["menu_stop", "menu_play"]),
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => {},
+				(self: MenuElement) => {
+					self.status = (cellMapController.getPause()) ? 1 : 0;
+				},
 				(self: MenuElement) => {
 					if (self.status == 0) {
 						cellMapController.setPause(true);
