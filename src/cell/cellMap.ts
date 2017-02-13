@@ -167,4 +167,14 @@ class CellMap {
 			}
 		}
 	}
+
+	plantStamp(stampMap: number[][], x0: number, y0: number): void {
+		for(var y = y0; y < y0 + stampMap.length; ++y){
+			for(var x = x0; x < x0 + stampMap[0].length; ++x){
+				if(stampMap[y - y0][x - x0] == 1){
+					this.map[y][x] = true;
+				}
+			}
+		}
+	}
 }

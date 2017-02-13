@@ -4,6 +4,7 @@ class Mouse {
 	y: number;
 	pointCount = 0;
 	stopCount = 0;
+	entered: boolean;
 	private leftPress: boolean;
 	private tempX: number;
 	private tempY: number;
@@ -13,6 +14,7 @@ class Mouse {
 		global.domController.controlCanvas.addEventListener('mousedown', this.mouseDown.bind(this), true);
 		global.domController.controlCanvas.addEventListener('mouseup', this.mouseUp.bind(this), true);
 		global.domController.controlCanvas.addEventListener('mouseout', this.mouseOut.bind(this), true);
+		global.domController.controlCanvas.addEventListener('mouseover', this.mouseOver.bind(this), true);
 	}
 
 	update() {
@@ -52,5 +54,10 @@ class Mouse {
 
 	private mouseOut(event: MouseEvent): void {
 		this.leftPress = false;
+		this.entered = false;
+	}
+
+	private mouseOver(event: MouseEvent): void {
+		this.entered = true;
 	}
 }

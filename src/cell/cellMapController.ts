@@ -152,4 +152,16 @@ class CellMapController {
 		this.cellMap.setTemplate(template, leftAlignment);
 		this.cellMapView.drawCell();
 	}
+
+	plantStamp(stampMap: number[][], x0: number, y0: number): void {
+		this.cellMap.plantStamp(stampMap, x0, y0);
+		this.cellMapView.drawCell();
+	}
+
+	getXNum(): number {
+		return this.cellMap.xNum;
+	}
+	getYNum(): number {
+		return this.cellMap.yNum;
+	}
 }

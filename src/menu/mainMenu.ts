@@ -32,22 +32,21 @@ class MainMenu {
 		this.messageBox = new MessageBox();
 		this.topPagePanel = new TopPagePanel(cellMapController, cellPlanter, this.messageBox);
 
-		var setStamp = (name: string) => { console.log(name); }
-		var setTemplate = (name: string) => {
-			cellMapController.setTemplate(
-				TemplatePattern.list[name].map,
-				TemplatePattern.list[name].leftAlignment
-			);
-		}
-
 		this.stampPanel = new ItemPanel(
 			StampPattern.makeItemPanelElementData(),
-			setStamp,
+			(name: string) => {
+				cellPlanter.setDrawingTool(DrawingTool.STAMP, StampPattern.list[name].map);
+			},
 			this.messageBox
 		);
 		this.templatePanel = new ItemPanel(
 			TemplatePattern.makeItemPanelElementData(),
-			setTemplate,
+			(name: string) => {
+				cellMapController.setTemplate(
+					TemplatePattern.list[name].map,
+					TemplatePattern.list[name].leftAlignment
+				);
+			},
 			this.messageBox
 		);
 
