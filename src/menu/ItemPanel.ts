@@ -23,7 +23,12 @@ class ItemPanel extends MainMenuPanel {
 	private changeStatus: MainMenuChangeStatus;
 	private messageBox: MessageBox;
 
-	constructor(itemList: ItemPanelElementData[], itemAction: (name: string) => void, messageBox: MessageBox) {
+	constructor(
+		itemList: ItemPanelElementData[],
+		itemUpdate: (self: MenuElement, name: string) => void,
+		itemAction: (name: string) => void,
+		messageBox: MessageBox
+	) {
 		super();
 		this.elementList = [];
 		this.changeStatus = 0;
@@ -75,7 +80,9 @@ class ItemPanel extends MainMenuPanel {
 				global.imageManager.imageMap[item.name],
 				x,
 				ItemPanel.inner_margin, ItemPanel.element_size, ItemPanel.element_size,
-				() => {},
+				(self: MenuElement) => {
+					itemUpdate(self, item.name);
+				},
 				() => {
 					itemAction(item.name);
 				},
@@ -226,12 +233,27 @@ class ItemPanel extends MainMenuPanel {
 				ItemPanel.element_line_width
 			);
 		} else {
-			canvasDrawer.drawRect({
-				x: elm.x + ItemPanel.element_padding,
-				y: elm.y + ItemPanel.element_padding,
-				width: elm.width - ItemPanel.element_padding * 2,
-				height: elm.height - ItemPanel.element_padding * 2
-			}, {r: 64, g: 64, b: 64, a: 255}, false, ItemPanel.element_line_width);
+			if (elm.selected) {
+				canvasDrawer.drawRect({
+					x: elm.x,
+					y: elm.y,
+					width: elm.width,
+					height: elm.height
+				}, {r: 0, g: 100, b: 255, a: 255}, false, 2);
+				canvasDrawer.drawRect({
+					x: elm.x + 4,
+					y: elm.y + 4,
+					width: elm.width - 8,
+					height: elm.height - 8
+				}, {r: 0, g: 60, b: 153, a: 255}, false, 2);
+			}　else {
+				canvasDrawer.drawRect({
+					x: elm.x + ItemPanel.element_padding,
+					y: elm.y + ItemPanel.element_padding,
+					width: elm.width - ItemPanel.element_padding * 2,
+					height: elm.height - ItemPanel.element_padding * 2
+				}, {r: 64, g: 64, b: 64, a: 255}, false, ItemPanel.element_line_width);
+			}
 		}
 
 		// 画像の描画

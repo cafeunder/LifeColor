@@ -1,7 +1,19 @@
 
 class ColorMap {
-	static DIG_LENGTH = 30;
+	static DIG_LENGTH = 50;
 	static DIG_START = 110;
+
+	static createALLGREEN(xNum, yNum){
+		var result = [];
+		for (var y = 0; y < yNum; ++y) {
+			result[y] = [];
+			for (var x = 0; x < xNum; ++x) {
+				result[y][x] = {r: 0, g: 200, b: 0, a: 255};
+			}
+		}
+
+		return result;
+	}
 
 	static createCOCKTAIL(xNum, yNum){
 		var result = [];

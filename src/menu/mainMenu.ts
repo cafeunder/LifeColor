@@ -30,17 +30,24 @@ class MainMenu {
 			MainMenu.height
 		);
 		this.messageBox = new MessageBox();
-		this.topPagePanel = new TopPagePanel(cellMapController, cellPlanter, this.messageBox);
 
+		// トップページパネル
+		this.topPagePanel = new TopPagePanel(cellMapController, cellPlanter, this.messageBox);
+		// スタンプパネル
 		this.stampPanel = new ItemPanel(
 			StampPattern.makeItemPanelElementData(),
+			(self: MenuElement, name: string) => {
+				self.selected = name == cellPlanter.getStampName();
+			},
 			(name: string) => {
-				cellPlanter.setDrawingTool(DrawingTool.STAMP, StampPattern.list[name].map);
+				cellPlanter.setDrawingTool(DrawingTool.STAMP, name, StampPattern.list[name].map);
 			},
 			this.messageBox
 		);
+		// テンプレートパネル
 		this.templatePanel = new ItemPanel(
 			TemplatePattern.makeItemPanelElementData(),
+			() => {},
 			(name: string) => {
 				cellMapController.setTemplate(
 					TemplatePattern.list[name].map,
@@ -79,7 +86,7 @@ class MainMenu {
 		this.canvasDrawer.clear();
 		this.canvasDrawer.drawRect(
 			{x: 0, y: 0, width: MainMenu.width, height: MainMenu.height},
-			{r: 10, g: 10, b: 10, a: 230}
+			{r: 10, g: 10, b: 10, a: 245}
 		);
 		this.canvasDrawer.drawRect(
 			{x: 0, y: 0, width: MainMenu.width, height: MainMenu.height},

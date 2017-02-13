@@ -8,6 +8,7 @@ class CellMapView {
 
 	private visibleGrid: boolean;
 	private cellProperty: CellProperty;
+	private visibleGradation: boolean;
 	private cellColorMap: Color[];
 
 	constructor(cellMap: CellMap, cellProperty: CellProperty) {
@@ -17,6 +18,7 @@ class CellMapView {
 		this.gridCanvas = global.domController.createCanvas("gridCanvas", 1);
 		this.cellCanvasDrawer = new CanvasBitmapDrawer(this.cellCanvas);
 		this.gridCanvasDrawer = new CanvasBitmapDrawer(this.gridCanvas);
+		this.visibleGradation = true;
 
 		this.setCellProperty(cellProperty, cellMap.xNum, cellMap.yNum);
 	}
@@ -98,7 +100,11 @@ class CellMapView {
 		const top = Math.floor((global.domController.container.offsetHeight - height) / 2);
 		this.cellCanvasDrawer.changeCanvas(left, top, width, height);
 		this.gridCanvasDrawer.changeCanvas(left, top, width, height);
-		this.cellColorMap = ColorMap.createCOCKTAIL(cellXNum, cellYNum);
+		if (this.visibleGradation) {
+			this.cellColorMap = ColorMap.createCOCKTAIL(this.cellMap.xNum, this.cellMap.yNum);
+		} else {
+			this.cellColorMap = ColorMap.createALLGREEN(this.cellMap.xNum, this.cellMap.yNum);
+		}
 	}
 
 	getVisibleGrid(): boolean {
@@ -112,6 +118,20 @@ class CellMapView {
 		} else {
 			this.gridCanvasDrawer.clear();
 		}
+	}
+
+	getVisibleGradation(): boolean {
+		return this.visibleGradation;
+	}
+
+	setVisibleGradation(visible: boolean): void {
+		this.visibleGradation = visible;
+		if (this.visibleGradation) {
+			this.cellColorMap = ColorMap.createCOCKTAIL(this.cellMap.xNum, this.cellMap.yNum);
+		} else {
+			this.cellColorMap = ColorMap.createALLGREEN(this.cellMap.xNum, this.cellMap.yNum);
+		}
+		this.drawCell();
 	}
 
 	getCanvasRect(): Rect {

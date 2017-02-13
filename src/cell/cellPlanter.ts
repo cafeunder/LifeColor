@@ -12,6 +12,7 @@ class CellPlanter {
 	private drawingTool: DrawingTool;
 	private guideCanvas: HTMLCanvasElement;
 	private guideCanvasDrawer: CanvasImageDrawer;
+	private stampName: string;
 	private stampMap: number[][];
 	private stampX: number;
 	private stampY: number;
@@ -23,6 +24,7 @@ class CellPlanter {
 		const rect = this.cellMapController.getCanvasRect();
 		this.guideCanvasDrawer.changeCanvas(rect.x, rect.y, rect.width, rect.height);
 		this.drawingTool = DrawingTool.PEN;
+		this.stampName = null;
 		this.stampX = null;
 		this.stampY = null;
 	}
@@ -122,11 +124,18 @@ class CellPlanter {
 		}
 	}
 
-	setDrawingTool(drawingTool: DrawingTool, stampMap?: number[][]): void {
+	getStampName(): string {
+		return this.stampName;
+	}
+
+	getDrawingTool(): DrawingTool {
+		return this.drawingTool;
+	}
+
+	setDrawingTool(drawingTool: DrawingTool, stampName: string = null, stampMap: number[][] = null): void {
 		this.drawingTool = drawingTool;
-		if (drawingTool == DrawingTool.STAMP) {
-			this.stampMap = stampMap;
-		}
+		this.stampName = stampName;
+		this.stampMap = stampMap;
 	}
 
 	setMenuOnMouse(menuOnMouse: () => boolean): void {

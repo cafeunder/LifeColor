@@ -112,7 +112,9 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_pencil"],
 				(x += TopPagePanel.vertical_line_width + TopPagePanel.vertical_line_between_space),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => {},
+				(self: MenuElement) => {
+					self.selected = cellPlanter.getDrawingTool() == DrawingTool.PEN;
+				},
 				() => {
 					cellPlanter.setDrawingTool(DrawingTool.PEN);
 				},
@@ -125,7 +127,9 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_eraser"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => {},
+				(self: MenuElement) => {
+					self.selected = cellPlanter.getDrawingTool() == DrawingTool.ERASER;
+				},
 				() => {
 					cellPlanter.setDrawingTool(DrawingTool.ERASER);
 				},
@@ -138,7 +142,9 @@ class TopPagePanel extends MainMenuPanel {
 				global.imageManager.imageMap["menu_stamp"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => {},
+				(self: MenuElement) => {
+					self.selected = cellPlanter.getDrawingTool() == DrawingTool.STAMP;
+				},
 				() => {
 					this.changeStatus = MainMenuChangeStatus.GO_STAMP_PANEL;
 				},
@@ -197,6 +203,7 @@ class TopPagePanel extends MainMenuPanel {
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
 				(self: MenuElement) => {
 					self.status = (cellMapController.getVisibleGrid()) ? 0 : 1;
+					self.selected = self.status == 0;
 				},
 				(self: MenuElement) => {
 					cellMapController.setVisibleGrid(self.status != 0);
@@ -207,12 +214,17 @@ class TopPagePanel extends MainMenuPanel {
 		// ダミー
 		this.elementList.push(
 			new MenuElementWithExplain(
-				global.imageManager.imageMap["menu_grid"],
+				global.imageManager.imageMap["menu_color"],
 				(x += TopPagePanel.element_size),
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
-				() => {},
-				() => { console.log("grid"); },
-				"ダミー"
+				(self: MenuElement) => {
+					self.status = (cellMapController.getVisibleGradation()) ? 0 : 1;
+					self.selected = self.status == 0;
+				},
+				(self: MenuElement) => {
+					cellMapController.setVisibleGradation(self.status != 0);
+				},
+				["マップのグラーデーションをオフにします。", "マップのグラデーションをオンにします。"], 0
 			)
 		);
 	}
@@ -273,6 +285,21 @@ class TopPagePanel extends MainMenuPanel {
 				false,
 				lineWidth
 			);
+		}
+		// 選択状態の描画処理
+		if (elm.enable && !elm.mouseover && elm.selected) {
+			canvasDrawer.drawRect({
+				x: elm.x + 1,
+				y: elm.y + 1,
+				width: elm.width - 2,
+				height: elm.height - 2
+			}, {r: 0, g: 100, b: 255, a: 255}, false, 2);
+			canvasDrawer.drawRect({
+				x: elm.x + 5,
+				y: elm.y + 5,
+				width: elm.width - 10,
+				height: elm.height - 10
+			}, {r: 0, g: 60, b: 153, a: 255}, false, 2);
 		}
 
 		// アイコンの描画処理

@@ -26,7 +26,7 @@ class MessageBox {
 		this.canvasDrawer.clear();
 		this.canvasDrawer.drawRect(
 			{x: 0, y: 0, width: MessageBox.width, height: MessageBox.height},
-			{r: 10, g: 10, b: 10, a: 230}
+			{r: 10, g: 10, b: 10, a: 245}
 		);
 		this.canvasDrawer.drawRect(
 			{x: 0, y: 0, width: MessageBox.width, height: MessageBox.height},

@@ -22,6 +22,7 @@ class ImageManager {
 		"img/menu_back.png",
 		"img/menu_pagePrev.png",
 		"img/menu_pageNext.png",
+		"img/menu_color.png",
 		"img/stamp_block.png",
 		"img/stamp_tab.png",
 		"img/stamp_boat.png",

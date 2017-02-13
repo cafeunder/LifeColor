@@ -143,6 +143,14 @@ class CellMapController {
 		this.cellMapView.setVisibleGrid(visible);
 	}
 
+	getVisibleGradation(): boolean {
+		return this.cellMapView.getVisibleGradation();
+	}
+
+	setVisibleGradation(visible: boolean): void {
+		this.cellMapView.setVisibleGradation(visible);
+	}
+
 	getCanvasRect(): Rect {
 		return this.cellMapView.getCanvasRect();
 	}
