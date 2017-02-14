@@ -41,7 +41,7 @@ class MenuManager {
 			this.mainMenu.update();
 		}
 
-		if (global.keyboard.keyCountList[Keyboard.KEY_M] == 1) {
+		if (global.keyboard.check(Keyboard.KEY_M) == 1) {
 			this.visible = !this.visible;
 			if (!this.visible) {
 				this.cellSizeConfigMenu.clearCanvas();

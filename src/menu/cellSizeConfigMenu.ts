@@ -1,5 +1,7 @@
 
-
+/**
+ * セルサイズを設定するメニュー
+ */
 class CellSizeConfigMenu {
 	private static element_size = 34;
 	private static element_between_space = 5;
@@ -10,7 +12,7 @@ class CellSizeConfigMenu {
 		"cellSize_small"
 	];
 
-	private cellMapController: CellMapController;
+	private cellMapDrawPropertySetter: CellMapDrawPropertySetter;
 	private canvas: HTMLCanvasElement;
 	private canvasDrawer: CanvasImageDrawer;
 	private elementList: MenuElement[];
@@ -19,7 +21,7 @@ class CellSizeConfigMenu {
 	private height: number;
 
 	constructor(rx: number, y: number, cellMapController: CellMapController) {
-		this.cellMapController = cellMapController;
+		this.cellMapDrawPropertySetter = cellMapController.getDrawPropertySetter();
 		this.canvas = global.domController.createCanvas("cellSizeConfigMenuCanvas", 4);
 		this.canvasDrawer = new CanvasImageDrawer(this.canvas);
 
@@ -30,8 +32,6 @@ class CellSizeConfigMenu {
 			this.width,
 			this.height
 		);
-
-		this.selectElement(this.elementList[0], false);
 	}
 
 	update(): void {
@@ -45,7 +45,7 @@ class CellSizeConfigMenu {
 			})) {
 				elm.mouseover = true;
 				if (global.mouse.pointCount == 1) {
-					this.selectElement(elm);
+					elm.action(elm);
 				}
 			} else {
 				elm.mouseover = false;
@@ -75,17 +75,6 @@ class CellSizeConfigMenu {
 
 	clearCanvas(): void {
 		this.canvasDrawer.clear();
-	}
-
-	selectElement(element: MenuElement, doAction: boolean = true): void {
-		if (element == this.selectedElement) return;
-		if (this.selectedElement) {
-			this.selectedElement.selected = false;
-		}
-
-		element.selected = true;
-		this.selectedElement = element;
-		if (doAction) element.action(element);
 	}
 
 	changeCanvas(rx: number, y: number): void {
@@ -119,9 +108,11 @@ class CellSizeConfigMenu {
 					CellSizeConfigMenu.inner_margin,
 					CellSizeConfigMenu.element_size,
 					CellSizeConfigMenu.element_size,
-					() => {},
+					(self: MenuElement) => {
+						self.selected = (this.cellMapDrawPropertySetter.getIndex()) == index;
+					},
 					() => {
-						this.cellMapController.setCellPropertyIndex(index);
+						this.cellMapDrawPropertySetter.setIndex(index);
 					}
 				)
 			);

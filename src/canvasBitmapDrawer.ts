@@ -1,4 +1,8 @@
 
+/**
+ * ビットマップを直接編集することで描画を行う、CanvasDrawerのサブクラス。
+ * HTMLCanvasElementのImageDataを使って描画する。
+ */
 class CanvasBitmapDrawer extends CanvasDrawer {
 	private imageData: ImageData;
 
@@ -40,9 +44,5 @@ class CanvasBitmapDrawer extends CanvasDrawer {
 				bitmap[base + 3] = color.a;
 			}
 		}
-	}
-
-	getPixel(x: number, y: number, offset: number): number {
-		return this.imageData.data[(x + y * this.canvas.width) * 4 + offset];
 	}
 }

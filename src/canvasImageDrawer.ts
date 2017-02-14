@@ -1,4 +1,7 @@
 
+/**
+ * CanvasRenderingContext2Dの標準機能を使って描画を行う、CanvasDrawerのサブクラス。
+ */
 class CanvasImageDrawer extends CanvasDrawer {
 	constructor(canvas: HTMLCanvasElement) {
 		super(canvas);
@@ -24,12 +27,13 @@ class CanvasImageDrawer extends CanvasDrawer {
 		var dx = Math.floor(rect.x);
 		var dy = Math.floor(rect.y);
 
-		if (lineWidth % 2 != 0) {
-			dx -= 0.5;
-			dy -= 0.5;
-		}
-
 		if (!fill) {
+			// ブラウザによっては、線の太さが奇数のときにぼやけるため、それを防止するために座標を調整する
+			if (lineWidth % 2 != 0) {
+				dx -= 0.5;
+				dy -= 0.5;
+			}
+
 			dx += Math.ceil(lineWidth / 2);
 			dy += Math.ceil(lineWidth / 2);
 			rect.width -= lineWidth;

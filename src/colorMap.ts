@@ -1,8 +1,9 @@
 
+/**
+ * グラデーションを表現するために、各セルの色を配列にして返す。
+ */
 class ColorMap {
-	static DIG_LENGTH = 50;
-	static DIG_START = 110;
-
+	// 緑一色
 	static createALLGREEN(xNum, yNum){
 		var result = [];
 		for (var y = 0; y < yNum; ++y) {
@@ -15,7 +16,12 @@ class ColorMap {
 		return result;
 	}
 
-	static createCOCKTAIL(xNum, yNum){
+	// シアン系のカクテルカラー
+	static createCOCKTAIL_CYAN(xNum, yNum){
+		// 使う色を色相環上の角度で表現する
+		const dig_start = 110;
+		const dig_length = 60;
+
 		var result = [];
 		for (var y = 0; y < yNum; ++y) {
 			result[y] = [];
@@ -25,8 +31,8 @@ class ColorMap {
 					colValue = 2.0 - colValue;
 				}
 
-				var colRate = Math.floor(ColorMap.DIG_LENGTH * colValue);
-				var hue = ColorMap.DIG_START + colRate;
+				var colRate = Math.floor(dig_length * colValue);
+				var hue = dig_start + colRate;
 
 				result[y][x] = ColorMap.HSVtoRGB(hue, 90, 100);
 			}
@@ -35,6 +41,7 @@ class ColorMap {
 		return result;
 	}
 
+	// HSV色空間からRGBへ変換するメソッド
 	static HSVtoRGB(hue, saturation, value): Color {
 		var rgb = new Array();
 		var h = hue;

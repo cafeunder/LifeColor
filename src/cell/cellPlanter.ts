@@ -1,14 +1,30 @@
 
+/**
+ * セル配置に使うツール
+ */
 const enum DrawingTool {
+	/**
+	 * ペン。セルを一個配置する。
+	 */
 	PEN,
+
+	/**
+	 * 消しゴム。セルを一個削除する。
+	 */
 	ERASER,
+
+	/**
+	 * スタンプ。選択されたパターンを配置する。
+	 */
 	STAMP
 }
 
+/**
+ * マウスの入力を受取り、CellMapControllerを介してセルの配置/削除を行うクラス。
+ */
 class CellPlanter {
 	private cellMapController: CellMapController;
 	private menuOnMouse: () => boolean;
-
 	private drawingTool: DrawingTool;
 	private guideCanvas: HTMLCanvasElement;
 	private guideCanvasDrawer: CanvasImageDrawer;
@@ -30,8 +46,10 @@ class CellPlanter {
 	}
 
 	update(): void {
-		if (this.menuOnMouse()) return;
-		const cellSize = this.cellMapController.getCellProperty().cellSize;
+		// キャンバス上にマウスがある場合は配置しない
+		if (this.menuOnMouse() || !global.mouse.entered) return;
+
+		const cellSize = this.cellMapController.getCellDrawProperty().cellSize;
 		var cx: number = Math.floor((global.mouse.x - this.guideCanvasDrawer.x) / cellSize);
 		var cy: number = Math.floor((global.mouse.y - this.guideCanvasDrawer.y) / cellSize);
 		const xNum = this.cellMapController.getXNum();
@@ -75,9 +93,10 @@ class CellPlanter {
 	draw(): void {
 		this.guideCanvasDrawer.clear();
 
-		if (this.menuOnMouse()) return;
-		if (!global.mouse.entered) return;
-		const cellSize = this.cellMapController.getCellProperty().cellSize;
+		// キャンバス上にマウスがある場合は描画しない
+		if (this.menuOnMouse() || !global.mouse.entered) return;
+
+		const cellSize = this.cellMapController.getCellDrawProperty().cellSize;
 		const cx = Math.floor((global.mouse.x - this.guideCanvasDrawer.x) / cellSize);
 		const cy = Math.floor((global.mouse.y - this.guideCanvasDrawer.y) / cellSize);
 
@@ -98,9 +117,10 @@ class CellPlanter {
 	}
 
 	drawGuide(cx: number, cy: number, lightColor: Color, darkColor: Color): void {
-		const cellProperty = this.cellMapController.getCellProperty();
+		const cellProperty = this.cellMapController.getCellDrawProperty();
 		const cellSize = cellProperty.cellSize;
 		const gridWidth = cellProperty.gridWidth;
+
 		if (gridWidth < 2) {
 			this.guideCanvasDrawer.drawRect({
 				x: cx * cellSize + gridWidth,
@@ -125,6 +145,11 @@ class CellPlanter {
 		}
 	}
 
+	changeCanvas(): void {
+		const rect = this.cellMapController.getCanvasRect();
+		this.guideCanvasDrawer.changeCanvas(rect.x, rect.y, rect.width, rect.height);
+	}
+
 	getStampName(): string {
 		return this.stampName;
 	}
@@ -141,10 +166,5 @@ class CellPlanter {
 
 	setMenuOnMouse(menuOnMouse: () => boolean): void {
 		this.menuOnMouse = menuOnMouse;
-	}
-
-	changeCanvas(): void {
-		const rect = this.cellMapController.getCanvasRect();
-		this.guideCanvasDrawer.changeCanvas(rect.x, rect.y, rect.width, rect.height);
 	}
 }

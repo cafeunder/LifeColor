@@ -1,4 +1,7 @@
 
+/**
+ * マウス入力を受け付けるクラス。
+ */
 class Mouse {
 	x: number;
 	y: number;

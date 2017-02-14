@@ -1,4 +1,7 @@
 
+/**
+ * エントリーポイントとなるクラス
+ */
 class Program {
 	private cellPlanter: CellPlanter;
 	private cellMapController: CellMapController;
@@ -19,13 +22,14 @@ class Program {
 		this.cellMapController = new CellMapController();
 		this.cellPlanter = new CellPlanter(this.cellMapController);
 
+		// キャンバスリサイズ時の動作を定義
 		global.domController.resize = () => {
 			this.cellMapController.resize();
 			this.cellPlanter.changeCanvas();
 			this.menuManager.changeCanavs();
 		};
 
-		// リサイズ時の動作を定義
+		// ブラウザリサイズ時の動作を定義
 		var queue = null;
 		window.addEventListener("resize", () => {
 			if (!global.domController.fullScreen) { return; }
@@ -35,6 +39,7 @@ class Program {
 			}, 60 );
 		}, false );
 
+		// メインループ
 		var check = setInterval(() => {
 			// 画像読み込みの監視
 			if (global.imageManager.checkLoadCompleted()) {

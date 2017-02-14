@@ -82,6 +82,7 @@ class MenuElement {
 
 class MenuElementWithExplain extends MenuElement {
 	explain: string | string[]
+
 	constructor(
 		img: HTMLImageElement | HTMLImageElement[],
 		x: number,
