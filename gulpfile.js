@@ -19,9 +19,6 @@ gulp.task('compile', ['clean'], function() {
 		return tsProject.src()
 			.pipe(tsProject())
 			.pipe(uglify())
-			.pipe(rename({
-				extname: '.min.js'
-			}))
 			.pipe(gulp.dest(JS_DEST));
 	} else {
 		return tsProject.src()
