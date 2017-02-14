@@ -1,4 +1,7 @@
 
+/**
+ * メインメニュー下に表示されるメッセージボックスを表すクラス。
+ */
 class MessageBox {
 	private static element_size = 60;
 	private static line_width = 2;
@@ -22,8 +25,9 @@ class MessageBox {
 	}
 
 	draw(): void {
-		this.canvasDrawer.setFont("17px MyFont");
 		this.canvasDrawer.clear();
+
+		// 背景の四角形の描画
 		this.canvasDrawer.drawRect(
 			{x: 0, y: 0, width: MessageBox.width, height: MessageBox.height},
 			{r: 10, g: 10, b: 10, a: 245}
@@ -37,9 +41,12 @@ class MessageBox {
 
 		var color = {r: 255, g: 255, b: 255, a: 255};
 		var dx = 6;
+		this.canvasDrawer.setFont("17px MyFont");
+		// 文字列の描画
 		for(var i = 0; i < this.message.length; ++i){
 			var c = this.message.charAt(i);
 
+			// 文字に#がある場合は、表示色を変える
 			if(c == "#"){
 				++i;
 				switch(this.message.charAt(i)){

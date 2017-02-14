@@ -1,9 +1,15 @@
 
+/**
+ * パターンとその説明。
+ */
 interface Pattern {
 	map: number[][];
 	explain: string;
 }
 
+/**
+ * スタンプ機能で使えるパターンの一覧を提供するクラス。
+ */
 class StampPattern {
 	static makeItemPanelElementData(): ItemPanelElementData[] {
 		var result: ItemPanelElementData[] = [];

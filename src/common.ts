@@ -1,4 +1,7 @@
 
+/**
+ * 8ビットカラーを表すインターフェイス（0~255）
+ */
 interface Color {
 	r: number;
 	g: number;
@@ -6,11 +9,9 @@ interface Color {
 	a: number;
 }
 
-interface Position {
-	x: number;
-	y: number;
-}
-
+/**
+ * 矩形を表すインターフェイス
+ */
 interface Rect {
 	x: number;
 	y: number;

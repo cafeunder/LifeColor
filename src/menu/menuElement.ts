@@ -1,9 +1,12 @@
 
+/**
+ * メニューに配置される要素を表すクラス
+ */
 class MenuElement {
 	/**
 	 * 画像オブジェクト
 	 */
-	img: HTMLImageElement | HTMLImageElement[];
+	private img: HTMLImageElement | HTMLImageElement[];
 
 	/**
 	 * メニューキャンバス左上座標からの相対位置x
@@ -81,7 +84,11 @@ class MenuElement {
 }
 
 class MenuElementWithExplain extends MenuElement {
-	explain: string | string[]
+	/**
+	 * 要素の説明
+	 */
+	private explain: string | string[]
+
 	constructor(
 		img: HTMLImageElement | HTMLImageElement[],
 		x: number,

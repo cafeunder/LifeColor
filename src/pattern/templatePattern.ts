@@ -1,8 +1,14 @@
 
+/**
+ * パターンとその説明、左揃えにするかどうか。
+ */
 interface TemplatePattern extends Pattern {
 	leftAlignment: boolean;
 }
 
+/**
+ * テンプレート機能で使えるパターンの一覧を提供するクラス。
+ */
 class TemplatePattern {
 	static makeItemPanelElementData(): ItemPanelElementData[] {
 		var result: ItemPanelElementData[] = [];

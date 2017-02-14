@@ -1,4 +1,7 @@
 
+/**
+ * マップの描画を行うクラス
+ */
 class CellMapView {
 	private cellMap: CellMap;
 	private cellCanvas: HTMLCanvasElement;
@@ -7,11 +10,11 @@ class CellMapView {
 	private gridCanvasDrawer: CanvasBitmapDrawer;
 
 	private visibleGrid: boolean;
-	private cellProperty: CellProperty;
 	private visibleGradation: boolean;
+	private cellProperty: CellDrawProperty;
 	private cellColorMap: Color[];
 
-	constructor(cellMap: CellMap, cellProperty: CellProperty) {
+	constructor(cellMap: CellMap, cellProperty: CellDrawProperty) {
 		this.cellMap = cellMap;
 
 		this.cellCanvas = global.domController.createCanvas("cellCanvas", 2);
@@ -20,9 +23,13 @@ class CellMapView {
 		this.gridCanvasDrawer = new CanvasBitmapDrawer(this.gridCanvas);
 		this.visibleGradation = true;
 
-		this.setCellProperty(cellProperty, cellMap.xNum, cellMap.yNum);
+		this.setCellDrawProperty(cellProperty, cellMap.xNum, cellMap.yNum);
 	}
 
+	/**
+	 * すべてのセルを描画する。
+	 * 計算コストが非常に高いため、通常の世代交代で呼び出してはいけない。
+	 */
 	drawCell(): void {
 		for (var y = 0; y < this.cellMap.yNum; ++y) {
 			for (var x = 0; x < this.cellMap.xNum; ++x) {
@@ -42,6 +49,10 @@ class CellMapView {
 		this.cellCanvasDrawer.reflesh();
 	}
 
+	/**
+	 * マップの差分のみを描画する。
+	 * 通常の世代交代が行われたときのみ呼び出してよい。
+	 */
 	drawDifferenceCell(): void {
 		for (var y = 0; y < this.cellMap.yNum; ++y) {
 			for (var x = 0; x < this.cellMap.xNum; ++x) {
@@ -78,10 +89,6 @@ class CellMapView {
 		this.gridCanvasDrawer.reflesh();
 	}
 
-	getCellSize(): number {
-		return this.cellProperty.cellSize;
-	}
-
 	getRect(cx: number, cy: number): Rect {
 		return {
 			x: cx * this.cellProperty.cellSize + this.cellProperty.gridWidth,
@@ -91,7 +98,7 @@ class CellMapView {
 		}
 	}
 
-	setCellProperty(cellProperty: CellProperty, cellXNum: number, cellYNum: number): void {
+	setCellDrawProperty(cellProperty: CellDrawProperty, cellXNum: number, cellYNum: number): void {
 		this.cellProperty = cellProperty;
 		const cellSize = this.cellProperty.cellSize;
 		const width = cellSize * cellXNum;
@@ -101,7 +108,7 @@ class CellMapView {
 		this.cellCanvasDrawer.changeCanvas(left, top, width, height);
 		this.gridCanvasDrawer.changeCanvas(left, top, width, height);
 		if (this.visibleGradation) {
-			this.cellColorMap = ColorMap.createCOCKTAIL(this.cellMap.xNum, this.cellMap.yNum);
+			this.cellColorMap = ColorMap.createCOCKTAIL_CYAN(this.cellMap.xNum, this.cellMap.yNum);
 		} else {
 			this.cellColorMap = ColorMap.createALLGREEN(this.cellMap.xNum, this.cellMap.yNum);
 		}
@@ -127,7 +134,7 @@ class CellMapView {
 	setVisibleGradation(visible: boolean): void {
 		this.visibleGradation = visible;
 		if (this.visibleGradation) {
-			this.cellColorMap = ColorMap.createCOCKTAIL(this.cellMap.xNum, this.cellMap.yNum);
+			this.cellColorMap = ColorMap.createCOCKTAIL_CYAN(this.cellMap.xNum, this.cellMap.yNum);
 		} else {
 			this.cellColorMap = ColorMap.createALLGREEN(this.cellMap.xNum, this.cellMap.yNum);
 		}

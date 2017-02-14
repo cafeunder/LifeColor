@@ -1,7 +1,11 @@
 
+/**
+ * DOM要素の必要な機能だけを提供するクラス。
+ */
 class DOMController {
 	private static min_screen_width = 960;
 	private static min_screen_height = 786;
+
 	body: HTMLBodyElement;
 	container: HTMLElement;
 	controlCanvas: HTMLCanvasElement;
@@ -67,6 +71,7 @@ class DOMController {
 	getWidth(): number {
 		return parseInt(this.container.style.width);
 	}
+
 	getHeight(): number {
 		return parseInt(this.container.style.height);
 	}

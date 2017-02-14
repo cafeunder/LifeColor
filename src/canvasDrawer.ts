@@ -1,4 +1,7 @@
 
+/**
+ * HTMLCanvasElementをラッピングし、必要な描画機能だけを提供するクラスの抽象クラス。
+ */
 abstract class CanvasDrawer {
 	x: number;
 	y: number;

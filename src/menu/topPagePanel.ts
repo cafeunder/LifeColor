@@ -1,4 +1,7 @@
 
+/**
+ * トップメニューを表示するパネルを表すクラス。
+ */
 class TopPagePanel extends MainMenuPanel {
 	private static element_size = 60;
 	private static element_line_width = 2;
@@ -11,7 +14,7 @@ class TopPagePanel extends MainMenuPanel {
 	private messageBox: MessageBox;
 	private elementList: MenuElementWithExplain[];
 	private verticalLineXList: number[];
-	private changeStatus: MainMenuChangeStatus;
+	private changeStatus: PanelChangeStatus;
 
 	constructor(cellMapController: CellMapController, cellPlanter: CellPlanter, messageBox: MessageBox) {
 		super();
@@ -146,7 +149,7 @@ class TopPagePanel extends MainMenuPanel {
 					self.selected = cellPlanter.getDrawingTool() == DrawingTool.STAMP;
 				},
 				() => {
-					this.changeStatus = MainMenuChangeStatus.GO_STAMP_PANEL;
+					this.changeStatus = PanelChangeStatus.GO_STAMP_PANEL;
 				},
 				"#cスタンプ#w：一覧からパターンを選択し、クリックで配置します。"
 			)
@@ -187,7 +190,7 @@ class TopPagePanel extends MainMenuPanel {
 				TopPagePanel.inner_margin, TopPagePanel.element_size, TopPagePanel.element_size,
 				() => {},
 				() => {
-					this.changeStatus = MainMenuChangeStatus.GO_TEMPLATE_PANEL;
+					this.changeStatus = PanelChangeStatus.GO_TEMPLATE_PANEL;
 				}, "一覧から選んだパターンを配置します。"
 			)
 		);
@@ -211,7 +214,7 @@ class TopPagePanel extends MainMenuPanel {
 				["グリッドを非表示にします。", "グリッドを表示します。"], 0
 			)
 		);
-		// ダミー
+		// グラデーションのオン・オフ
 		this.elementList.push(
 			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_color"],
@@ -230,7 +233,7 @@ class TopPagePanel extends MainMenuPanel {
 	}
 
 	update(canvasDrawer: CanvasImageDrawer): number {
-		this.changeStatus = MainMenuChangeStatus.HOLD_PANEL;
+		this.changeStatus = PanelChangeStatus.HOLD_PANEL;
 		this.elementList.forEach((elm: MenuElementWithExplain) => {
 			elm.update(elm);
 			if (global.mouse.judgeEntered({

@@ -1,4 +1,7 @@
 
+/**
+ * マップを表すクラス。
+ */
 class CellMap {
 	xNum: number;
 	yNum: number;
@@ -156,6 +159,8 @@ class CellMap {
 
 	setTemplate(template: number[][], leftAlignment: boolean = false): void {
 		this.clear();
+
+		// マップの中心に来るように位置を調整
 		var setX = (leftAlignment) ? 0 : Math.floor(this.xNum / 2 - template[0].length / 2);
 		var setY = Math.floor(this.yNum / 2 - template.length / 2);
 

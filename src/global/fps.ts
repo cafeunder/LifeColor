@@ -1,4 +1,7 @@
 
+/**
+ * FPSを計算し、表示するクラス。
+ */
 class FPS {
 	static sampleFract = 10;
 	drawing = false;
@@ -18,6 +21,9 @@ class FPS {
 	}
 
 	update(): void {
+		if (global.keyboard.check(Keyboard.KEY_F) == 1) {
+			this.drawing = !this.drawing;
+		}
 		if (this.sampleNum == 0) {
 			this.start = +new Date();
 		}

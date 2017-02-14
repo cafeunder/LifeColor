@@ -1,4 +1,7 @@
 
+/**
+ * ウィンドウモードを切り替えるメニューを表すクラス。
+ */
 class WindowModeMenu {
 	private static element_size = 34;
 	private static margin = 5;

@@ -1,7 +1,10 @@
 
+/**
+ * キーボード入力を受け付けるクラス。
+ */
 class Keyboard {
-	pressedFlagList: {[key: number]: boolean} = {};
-	keyCountList: {[key: number]: number} = {};
+	private pressedFlagList: {[key: number]: boolean} = {};
+	private keyCountList: {[key: number]: number} = {};
 
 	constructor() {
 		for (var i = 0; i < 256; ++i) {
@@ -37,6 +40,7 @@ class Keyboard {
 		this.pressedFlagList[event.keyCode] = true;
 	}
 
+	// キーコードに名前を付ける
 	static KEY_ARROW_LEFT = 37;
 	static KEY_ARROW_RIGHT = 39;
 	static KEY_SPACE = 32;
