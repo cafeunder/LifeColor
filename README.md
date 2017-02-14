@@ -1,5 +1,5 @@
 # LifeColor
-web版ライフゲーム http://lifecolor.nitkc.org/
+web版ライフゲーム
 
 ## ビルド方法
 - nodejsがインストールされていることを前提とします。
