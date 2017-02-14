@@ -1,11 +1,17 @@
 
-const enum MainMenuChangeStatus {
+/**
+ * パネルの遷移状態
+ */
+const enum PanelChangeStatus {
 	HOLD_PANEL,
 	GO_TOP_PANEL,
 	GO_STAMP_PANEL,
 	GO_TEMPLATE_PANEL
 }
 
+/**
+ * メインメニューを表すクラス。
+ */
 class MainMenu {
 	private static line_width = 2;
 	private canvas: HTMLCanvasElement;
@@ -66,16 +72,16 @@ class MainMenu {
 
 		this.changedPanel = true;
 		switch(this.visiblePanel.update(this.canvasDrawer)) {
-		case MainMenuChangeStatus.HOLD_PANEL:
+		case PanelChangeStatus.HOLD_PANEL:
 			this.changedPanel = false;
 			break;
-		case MainMenuChangeStatus.GO_TOP_PANEL:
+		case PanelChangeStatus.GO_TOP_PANEL:
 			this.visiblePanel = this.topPagePanel;
 			break;
-		case MainMenuChangeStatus.GO_STAMP_PANEL:
+		case PanelChangeStatus.GO_STAMP_PANEL:
 			this.visiblePanel = this.stampPanel;
 			break;
-		case MainMenuChangeStatus.GO_TEMPLATE_PANEL:
+		case PanelChangeStatus.GO_TEMPLATE_PANEL:
 			this.visiblePanel = this.templatePanel;
 			break;
 		}

@@ -1,9 +1,15 @@
 
-class ItemPanelElementData {
+/**
+ * アイテム一覧に表示される要素の名前と説明。
+ */
+interface ItemPanelElementData {
 	name: string;
 	explain: string;
 }
 
+/**
+ * 与えられた要素をアイテマイズして表示するパネル。
+ */
 class ItemPanel extends MainMenuPanel {
 	private static element_size = 60;
 	private static element_padding = 3;
@@ -20,7 +26,7 @@ class ItemPanel extends MainMenuPanel {
 	private backButton: MenuElementWithExplain;
 	private pagePrevButton: MenuElementWithExplain;
 	private pageNextButton: MenuElementWithExplain;
-	private changeStatus: MainMenuChangeStatus;
+	private changeStatus: PanelChangeStatus;
 	private messageBox: MessageBox;
 
 	constructor(
@@ -42,7 +48,7 @@ class ItemPanel extends MainMenuPanel {
 			ItemPanel.inner_margin, ItemPanel.element_size, ItemPanel.element_size,
 			() => {},
 			() => {
-				this.changeStatus = MainMenuChangeStatus.GO_TOP_PANEL;
+				this.changeStatus = PanelChangeStatus.GO_TOP_PANEL;
 			}, "メインメニューに戻ります。"
 		);
 
@@ -116,9 +122,9 @@ class ItemPanel extends MainMenuPanel {
 		this.page = 0;
 	}
 
-	update(canvasDrawer: CanvasImageDrawer): MainMenuChangeStatus {
+	update(canvasDrawer: CanvasImageDrawer): PanelChangeStatus {
 		this.messageBox.setMessage(" ");
-		this.changeStatus = MainMenuChangeStatus.HOLD_PANEL;
+		this.changeStatus = PanelChangeStatus.HOLD_PANEL;
 
 		// ほとんど同じ処理なので同じ配列で処理する
 		this.elementList[this.page].concat([
@@ -193,7 +199,7 @@ class ItemPanel extends MainMenuPanel {
 		}
 
 		// 画像の描画
-		var image = (Array.isArray(elm.img)) ? elm.img[elm.status] : elm.img;
+		var image = elm.getImage();
 		canvasDrawer.drawImage(
 			elm.getImage(),
 			elm.x + Math.floor(elm.width / 2 - image.width / 2),
@@ -257,7 +263,7 @@ class ItemPanel extends MainMenuPanel {
 		}
 
 		// 画像の描画
-		var image = (Array.isArray(elm.img)) ? elm.img[elm.status] : elm.img;
+		var image = elm.getImage();
 		canvasDrawer.drawImage(
 			elm.getImage(),
 			elm.x + Math.floor(elm.width / 2 - image.width / 2),
