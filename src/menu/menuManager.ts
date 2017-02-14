@@ -1,4 +1,7 @@
 
+/**
+ * 画面上にある各種メニューを管理するクラス
+ */
 class MenuManager {
 	static outer_margin = 10;
 	static bitween_menu = 5;
@@ -9,15 +12,19 @@ class MenuManager {
 	private visible: boolean;
 
 	constructor(cellMapController: CellMapController, cellPlanter: CellPlanter) {
+		// ウィンドウモードメニュー
 		this.windowModeMenu = new WindowModeMenu(
 			global.domController.getWidth() - MenuManager.outer_margin,
 			MenuManager.outer_margin,
 		);
+		// セルサイズメニュー
+		// ウィンドウモードメニューに対する相対位置に配置する
 		this.cellSizeConfigMenu = new CellSizeConfigMenu(
 			global.domController.getWidth() - (this.windowModeMenu.width + MenuManager.outer_margin + MenuManager.bitween_menu),
 			MenuManager.outer_margin,
 			cellMapController
 		);
+		// メインメニュー
 		this.mainMenu = new MainMenu(cellMapController, cellPlanter);
 		this.visible = true;
 	}

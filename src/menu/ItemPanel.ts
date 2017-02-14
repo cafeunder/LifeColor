@@ -8,7 +8,7 @@ interface ItemPanelElementData {
 }
 
 /**
- * 与えられた要素をアイテマイズして表示するパネル。
+ * 与えられた要素をアイテマイズして表示するパネルを表すクラス。
  */
 class ItemPanel extends MainMenuPanel {
 	private static element_size = 60;

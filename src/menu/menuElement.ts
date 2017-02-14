@@ -84,7 +84,10 @@ class MenuElement {
 }
 
 class MenuElementWithExplain extends MenuElement {
-	explain: string | string[]
+	/**
+	 * 要素の説明
+	 */
+	private explain: string | string[]
 
 	constructor(
 		img: HTMLImageElement | HTMLImageElement[],

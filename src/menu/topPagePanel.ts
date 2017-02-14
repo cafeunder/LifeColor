@@ -1,4 +1,7 @@
 
+/**
+ * トップメニューを表示するパネルを表すクラス。
+ */
 class TopPagePanel extends MainMenuPanel {
 	private static element_size = 60;
 	private static element_line_width = 2;
@@ -211,7 +214,7 @@ class TopPagePanel extends MainMenuPanel {
 				["グリッドを非表示にします。", "グリッドを表示します。"], 0
 			)
 		);
-		// ダミー
+		// グラデーションのオン・オフ
 		this.elementList.push(
 			new MenuElementWithExplain(
 				global.imageManager.imageMap["menu_color"],
