@@ -61,7 +61,8 @@ class CellPlanter {
 			this.stampY = y0;
 		}
 
-		if (global.mouse.pointCount > 0) {
+		// マウスの左ボタンが押された瞬間か、押しながら動いたときにセルを配置
+		if (global.mouse.pointCount == 1 || (global.mouse.pointCount > 1 && global.mouse.stopCount == 0)) {
 			if (this.drawingTool == DrawingTool.STAMP) {
 				this.cellMapController.plantStamp(this.stampMap, this.stampX, this.stampY);
 			} else {
