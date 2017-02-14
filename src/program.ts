@@ -14,7 +14,6 @@ class Program {
 		global.keyboard = new Keyboard();
 		global.imageManager = new ImageManager();
 		global.fps = new FPS();
-		global.fps.drawing = true;
 		global.domController.setupNormalMode();
 		global.imageManager.load();
 

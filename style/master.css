@@ -12,7 +12,13 @@ html, body {
 }
 
 body {
-  margin:0px;padding:0px; overflow: auto;
+  margin:0px;
+  padding:0px;
+  overflow: auto;
+}
+
+a:link {
+  color: #13f;
 }
 
 #mainDiv {
