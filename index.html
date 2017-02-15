@@ -3,13 +3,18 @@
 
 <!--Noto Fonts (c) Google Inc. Licensed under Apache License 2.0-->
 <!--@import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);-->
+
 <head>
   <title>ライフゲーム</title>
   <meta charset="UTF-8" />
   <meta name="description" content="ウェブブラウザで実行できるライフゲームシュミレーター。HTML5 canvas + javascriptで作りました。">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+  />
   <link rel="shortcut icon" href="favicon.ico" />
+  <link href="style/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="style/master.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
 </head>
 
 <body id="lifeBody">
@@ -19,28 +24,234 @@
   </span>
   <div id="mainDiv">
     <br>
-      <div align="center">
-      <p><img src="img/title.png" alt="画像を表示できません" title="lifegame"></p>
+    <div align="center">
+      <p><img src="fig/title.png" alt="画像を表示できません" title="lifegame"></p>
     </div>
-    <h3>ライフゲームとは</h3>
-    <r>ライフゲーム</r>は、1970年にイギリスの数学者<r>コンウェイ</r>(Conway)が考案した擬似生命シミュレーションです。<br>
-    ライフゲームにおける生物は<r>セル</r>と呼ばれ、方眼状のマップに四角形で表現されます。<br>
-    ひとつひとつのセルは、周囲のセルから決まる単純なルールで状態が変化しますが、<br>
-    複数のセルが互いに影響し合うことで複雑なパターンを描きます。<br>
-    プレイヤー(？)ができることは、マップの初期状態を決めて変化を観察することだけです。<br>
-    ルールは単純ですが、その奇妙で奥の深い振る舞いは多くの科学者を魅了してきました。<br>
-    <br>
-    ライフゲームを初めて知った方は、以下の遊び方を試してみてください。<br>
-    ・ランダムにセルを配置して、パターンや規則性を探してみる。<br>
-    ・スタンプ機能やテンプレート機能を使って、パターンを配置してみる。<br>
-    ・ペン機能を使ってセルを配置し、色々な盤面を作ってみる。<br>
-    <h3>参考になるサイト</h3>
-    Wikipedia - ライフゲーム <a href="https://ja.wikipedia.org/wiki/ライフゲーム" target="_blank">https://ja.wikipedia.org/wiki/ライフゲーム</a><br>
-    LifeWiki（英語） <a href="http://www.conwaylife.com/wiki/" target="_blank">http://www.conwaylife.com/wiki/</a><br>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab-overview" data-toggle="tab">概要</a></li>
+      <li><a href="#tab-rule" data-toggle="tab">ルール</a></li>
+      <li><a href="#tab-word" data-toggle="tab">用語</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab-overview">
+        <h3>ライフゲームとは</h3>
+        <r>ライフゲーム</r>は、1970年にイギリスの数学者
+        <r>コンウェイ</r>(Conway)が考案した擬似生命シミュレーションです。<br> ライフゲームにおける生物は
+        <r>セル</r>と呼ばれ、方眼状のマップに四角形で表現されます。<br> ひとつひとつのセルは、周囲のセルから決まる単純なルールで状態が変化しますが、
+        <br> 複数のセルが互いに影響し合うことで複雑なパターンを描きます。
+        <br> プレイヤー(？)ができることは、マップの初期状態を決めて変化を観察することだけです。
+        <br> ルールは単純ですが、その奇妙で奥の深い振る舞いは多くの科学者を魅了してきました。
+        <br>
+        <br> ライフゲームを初めて知った方は、以下の遊び方を試してみてください。
+        <br> ・ランダムにセルを配置して、パターンや規則性を探してみる。
+        <br> ・スタンプ機能やテンプレート機能を使って、パターンを配置してみる。
+        <br> ・ペン機能を使ってセルを配置し、色々な盤面を作ってみる。
+        <br>
+        <h3>参考になるサイト</h3>
+        Wikipedia - ライフゲーム <a href="https://ja.wikipedia.org/wiki/ライフゲーム" target="_blank">https://ja.wikipedia.org/wiki/ライフゲーム</a><br>        LifeWiki（英語） <a href="http://www.conwaylife.com/wiki/" target="_blank">http://www.conwaylife.com/wiki/</a><br>
+      </div>
+      <div class="tab-pane" id="tab-rule">
+        <h3>セルの状態</h3>
+        ライフゲームでは、マップ上に配置された四角形を生物に見立て、これを
+        <r>セル</r>と呼びます。<br> マップ上の時間変化を
+        <r>世代</r>と呼び、世代毎にセルの状態が変化します。<br> セルの状態は、
+        <r>死状態</r>と
+        <r>生状態</r>の２つに分かれます。<br>
+        <ul class="main-nav">
+          <figure>
+            <img src="fig/cellD.png" alt="画像を表示できません" title="cellDead">
+            <figcaption>死状態</figcaption>
+          </figure>
+          <figure>
+            <img src="fig/cellA.png" alt="画像を表示できません" title="cellAlive">
+            <figcaption>生状態</figcaption>
+          </figure>
+        </ul>
+        <br>
+        <h3>生死決定のルール</h3>
+        次の世代におけるセルの状態は、周囲８マスのセルの状態によって決まります。<br> 以下に示す４つのルールで、セルは死状態と生状態を切り替えます。
+        <br>
+
+        <h4>誕生：新たなセルが産まれる</h4>
+        ある死状態のセルの周りに、生状態のセルがちょうど３個あるとき、そのセルは生状態へと変化します。<br> これを
+        <r>誕生</r>と呼びます。
+        <ul class="main-nav">
+          <figure>
+            <img src="fig/birthF.png" alt="画像を表示できません" title="cellBirth">
+          </figure>
+        </ul>
+        <h4>生存：ちょうど良い環境</h4>
+        ある生状態のセルの周りに、生状態のセルが2個、あるいは3個あるとき、そのセルは生状態を維持します。<br> これを
+        <r>生存</r>と呼びます。<br>
+        <ul class="main-nav">
+          <figure class="sbs">
+            <img src="fig/Alive.png" alt="画像を表示できません" title="cellAlive2">
+            <figcaption>周囲に2つある例</figcaption>
+          </figure>
+          <figure class="sbs">
+            <img src="fig/Alive2.png" alt="画像を表示できません" title="cellAlive3">
+            <figcaption>周囲に3つある例</figcaption>
+          </figure>
+        </ul>
+        <figure class="sbserase"></figure>
+        <h4>過疎：寂しくて死ぬ</h4>
+        ある生状態のセルの周りに、生状態のセルが１個以下しかないときは、そのセルは死状態へと変化します。<br> これを
+        <r>過疎</r>による死と呼びます。
+        <ul class="main-nav">
+          <figure>
+            <img src="fig/deadF.png" alt="画像を表示できません" title="cellDeath">
+          </figure>
+        </ul>
+        <h4>過密：息苦しくて死ぬ</h4>
+        ある生状態のセルの周りに、生状態のセルが４個以上あるときは、そのセルは死状態へと変化します。<br> これを
+        <r>過密</r>による死と呼びます。
+        <ul class="main-nav">
+          <figure>
+            <img src="fig/deadF2.png" alt="画像を表示できません" title="cellDeath2">
+          </figure>
+        </ul>
+      </div>
+      <div class="tab-pane" id="tab-word">
+        <h3>パターン</h3>
+        ライフゲームのマップを見ていると、セルの集合が特徴的な動きや形をしていることが分かります。<br> セルの集合のうち、良く見る形や、興味深い動きをする集合を
+        <r>パターン</r>と呼んで区別します。<br> その内の多くが、パターンの性質や形によって、固定物体や移動物体などに分類されています。
+        <br>
+        <h4>パターンの例</h4>
+        <ul class="main-nav">
+          <figure>
+            <img src="fig/exBlock.png" alt="画像を表示できません">
+            <figcaption>ブロック</figcaption>
+          </figure>
+          <figure>
+            <img src="fig/exBlinker.png" alt="画像を表示できません">
+            <figcaption>ブリンカー</figcaption>
+          </figure>
+          <figure>
+            <img src="fig/exGlider.png" alt="画像を表示できません">
+            <figcaption>グライダー</figcaption>
+          </figure>
+          <figure>
+            <img src="fig/exRP.png" alt="画像を表示できません">
+            <figcaption>Rペントミノ</figcaption>
+          </figure>
+        </ul>
+        <br>
+        <h3>固定物体</h3>
+        世代が経過しても形が変わらないパターンを
+        <r>固定物体</r>と呼びます。<br> 固定物体を構成するセル数を
+        <r>サイズ</r>と言います。最小の固定物体はサイズ4のブロックおよびタブです。<br>
+        <h4>固定物体の例</h4>
+        <ul class="main-nav">
+          <figure>
+            <img src="fig/exBlock.png" alt="画像を表示できません">
+            <figcaption>ブロック</figcaption>
+          </figure>
+          <figure>
+            <img src="fig/exTab.png" alt="画像を表示できません">
+            <figcaption>タブ</figcaption>
+          </figure>
+          <figure>
+            <img src="fig/exShip.png" alt="画像を表示できません">
+            <figcaption>船</figcaption>
+          </figure>
+          <figure>
+            <img src="fig/exBeehive.png" alt="画像を表示できません">
+            <figcaption>ハチの巣</figcaption>
+          </figure>
+        </ul>
+        <br>
+        <h3>振動子</h3>
+        一定の間隔で同じ配置が繰り返されるパターンを
+        <r>振動子</r>と呼びます。<br> 同じ形に戻るまでに要する世代数を
+        <r>周期</r>と言います。最短の周期は2で、ブリンカーなどがあげられます。<br>
+        <h4>振動子の例</h4>
+        <ul class="main-nav">
+          <figure>
+            <img src="fig/exBlinker.png" alt="画像を表示できません">
+            <figcaption>ブリンカー</figcaption>
+          </figure>
+          <figure>
+            <img src="fig/exToad.png" alt="画像を表示できません">
+            <figcaption>ひきがえる</figcaption>
+          </figure>
+          <figure>
+            <img src="fig/exBeacon.png" alt="画像を表示できません">
+            <figcaption>ビーコン</figcaption>
+          </figure>
+        </ul>
+        <br>
+        <h3>移動物体</h3>
+        一定の間隔で同じ配置を繰り返し、一定方向に移動を続けるパターンを
+        <r>移動物体</r>と呼びます。<br> 同じ形に戻るまでに要する世代数を周期と言います。
+        <br>
+        <h4>移動物体の例</h4>
+        <ul class="main-nav">
+          <figure>
+            <img src="fig/exGlider.png" alt="画像を表示できません">
+            <figcaption>グライダー</figcaption>
+          </figure>
+          <figure>
+            <img src="fig/exLWS.png" alt="画像を表示できません">
+            <figcaption>軽量級宇宙船</figcaption>
+          </figure>
+        </ul>
+        <br>
+        <h3>長寿型</h3>
+        比較的少ないセル数から、長い間変化し続けるパターンを
+        <r>長寿型</r>と呼びます。<br> 長寿型では変化が続く最大世代数が決まっていますが、このアプリケーションでは、
+        <br> マップのサイズによって最大世代数に到達する前に変化が終わってしまうことがあります。
+        <br> 長寿型のパターンを見るときは、セルサイズを小さくしたり、全画面モードにするなど、
+        <br> なるべくマップのサイズを大きくしてください。
+        <br>
+        <h4>長寿型の例</h4>
+        <ul class="main-nav">
+          <figure>
+            <img src="fig/exRP.png" alt="画像を表示できません">
+            <figcaption>Rペントミノ</figcaption>
+          </figure>
+          <figure>
+            <img src="fig/exThunder.png" alt="画像を表示できません">
+            <figcaption>サンダーバード</figcaption>
+          </figure>
+        </ul>
+        <br>
+        <h3>繁殖型</h3>
+        無限のマップを与えれば、セルが無限に増えていくパターンを
+        <r>繁殖型</r>と呼びます。<br> このアプリケーションでは、マップのサイズが有限なため無限にセル数が増えることはありません。
+        <br> 繁殖型のパターンを見るときは、セルサイズを小さくしたり、全画面モードにするなど、
+        <br> なるべくマップのサイズを大きくしてください。
+        <br>
+        <h4>長寿型の例</h4>
+        <ul class="main-nav">
+          <figure>
+            <img src="fig/ex5x5.png" alt="画像を表示できません">
+            <figcaption>5×5</figcaption>
+          </figure>
+        </ul>
+        <br>
+        <h3>イーター</h3>
+        他のパターンを近くに配置すると、そのパターンを食べてしまうパターンを
+        <r>イーター</r>と呼びます。<br> 食べられるパターンは決まっており、配置も特定の形にする必要があるため、食べさせるにはコツがいります。
+        <br>
+        <h4>イーターの例</h4>
+        <ul class="main-nav">
+          <figure>
+            <img src="fig/exEater.png" alt="画像を表示できません">
+            <figcaption>イーター1</figcaption>
+          </figure>
+        </ul>
+        <br>
+        <h3>フェニックス</h3>
+        振動子のうち、世代毎のセルがすべて入れ替わるパターンを
+        <r>フェニックス</r>と呼びます。<br>
+        <br>
+      </div>
+    </div>
   </div>
   <div id="copyright">
     copyright(C) 2016-2017 cafeunder<br><br>
   </div>
   <script src='js/index.js'></script>
 </body>
+
 </html>
