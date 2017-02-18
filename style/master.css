@@ -1,7 +1,7 @@
 @font-face {
   font-family: "myFont";
-  src: url("../font/NotoSansCJKjp-DemiLight.eot?") format('eot'),
-       url("../font/NotoSansCJKjp-DemiLight.woff") format('woff');
+  src: url("../fonts/NotoSansCJKjp-DemiLight.eot?") format('eot'),
+       url("../fonts/NotoSansCJKjp-DemiLight.woff") format('woff');
 }
 
 html, body {
@@ -17,14 +17,11 @@ body {
   overflow: auto;
 }
 
-a:link {
-  color: #13f;
-}
-
 #mainDiv {
   background-color: #0a0a0a;
   font-family: "ヒラギノ角ゴ Pro W3",メイリオ,Osaka,Arial,Verdana,"ＭＳ Ｐゴシック",sans-serif;
-  width:880px;
+  font-size: 16px;
+  width: 960px;
   margin: 0 auto;
   margin-top: 0em;
   margin-bottom: 1em;
@@ -48,8 +45,8 @@ r {
 h3 {
   margin-top: 2.5em;
   font-size: 120%;
-  border-bottom: 2px solid #fff;
-  color: #fff;
+  border-bottom: 2px solid #fafafa;
+  color: #fafafa;
 }
 
 h4 {

@@ -227,7 +227,7 @@ class TopPagePanel extends MainMenuPanel {
 				(self: MenuElement) => {
 					cellMapController.setVisibleGradation(self.status != 0);
 				},
-				["マップのグラーデーションをオフにします。", "マップのグラデーションをオンにします。"], 0
+				["マップのグラデーションをオフにします。", "マップのグラデーションをオンにします。"], 0
 			)
 		);
 	}
