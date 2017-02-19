@@ -19,7 +19,7 @@ gulp
 - NODE_ENVの値がproductionの場合は最小構成のファイルが、それ以外の場合はデバッグ用のファイルが生成されます。
 
 ## 実行方法
-上記の手順でビルドを行った後、index.htmlをwebブラウザで読み込んでください。
+上記の手順でビルドを行った後、index.htmlをwebブラウザで読み込んでください。ブラウザはchromeを推奨します。
 
 ## Copyright
 copyright(C) 2016-2017 cafeunder.
